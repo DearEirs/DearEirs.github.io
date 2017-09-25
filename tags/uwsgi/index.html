@@ -1,0 +1,341 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>uwsgi | Dear&#39;s Blog</title>
+  <meta name="author" content="Dear">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="renderer" content="webkit">
+
+  
+  <meta property="og:site_name" content="Dear&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+
+  <!-- CSS -->
+  <!-- link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css" -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+  <!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  -->
+  <![endif]-->
+
+  <script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+  <meta name="baidu-site-verification" content="RXfcpfczu8" />
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Dear&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>目录
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于个人
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+<!-- title -->
+<div class="page-header page-header-inverse ">
+  <h1 class="archive-title-tag title title-inverse ">uwsgi</h1>
+</div>
+
+<div class="row page">
+  <!-- cols -->
+  
+  <div class="col-md-9">
+	
+
+	  <div id="top_search"></div>
+
+      
+         <!-- display as entry -->
+	     <div class="mypage">
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-08-30 </div>
+			<div class="article-title"><a href="/2017/08/30/部署Nginx-uwsgi-django/" >部署Nginx+uwsgi+django</a></div>
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>访问流程:用户–&gt;nginx–&gt;uwsgi–&gt;django</p>
+<ol>
+<li>用户访问nginx</li>
+<li>nginx设置反向代理,将请求转发给uwsgi</li>
+<li>uwsgi接收请求</li>
+<li>django代码处理返回结果</li>
+</ol>
+<hr>
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">centos IP：192.168.1.1</div><div class="line">python：2.7.11</div><div class="line">django：1.9.5</div><div class="line">nginx:1.10.1</div></pre></td></tr></table></figure>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">django</div><div class="line">pip install django==1.9.5</div><div class="line">uwsgi </div><div class="line">pip install uwsgi</div><div class="line">nginx</div><div class="line">yum install nginx -y</div></pre></td></tr></table></figure>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h3 id="django"><a href="#django" class="headerlink" title="django"></a>django</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">首先要确定django项目可运行</div><div class="line">python /project/manage.py runserver 0.0.0.0:8000</div><div class="line">curl -i &apos;127.0.0.1:8000&apos;</div><div class="line">curl返回200则成功</div></pre></td></tr></table></figure>
+<h3 id="uwsgi"><a href="#uwsgi" class="headerlink" title="uwsgi"></a>uwsgi</h3><p>首先新建1个test.uwsgi.py文件在项目的根目录。即/project (与manage.py同目录)</p>
+<p>文件内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">#coding:utf-8</div><div class="line">import os</div><div class="line">import sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(&apos;utf8&apos;)</div><div class="line"></div><div class="line">from django.core.wsgi import get_wsgi_application</div><div class="line"></div><div class="line">os.environ.setdefault(&quot;DJANGO_SETTINGS_MODULE&quot;, &quot;project.settings&quot;)    #project为项目名，请按需求修改</div><div class="line"> </div><div class="line">application = get_wsgi_application()</div></pre></td></tr></table></figure></p>
+<p>uwsgi的话有2种开启方法</p>
+<p>第一种是直接在命令行输入命令打开，如：</p>
+<blockquote>
+<p>uwsgi –http 192.168.1.1:8000 –chdir /project –module test_uwsgi –chmod-socket=666</p>
+</blockquote>
+<p>第二种就是添加ini或xml配置文件</p>
+<p>新建文件test.ini在项目根目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">cat /project/test.ini</div><div class="line"></div><div class="line">[uwsgi]</div><div class="line">http = 192.157.1.1:8000 #监听IP和端口</div><div class="line">chdir = /project     #项目根目录</div><div class="line">module = test_uwsgi    #uwsgi文件，注意不用把后缀.py加上去</div><div class="line">processes = 4       #开启4个进程（按需更改）</div><div class="line">threads = 2           #每个进程开启4个线程</div><div class="line">enable-threads = True    #支持线程启动</div><div class="line">daemonize = /var/log/uwsgi.log    #后台启动，并把日志记录到指定文件</div><div class="line">buffer-size = 21573</div><div class="line">stats = 192.157.1.1:9000</div></pre></td></tr></table></figure></p>
+<p>示例中用的是ini配置文件，如需使用xml配置，请另行百度xml配置文件。更多的参数使用也可以自行百度添加上去</p>
+<p>当ini配置文件写好后执行</p>
+<p>uwsgi –ini /project/blog.ini #–ini 表示使用ini配置文件，xml文件就用–xml</p>
+<p>做完这些之后就访问192.168.1.1:8000端口，如无意外的话是可以访问成功的</p>
+<p>如果出现问题无法访问成功，请<strong>仔细阅读</strong>启动uwsgi之后弹出来的一系列信息，里面一般都包含有<strong>错误信息</strong>。按照提示修改即可。</p>
+<p>因为网页可以访问成功而且静态文件本来就是打算放在nginx上让用户直接访问，所以我就继续把配置进行下去了。</p>
+<h3 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">cat /etc/nginx/nginx.conf</div><div class="line"></div><div class="line"></div><div class="line">http &#123;</div><div class="line">    include       /etc/nginx/mime.types;</div><div class="line">    default_type  application/octet-stream;</div><div class="line"></div><div class="line">    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</div><div class="line">                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</div><div class="line">                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</div><div class="line"></div><div class="line">    access_log  /var/log/nginx/access.log  main;</div><div class="line"></div><div class="line">    sendfile        on;</div><div class="line">    #tcp_nopush     on;</div><div class="line">    server&#123;</div><div class="line">            listen       80 ;    #监听80端口</div><div class="line">            access_log /var/log/nginx/access.log;    #日志文件位置</div><div class="line">            error_log  /var/log/nginx/error.log;</div><div class="line">            location / &#123;#访问/时</div><div class="line">              include         uwsgi_params; #加载uwsgi模块</div><div class="line">              proxy_pass http://192.168.1.1:8000;  #将连接转到该IP</div><div class="line">            &#125;</div><div class="line">            error_page   500 502 503 504  /50x.html;</div><div class="line">              location = /50x.html &#123;</div><div class="line">                  root   html;</div><div class="line">            &#125;</div><div class="line">            location /static/ &#123;</div><div class="line">                alias  /project/static/;    #访问/static时直接访问到/project/static </div><div class="line">            &#125;</div><div class="line">    &#125;</div><div class="line">    keepalive_timeout  65;</div><div class="line"></div><div class="line">    #gzip  on;</div><div class="line"></div><div class="line">    include /etc/nginx/conf.d/*.conf;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>修改完nginx配置后nginx重新加载下配置 </p>
+<p>nginx -s reload</p>
+<p>到此配置完成,测试</p>
+<p>curl -i ‘192.168.1.1’</p>
+<p>正常的话会返回django的/页面</p>
+
+	
+	</div>
+  <a type="button" href="/2017/08/30/部署Nginx-uwsgi-django/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+	       
+	     </div>
+	     <div>
+	       <center>
+	         <div class="pagination">
+<ul class="pagination">
+	 
+</ul>
+</div>
+
+	       </center>
+	     </div>	
+      
+
+</div> <!-- col-md-9/col-md-12 -->
+
+
+<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
+
+		
+			
+	<div class="widget">
+		<h4>分类</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/django/">django</label></a></li>
+		
+			<li><a href="/categories/linux/">linux</label></a></li>
+		
+			<li><a href="/categories/python/">python</label></a></li>
+		
+			<li><a href="/categories/saltstack/">saltstack</label></a></li>
+		
+		</ul>
+	</div>
+
+
+		
+			
+	<div class="widget">
+		<h4>标签云</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/jinja/">jinja</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/oop/">oop</a></li>
+		
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/redis/">redis</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/django/">django</a></li>
+		
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>最新文章</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2017/09/21/jinja2/" ><i class="fa fa-file-o"></i>django中使用jinja2模板</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/14/salt-sls/" ><i class="fa fa-file-o"></i>saltstack(四)sls编写</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/salt-ssh/" ><i class="fa fa-file-o"></i>slatstack(三)salt-ssh批量安装min...</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/optimization/" ><i class="fa fa-file-o"></i>python之代码优化</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/async/" ><i class="fa fa-file-o"></i>python之异步编程</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>链接</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="fa fa-github"></i><a href="http://www.github.com/DearEirs" title="My Github account." target="_blank"]);">My Github</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 Dear
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

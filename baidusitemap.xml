@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/09/21/jinja2/</loc>
+    <lastmod>2017-09-21T02:32:16.275Z</lastmod>
+    <data>
+        <display>
+        <title>django中使用jinja2模板</title>
+        <pubTime>2017-09-21T02:26:53.000Z</pubTime>
+        
+        <tag>jinja</tag>
+         
+         
+           
+             
+              <breadCrumb title="django" url="http://139.199.0.245/categories/django/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/09/12/salt-ssh/</loc>
+    <lastmod>2017-09-14T07:46:28.302Z</lastmod>
+    <data>
+        <display>
+        <title>slatstack(三)salt-ssh批量安装minion</title>
+        <pubTime>2017-09-12T03:41:09.000Z</pubTime>
+        
+        <tag>saltstack</tag>
+         
+         
+           
+             
+              <breadCrumb title="saltstack" url="http://139.199.0.245/categories/saltstack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/09/14/salt-sls/</loc>
+    <lastmod>2017-09-14T07:46:19.030Z</lastmod>
+    <data>
+        <display>
+        <title>saltstack(四)sls编写</title>
+        <pubTime>2017-09-14T07:42:56.000Z</pubTime>
+        
+        <tag>saltstack</tag>
+         
+         
+           
+             
+              <breadCrumb title="saltstack" url="http://139.199.0.245/categories/saltstack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/09/12/oop/</loc>
+    <lastmod>2017-09-14T03:32:00.536Z</lastmod>
+    <data>
+        <display>
+        <title>python之面向对象编程</title>
+        <pubTime>2017-09-12T02:19:50.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>oop</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://139.199.0.245/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/09/12/optimization/</loc>
+    <lastmod>2017-09-12T03:58:13.440Z</lastmod>
+    <data>
+        <display>
+        <title>python之代码优化</title>
+        <pubTime>2017-09-12T02:32:58.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>代码优化</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://139.199.0.245/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/09/12/decorator/</loc>
+    <lastmod>2017-09-12T02:37:48.945Z</lastmod>
+    <data>
+        <display>
+        <title>python之装饰器的使用</title>
+        <pubTime>2017-09-12T02:19:41.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>decorator</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://139.199.0.245/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/09/12/async/</loc>
+    <lastmod>2017-09-12T02:35:14.851Z</lastmod>
+    <data>
+        <display>
+        <title>python之异步编程</title>
+        <pubTime>2017-09-12T02:32:51.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>异步</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://139.199.0.245/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/09/12/func/</loc>
+    <lastmod>2017-09-12T02:34:31.773Z</lastmod>
+    <data>
+        <display>
+        <title>python之函数、闭包</title>
+        <pubTime>2017-09-12T02:32:45.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>函数</tag>
+         
+        <tag>闭包</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://139.199.0.245/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/08/30/%E9%83%A8%E7%BD%B2Nginx-uwsgi-django/</loc>
+    <lastmod>2017-08-31T03:17:25.862Z</lastmod>
+    <data>
+        <display>
+        <title>部署Nginx+uwsgi+django</title>
+        <pubTime>2017-08-30T10:29:03.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>django</tag>
+         
+        <tag>uwsgi</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://139.199.0.245/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/08/15/python-gc%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/</loc>
+    <lastmod>2017-08-30T10:37:00.499Z</lastmod>
+    <data>
+        <display>
+        <title>python-gc回收机制</title>
+        <pubTime>2017-08-15T03:28:06.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>gc</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://139.199.0.245/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/08/30/saltstack-%E4%BA%8C-%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</loc>
+    <lastmod>2017-08-30T10:35:54.385Z</lastmod>
+    <data>
+        <display>
+        <title>saltstack(二)简单使用</title>
+        <pubTime>2017-08-30T09:50:31.000Z</pubTime>
+        
+        <tag>saltstack</tag>
+         
+         
+           
+             
+              <breadCrumb title="saltstack" url="http://139.199.0.245/categories/saltstack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/08/30/RocketMQ%E5%8F%8C%E4%B8%BB%E9%9B%86%E7%BE%A4/</loc>
+    <lastmod>2017-08-30T10:35:54.385Z</lastmod>
+    <data>
+        <display>
+        <title>RocketMQ双主集群</title>
+        <pubTime>2017-08-30T09:59:52.000Z</pubTime>
+        
+        <tag>rocketmq</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux" url="http://139.199.0.245/categories/linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/08/30/saltstack-%E4%B8%80-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/</loc>
+    <lastmod>2017-08-30T10:35:54.385Z</lastmod>
+    <data>
+        <display>
+        <title>saltstack(一)安装与配置</title>
+        <pubTime>2017-08-30T09:46:05.000Z</pubTime>
+        
+        <tag>saltstack</tag>
+         
+         
+           
+             
+              <breadCrumb title="saltstack" url="http://139.199.0.245/categories/saltstack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/08/30/redis%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2017-08-30T10:35:54.384Z</lastmod>
+    <data>
+        <display>
+        <title>redis集群模式搭建</title>
+        <pubTime>2017-08-30T09:56:16.000Z</pubTime>
+        
+        <tag>redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux" url="http://139.199.0.245/categories/linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/08/15/redis%E6%90%AD%E5%BB%BA%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/</loc>
+    <lastmod>2017-08-30T10:35:54.384Z</lastmod>
+    <data>
+        <display>
+        <title>redis搭建哨兵模式</title>
+        <pubTime>2017-08-15T03:28:06.000Z</pubTime>
+        
+        <tag>redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux" url="http://139.199.0.245/categories/linux/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+    
+</urlset>

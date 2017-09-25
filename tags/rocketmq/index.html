@@ -1,0 +1,341 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>rocketmq | Dear&#39;s Blog</title>
+  <meta name="author" content="Dear">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="renderer" content="webkit">
+
+  
+  <meta property="og:site_name" content="Dear&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+
+  <!-- CSS -->
+  <!-- link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css" -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+  <!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  -->
+  <![endif]-->
+
+  <script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+  <meta name="baidu-site-verification" content="RXfcpfczu8" />
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Dear&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>目录
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于个人
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+<!-- title -->
+<div class="page-header page-header-inverse ">
+  <h1 class="archive-title-tag title title-inverse ">rocketmq</h1>
+</div>
+
+<div class="row page">
+  <!-- cols -->
+  
+  <div class="col-md-9">
+	
+
+	  <div id="top_search"></div>
+
+      
+         <!-- display as entry -->
+	     <div class="mypage">
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-08-30 </div>
+			<div class="article-title"><a href="/2017/08/30/RocketMQ双主集群/" >RocketMQ双主集群</a></div>
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="RocketMQ-双主集群"><a href="#RocketMQ-双主集群" class="headerlink" title="RocketMQ 双主集群"></a>RocketMQ 双主集群</h1><table>
+<thead>
+<tr>
+<th style="text-align:center">主机名</th>
+<th style="text-align:center">环境</th>
+<th style="text-align:center">IP</th>
+<th style="text-align:center">角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">zstd1</td>
+<td style="text-align:center">centos7</td>
+<td style="text-align:center">172.16.0.89</td>
+<td style="text-align:center">master1</td>
+</tr>
+<tr>
+<td style="text-align:center">zstd1</td>
+<td style="text-align:center">centos7</td>
+<td style="text-align:center">172.16.0.221</td>
+<td style="text-align:center">master2</td>
+</tr>
+</tbody>
+</table>
+<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h2><p>安装这里选择在官网上下载源码包安装。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget -O /data/softs/src/rocketmq.tar.gz </div><div class="line">tar -zxvf /data/softs/src/rocketmq.tar.gz</div><div class="line">mv /data/softs/src/alibaba-rocketmq /data/softs/src/rocketmq</div><div class="line">cd /data/softs/src/rocketmq &amp;&amp; make &amp;&amp; make install</div></pre></td></tr></table></figure></p>
+<h2 id="2-修改配置"><a href="#2-修改配置" class="headerlink" title="2.修改配置"></a>2.修改配置</h2><p>安装完成后可以在$ROCKETMQ_HOME/conf/2m-noslave 下找到所需的配置文件</p>
+<p>需求修改的地方不多</p>
+<p>master1 对应修改broker-a.properties文件,master2 对应修改broker-b.properties文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">brokerClusterName=rocketmq-cluster  #所属集群名字 这个名字要一致</div><div class="line">brokerName=broker-a/broker-b    #这里2个分别对应文件名</div><div class="line">brokerId=0</div><div class="line">namesrvAddr=172.16.0.89:9876;172.16.0.221:9876</div><div class="line">listenPort=10911 #Broker 对外服务的监听端口</div></pre></td></tr></table></figure>
+<h2 id="3-启动服务"><a href="#3-启动服务" class="headerlink" title="3.启动服务"></a>3.启动服务</h2><p>启动服务的顺序： nameserver—-broker</p>
+<p>关闭服务的顺序： broker—-nameserver</p>
+<p>对应命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">nohup sh $ROCKETMQ_HOME/bin/mqnamesrv &amp; #启动nameserver</div><div class="line"></div><div class="line">nohup sh $ROCKETMQ_HOME/bin/mqbroker -n 172.16.0.89:9876 -c $ROCKETMQ_HOME/conf/2m-noslave/broker-a/b.properties &amp;</div><div class="line">#启动broker</div><div class="line">#两台master 启动 指定的IP要一致,即指定到同1台nameserver上</div><div class="line"></div><div class="line">mqadmin clusterList  -n 172.16.0.89:9876#查看集群信息</div></pre></td></tr></table></figure></p>
+
+	
+	</div>
+  <a type="button" href="/2017/08/30/RocketMQ双主集群/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+	       
+	     </div>
+	     <div>
+	       <center>
+	         <div class="pagination">
+<ul class="pagination">
+	 
+</ul>
+</div>
+
+	       </center>
+	     </div>	
+      
+
+</div> <!-- col-md-9/col-md-12 -->
+
+
+<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
+
+		
+			
+	<div class="widget">
+		<h4>分类</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/django/">django</label></a></li>
+		
+			<li><a href="/categories/linux/">linux</label></a></li>
+		
+			<li><a href="/categories/python/">python</label></a></li>
+		
+			<li><a href="/categories/saltstack/">saltstack</label></a></li>
+		
+		</ul>
+	</div>
+
+
+		
+			
+	<div class="widget">
+		<h4>标签云</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/jinja/">jinja</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+			<li><a href="/tags/redis/">redis</a></li>
+		
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/django/">django</a></li>
+		
+			<li><a href="/tags/oop/">oop</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>最新文章</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2017/09/21/jinja2/" ><i class="fa fa-file-o"></i>django中使用jinja2模板</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/14/salt-sls/" ><i class="fa fa-file-o"></i>saltstack(四)sls编写</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/salt-ssh/" ><i class="fa fa-file-o"></i>slatstack(三)salt-ssh批量安装min...</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/optimization/" ><i class="fa fa-file-o"></i>python之代码优化</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/async/" ><i class="fa fa-file-o"></i>python之异步编程</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>链接</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="fa fa-github"></i><a href="http://www.github.com/DearEirs" title="My Github account." target="_blank"]);">My Github</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 Dear
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

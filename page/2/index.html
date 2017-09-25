@@ -1,0 +1,558 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 2 页 | Dear&#39;s Blog</title>
+  <meta name="author" content="Dear">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="renderer" content="webkit">
+
+  
+  <meta property="og:site_name" content="Dear&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+
+  <!-- CSS -->
+  <!-- link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css" -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+  <!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  -->
+  <![endif]-->
+
+  <script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+  <meta name="baidu-site-verification" content="RXfcpfczu8" />
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Dear&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>目录
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于个人
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 <div class="row page">
+
+	
+	<div class="col-md-9">
+	
+
+		<div class="slogan">
+      <i class="fa fa-heart"></i>
+      Welcome to Dear&#39;s Blog
+</div>    
+		<div id="top_search"></div>
+		<div class="mypage">
+		
+		<!-- title and entry -->
+        <!-- render top articles firstly -->
+        
+        <!-- render other articles -->
+        
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-08-30 </div>
+			<div class="article-title"><a href="/2017/08/30/redis集群模式搭建/" >redis集群模式搭建</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><blockquote>
+<p>redis的集群模式是redis3以后新增的,对比传统哨兵模式,集群模式的数据是分片存储的,插入数据会插入到随机的1个redis master端并同步到对应的slave,由所有master共同组成1份完整的数据,而每个master会有对应的slave,当master宕掉时,对应的slave会自动升级成为master</p>
+</blockquote>
+<hr>
+<h1 id="环境："><a href="#环境：" class="headerlink" title="环境："></a>环境：</h1><p>centos6.7</p>
+<p>redis3.0.3</p>
+<p>3台虚拟机，IP分别是</p>
+<ul>
+<li>server1：192.168.1.1    </li>
+<li>server2：192.168.1.2     </li>
+<li>server3：   192.168.1.3</li>
+</ul>
+<p>（因redis机器最少要有3主3从，这里就用3台虚拟机来方便区分，实在没机器的可以在1台机上开6个节点）</p>
+<p>拿到机器后，首先把环境弄好<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum groupinstall &quot;Development tools&quot; -y</div><div class="line">yum install wget -y</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/src/</div><div class="line">wget http://download.redis.io/releases/redis-3.0.3.tar.gz</div><div class="line">tar -zxvf redis-3.0.3.tar.gz</div><div class="line">解压出来后要到目录里面编译安装</div><div class="line"></div><div class="line">cd redis-3.0.3</div><div class="line">make  &amp;&amp; make install</div><div class="line">在这里，可能会出现如下错误:(如没有，请略过)</div><div class="line"></div><div class="line">make[1]: Entering directory `/redis/src&apos;</div><div class="line">CC adlist.o</div><div class="line">In file included from adlist.c:34:</div><div class="line">zmalloc.h:50:31: error: jemalloc/jemalloc.h: No such file or directory</div><div class="line">zmalloc.h:55:2: error: #error &quot;Newer version of jemalloc required&quot;</div><div class="line">make[1]: *** [adlist.o] Error 1</div><div class="line">make[1]: Leaving directory `/redis/src&apos;</div><div class="line">make: *** [all] Error 2</div><div class="line"></div><div class="line">原因是没有安装jemalloc内存分配器，可以安装jemalloc 或 直接 输入make MALLOC=libc  &amp;&amp; make install</div></pre></td></tr></table></figure>
+<p>安装好redis后就是要创建节点了，3主3从总共6个</p>
+<p>以server1为例<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">首先创建redis集群的目录</div><div class="line"></div><div class="line">cd /usr/local</div><div class="line">mkdir redis</div><div class="line">cd ./redis</div><div class="line">然后把刚才已经编译好的redis包复制过来</div><div class="line"></div><div class="line">包复制过来¡理把文件夹以端口号命名</div><div class="line">cp  -r  /usr/local/src/redis-3.0.3 /usr/local/redis/ &amp;&amp; mv /usr/local/redis/redis-3.0.3  7001</div><div class="line">此步骤分别在其余的2台机子上重复一遍，那么redis的6个节点就算简历完毕。</div></pre></td></tr></table></figure></p>
+<p>接下来要做的就是修改各个节点的配置文件</p>
+<p>以7000节点为例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/redis/7000</div><div class="line">vi redis.conf     #主要修改一下这几个参数</div><div class="line">daemonize    yes                       #后台运行redis</div><div class="line">pidfile  /var/run/redis_7000.pid    #pidfile文件对应7000</div><div class="line">port  7000                            #监听的端口号</div><div class="line">cluster-enabled  yes         #开启集群，这个原本有的把注释#去掉就好了</div><div class="line">cluster-config-file  nodes.conf  #集群的配置  配置文件首次启动自动生成</div><div class="line">cluster-node-timeout  5000      #请求超时的时间</div><div class="line">appendonly  yes       #aof日志开启，按需开启，每次写操作都会记录成1条日志</div><div class="line">bind  192.168.1.1     #这里要改成server的IP，不改的话后续会报错</div><div class="line"> </div><div class="line"></div><div class="line">其他节点的配置只需把pidfile对应的文件和端口号改下就好了，一般建议7000 7001 7002 这样一直写上去</div></pre></td></tr></table></figure></p>
+<h1 id="启动redis"><a href="#启动redis" class="headerlink" title="启动redis"></a>启动redis</h1><p>当所有的节点都配置好后，就启动redis了<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/redis/7000</div><div class="line">redis-server ./redis.conf</div><div class="line"></div><div class="line">#这里是先进到7000节点的目录再开启，因为我发现如果直接输入 redis-server /usr/local/redis/7000/redis.conf的话，自动生成的appendonly.aof  nodes.conf文件会在当前目录下，而不是在对应节点的目录下。大家可以试验一下。</div></pre></td></tr></table></figure></p>
+<p>启动完成后，循例检查下。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ps aux |grep redis      </div><div class="line">netstat -lanp |grep 7000/7001</div></pre></td></tr></table></figure></p>
+<p>正常情况下是可以看到7000  7001  17000 17001端口的</p>
+<p>7000，7001是用于客户端访问，17000,17001是用于集群内部节点之间的访问的</p>
+<hr>
+<h1 id="创建集群"><a href="#创建集群" class="headerlink" title="创建集群"></a>创建集群</h1><p>当所有的节点都配置并启动完之后，我们要做的就是利用这些节点来创建集群</p>
+<p>官方提供了一个专门的工具   redis-trib.rb  </p>
+<p>配合使用redis-trib.rb还要安装ruby</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">yum -y install ruby ruby-devel rubygems rpm-build</div><div class="line"></div><div class="line">装好后再用gem命令来安装redis接口</div><div class="line"></div><div class="line">gem install redis</div><div class="line">在3台server上都安装好后，就可以开始创建集群了</div></pre></td></tr></table></figure>
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">/usr/local/redis/7000/src/redis-trib.rb  create  --replicas  1  192.168.1.1:7000  192.168.1.2:7000 192.168.1.3:7000  192.168.1.1:7001  192.168.1.2:7001  192.168.1.3:7001</div><div class="line"></div><div class="line"></div><div class="line">命令一定要以IP：端口形式来输入，千万别用域名。</div><div class="line"></div><div class="line">参数 --replicas 1   是自动为每台master配置1个slave   上面有6个节点 会按规则生成3个主节点（master）3个从节点（slave）</div><div class="line"></div><div class="line">注意：前面3个IP redis会默认他为主节点。</div><div class="line"></div><div class="line">输入完命令后会提示</div><div class="line"></div><div class="line">Can I set the above configuration? (type &apos;yes&apos; to accept): </div><div class="line"></div><div class="line">这里输入yes 就可以了</div><div class="line"></div><div class="line">然后就会弹出如下信息：</div><div class="line"></div><div class="line">&gt;&gt;&gt; Performing Cluster Check (using node 127.0.0.1:7000)</div><div class="line">M: 5ca195e70a7d6d3b2756f06bfd5bb62f133ad236 127.0.0.1:7000</div><div class="line">   slots:10923-16383 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">M: a79ab5c1558f64d37efb6ad3e775bcd32bee70fc 192.168.20.186:7000</div><div class="line">   slots:0-5460 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">S: ebbc18dca8215930cf6430c39671b7660ca1de0f 192.168.20.187:7001</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 5ca195e70a7d6d3b2756f06bfd5bb62f133ad236</div><div class="line">S: c195573125f0d0a87b0f1076dd7de392aa90a5f3 192.168.20.186:7001</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 0e590350177d69f337dc88188545dfe3c4c75742</div><div class="line">M: 0e590350177d69f337dc88188545dfe3c4c75742 192.168.20.184:7000</div><div class="line">   slots:5461-10922 (5462 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">S: b29210a818e15b1097422933163e92722c624ad8 192.168.20.184:7001</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates a79ab5c1558f64d37efb6ad3e775bcd32bee70fc</div><div class="line">[OK] All nodes agree about slots configuration.</div><div class="line">&gt;&gt;&gt; Check for open slots...</div><div class="line">&gt;&gt;&gt; Check slots coverage...</div><div class="line">[OK] All 16384 slots covered.</div><div class="line">这样子就可以了。至于测试的话可以从其他文章里面找到</div></pre></td></tr></table></figure>
+<p>附：</p>
+<p><a href="http://www.ithao123.cn/content-3619322.html" target="_blank" rel="external">http://www.ithao123.cn/content-3619322.html</a>     #redis 常见集群报错处理</p>
+
+	
+	</div>
+  <a type="button" href="/2017/08/30/redis集群模式搭建/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-08-30 </div>
+			<div class="article-title"><a href="/2017/08/30/saltstack-二-简单使用/" >saltstack(二)简单使用</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<p>命令格式：<br>salt [options] ‘<target>‘ <function> [arguments]</function></target></p>
+<p>salt –help</p>
+<p>[option] 可自行看说明</p>
+<h3 id="target-匹配模式"><a href="#target-匹配模式" class="headerlink" title="target 匹配模式"></a>target 匹配模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">-E 正则匹配 通过正则表达式进行匹配</div><div class="line">salt -E &apos;^minion[1-9]&apos; test.ping</div><div class="line">-L 列表匹配 以列表形式进行匹配,多个ID之间用,进行分割</div><div class="line">salt -L &apos;minion1,minion2&apos; test.ping</div><div class="line">-G Grain匹配</div><div class="line">salt -G &apos;os:CentOS&apos; test.ping</div><div class="line">-P Pillar匹配</div><div class="line">salt -P &apos;os:CentOS&apos; test.ping</div><div class="line">-S IP匹配 可以用掩码来自行调整ip范围</div><div class="line">salt -S &apos;192.168.0.0/24&apos; test.ping</div><div class="line"></div><div class="line">其他更详细的请参考帮助文档</div></pre></td></tr></table></figure>
+<h3 id="模块方法"><a href="#模块方法" class="headerlink" title="模块方法"></a>模块方法</h3><p>如需更详细的了解,请参考<a href="https://docs.saltstack.com/en/latest/contents.html" target="_blank" rel="external">官方文档</a> (自行翻墙)</p>
+<ul>
+<li>sys.doc  查看模块的文档</li>
+<li>sys.list_modules 列出有哪些可用模块</li>
+<li>sys.list_functions 列出模块有哪些可用方法</li>
+</ul>
+<p>常用模块</p>
+<p>cmd.run</p>
+<ul>
+<li>salt ‘*’ cmd.run ‘ls /‘ # 控制target 执行命令</li>
+</ul>
+<p>test</p>
+<ul>
+<li>salt ‘*’ test.ping #查看target通讯是否正常</li>
+<li>salt ‘*’ test.version #查看target salt版本</li>
+</ul>
+<p>cp</p>
+<ul>
+<li>salt ‘minion1’ cp.get_file salt://path/to/file /minion/dest # 分发文件到target</li>
+<li>salt ‘minion1’ cp.get_dir salt://path/to/file /minion/dest # 分发目录到target</li>
+<li>salt ‘minion1’ cp.push /minion/filename # 从minion上传文件到master</li>
+</ul>
+<p>grains</p>
+<ul>
+<li>salt ‘minion1’ grains.items #查看所有grains信息</li>
+</ul>
+<p>pillar</p>
+<ul>
+<li>salt ‘minion1’ pillar.items #查看所有pillar信息</li>
+</ul>
+<p>fileserver</p>
+<ul>
+<li>salt-run fileserver.file_list #返回给定环境中的文件列表</li>
+<li>salt-run fileserver.dir_list #返回给定环境中的目录列表</li>
+<li>salt-run fileserver.update #更新文件</li>
+</ul>
+
+	
+	</div>
+  <a type="button" href="/2017/08/30/saltstack-二-简单使用/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-08-30 </div>
+			<div class="article-title"><a href="/2017/08/30/saltstack-一-安装与配置/" >saltstack(一)安装与配置</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><p>centos7</p>
+<p>master IP:192.168.1.100</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>一般情况下安装saltstack 用yum就可以了<br>yum install <a href="https://repo.saltstack.com/yum/redhat/salt-repo-2017.7-1.el7.noarch.rpm" target="_blank" rel="external">https://repo.saltstack.com/yum/redhat/salt-repo-2017.7-1.el7.noarch.rpm</a> </p>
+<p>如需指定版本,可修改salt-repo-2017.7-1.el7.noarch.rpm为其他版本号</p>
+<p>如:salt-repo-2016.11-2.el7.noarch.rpm</p>
+<p>版本号可在<a href="https://repo.saltstack.com/yum/redhat找到" target="_blank" rel="external">https://repo.saltstack.com/yum/redhat找到</a></p>
+<p>按需求安装个部件</p>
+<ul>
+<li>yum install salt-master</li>
+<li>yum install salt-minion</li>
+<li>yum install salt-ssh</li>
+<li>yum install salt-syndic</li>
+<li>yum install salt-cloud</li>
+<li>yum install salt-api</li>
+</ul>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h1 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h1><h3 id="master"><a href="#master" class="headerlink" title="master"></a>master</h3><h3 id="minion"><a href="#minion" class="headerlink" title="minion"></a>minion</h3><p>minion端只需配置2个地方<br>id: minion1 #指定自己的ID,默认为hostname<br>master: 192.168.1.100 #指定master</p>
+<p>这样最基本的就配置就完成了,可以在master端通过</p>
+<p>salt-key -a minion1 来把minion1添加到管理</p>
+<p>salt ‘minion1’ test.ping #测试minion1是否正常通讯</p>
+<h3 id="目录配置"><a href="#目录配置" class="headerlink" title="目录配置"></a>目录配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">file_roots:</div><div class="line">  base:</div><div class="line">    - /data/salt/srv</div><div class="line">    - /data/salt/formulas/base</div><div class="line"></div><div class="line">#设置base环境下 salt目录,当使用salt路径即salt://来访问文件时,会到这里边定义的所有目录下寻找</div><div class="line"></div><div class="line">pillar_roots:</div><div class="line">  base:</div><div class="line">    - /data/salt/pillar</div><div class="line"></div><div class="line">#定义pillar目录</div><div class="line"></div><div class="line"></div><div class="line">include:</div><div class="line">  - /data/salt/test.conf</div><div class="line"></div><div class="line">#加载其他配置文件</div><div class="line"></div><div class="line">extension_modules: /data/salt/ext</div><div class="line"></div><div class="line">#/usr/lib/python2.7/site-packages/</div><div class="line"></div><div class="line">ext_pillar:</div><div class="line">  - nodegroups:</div><div class="line">    pillar_name: &apos;nodegroups&apos;</div><div class="line"></div><div class="line"># 扩展pillar</div></pre></td></tr></table></figure>
+<h3 id="权限配置"><a href="#权限配置" class="headerlink" title="权限配置"></a>权限配置</h3><p>默认情况下salt 只允许root执行,而如果其他用户需要执行salt命令那么就需要添加如下配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">client_acl:</div><div class="line">  tomcat:</div><div class="line">    - state.*</div><div class="line">  nginx:</div><div class="line">    - test.ping</div><div class="line"></div><div class="line">效果:使得tomcat 可以执行 state模块的所有命令</div><div class="line">nginx用户可以执行test.ping 命令</div></pre></td></tr></table></figure></p>
+<h3 id="gitfs"><a href="#gitfs" class="headerlink" title="gitfs"></a>gitfs</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">安装</div><div class="line">yum install libgit2 python-devel libffi-devel libgit2-devel -y</div><div class="line">rpm -ivh http://dl.fedoraproject.org/pub/epel/6/x86_64//http-parser-2.0-4.20121128gitcd01361.el6.x86_64.rpm</div><div class="line">wget https://github.com/libgit2/libgit2/archive/v0.26.0.tar.gz</div><div class="line">tar xzf v0.26.0.tar.gz</div><div class="line">cd libgit2-0.26.0/</div><div class="line">cmake . &amp;&amp; make &amp;&amp; make install</div><div class="line">cp /usr/local/lib/libgit2.so* /usr/lib64/</div><div class="line">cd /usr/lib64/ &amp;&amp; ldconfig</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">gitfs_provider: pygit2</div><div class="line">gitfs_base: master</div><div class="line"></div><div class="line">gitfs_remotes:</div><div class="line">  - http://git地址: #后边带:</div><div class="line">    - base: master #分支</div><div class="line">    - root: demo-service-provider/src/main/resources #目录</div><div class="line">    - mountpoint: salt://webapp/ops_resources #挂载目录</div><div class="line">    - insecure_auth: True</div><div class="line">    - user: arthur #用户</div><div class="line">    - password: zsdata123 #密码</div><div class="line"></div><div class="line">效果:可以加载到git上边定义的文件,一般用于</div></pre></td></tr></table></figure>
+<h3 id="其他配置"><a href="#其他配置" class="headerlink" title="其他配置"></a>其他配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">file_recv: True #开启后minion可通过cp.push 向master上传文件</div></pre></td></tr></table></figure>
+
+	
+	</div>
+  <a type="button" href="/2017/08/30/saltstack-一-安装与配置/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-08-15 </div>
+			<div class="article-title"><a href="/2017/08/15/redis搭建哨兵模式/" >redis搭建哨兵模式</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><blockquote>
+<p>redis的集群模式是redis3以后新增的,对比传统哨兵模式,集群模式的数据是分片存储的,插入数据会插入到随机的1个redis master端并同步到对应的slave,由所有master共同组成1份完整的数据,而每个master会有对应的slave,当master宕掉时,对应的slave会自动升级成为master</p>
+</blockquote>
+<hr>
+<h1 id="环境："><a href="#环境：" class="headerlink" title="环境："></a>环境：</h1><p>centos6.7</p>
+<p>redis3.0.3</p>
+<p>3台虚拟机，IP分别是</p>
+<ul>
+<li>server1：192.168.1.1    </li>
+<li>server2：192.168.1.2     </li>
+<li>server3：   192.168.1.3</li>
+</ul>
+<p>（因redis机器最少要有3主3从，这里就用3台虚拟机来方便区分，实在没机器的可以在1台机上开6个节点）</p>
+<p>拿到机器后，首先把环境弄好<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum groupinstall "Development tools" -y</div><div class="line">yum install wget -y</div></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/src/</div><div class="line">wget http://download.redis.io/releases/redis-3.0.3.tar.gz</div><div class="line">tar -zxvf redis-3.0.3.tar.gz</div><div class="line">解压出来后要到目录里面编译安装</div><div class="line"></div><div class="line">cd redis-3.0.3</div><div class="line">make  &amp;&amp; make install</div><div class="line">在这里，可能会出现如下错误:(如没有，请略过)</div><div class="line"></div><div class="line">make[1]: Entering directory `/redis/src'</div><div class="line">CC adlist.o</div><div class="line">In file included from adlist.c:34:</div><div class="line">zmalloc.h:50:31: error: jemalloc/jemalloc.h: No such file or directory</div><div class="line">zmalloc.h:55:2: error: #error "Newer version of jemalloc required"</div><div class="line">make[1]: *** [adlist.o] Error 1</div><div class="line">make[1]: Leaving directory `/redis/src'</div><div class="line">make: *** [all] Error 2</div><div class="line"></div><div class="line">原因是没有安装jemalloc内存分配器，可以安装jemalloc 或 直接 输入make MALLOC=libc  &amp;&amp; make install</div></pre></td></tr></table></figure>
+<p>安装好redis后就是要创建节点了，3主3从总共6个</p>
+<p>以server1为例<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">首先创建redis集群的目录</div><div class="line"></div><div class="line">cd /usr/local</div><div class="line">mkdir redis</div><div class="line">cd ./redis</div><div class="line">然后把刚才已经编译好的redis包复制过来</div><div class="line"></div><div class="line">cp  -r  /usr/local/src/redis-3.0.3 /usr/local/redis/ &amp;&amp; mv /usr/local/redis/redis-3.0.3  7000   #这里以7000 7001 端口为例，为方便管理把文件夹以端口号命名</div><div class="line">cp  -r  /usr/local/src/redis-3.0.3 /usr/local/redis/ &amp;&amp; mv /usr/local/redis/redis-3.0.3  7001</div><div class="line">7001ª节点就算简历完毕。</div></pre></td></tr></table></figure></p>
+<p>接下来要做的就是修改各个节点的配置文件</p>
+<p>以7000节点为例：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/redis/7000</div><div class="line">vi redis.conf     #主要修改一下这几个参数</div><div class="line">daemonize    yes                       #后台运行redis</div><div class="line">pidfile  /var/run/redis_7000.pid    #pidfile文件对应7000</div><div class="line">port  7000                            #监听的端口号</div><div class="line">cluster-enabled  yes         #开启集群，这个原本有的把注释#去掉就好了</div><div class="line">cluster-config-file  nodes.conf  #集群的配置  配置文件首次启动自动生成</div><div class="line">cluster-node-timeout  5000      #请求超时的时间</div><div class="line">appendonly  yes       #aof日志开启，按需开启，每次写操作都会记录成1条日志</div><div class="line">bind  192.168.1.1     #这里要改成server的IP，不改的话后续会报错</div><div class="line"> </div><div class="line"></div><div class="line">其他节点的配置只需把pidfile对应的文件和端口号改下就好了，一般建议7000 7001 7002 这样一直写上去</div></pre></td></tr></table></figure></p>
+<h1 id="启动redis"><a href="#启动redis" class="headerlink" title="启动redis"></a>启动redis</h1><p>当所有的节点都配置好后，就启动redis了<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/redis/7000</div><div class="line">redis-server ./redis.conf</div><div class="line"></div><div class="line"><span class="meta">#</span>这里是先进到7000节点的目录再开启，因为我发现如果直接输入 redis-server /usr/local/redis/7000/redis.conf的话，自动生成的appendonly.aof  nodes.conf文件会在当前目录下，而不是在对应节点的目录下。大家可以试验一下。</div></pre></td></tr></table></figure></p>
+<p>启动完成后，循例检查下。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ps aux |grep redis      </div><div class="line">netstat -lanp |grep 7000/7001</div></pre></td></tr></table></figure></p>
+<p>正常情况下是可以看到7000  7001  17000 17001端口的</p>
+<p>7000，7001是用于客户端访问，17000,17001是用于集群内部节点之间的访问的</p>
+<hr>
+<h1 id="创建集群"><a href="#创建集群" class="headerlink" title="创建集群"></a>创建集群</h1><p>当所有的节点都配置并启动完之后，我们要做的就是利用这些节点来创建集群</p>
+<p>官方提供了一个专门的工具   redis-trib.rb  </p>
+<p>配合使用redis-trib.rb还要安装ruby</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">yum -y install ruby ruby-devel rubygems rpm-build</div><div class="line"></div><div class="line">装好后再用gem命令来安装redis接口</div><div class="line"></div><div class="line">gem install redis</div><div class="line">在3台server上都安装好后，就可以开始创建集群了</div></pre></td></tr></table></figure>
+<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">/usr/local/redis/7000/src/redis-trib.rb  create  --replicas  1  192.168.1.1:7000  192.168.1.2:7000 192.168.1.3:7000  192.168.1.1:7001  192.168.1.2:7001  192.168.1.3:7001</div><div class="line"></div><div class="line"></div><div class="line">命令一定要以IP：端口形式来输入，千万别用域名。</div><div class="line"></div><div class="line">参数 --replicas 1   是自动为每台master配置1个slave   上面有6个节点 会按规则生成3个主节点（master）3个从节点（slave）</div><div class="line"></div><div class="line">注意：前面3个IP redis会默认他为主节点。</div><div class="line"></div><div class="line">输入完命令后会提示</div><div class="line"></div><div class="line">Can I set the above configuration? (type 'yes' to accept): </div><div class="line"></div><div class="line">这里输入yes 就可以了</div><div class="line"></div><div class="line">然后就会弹出如下信息：</div><div class="line"></div><div class="line"><span class="meta">&gt;</span>&gt;&gt; Performing Cluster Check (using node 127.0.0.1:7000)</div><div class="line">M: 5ca195e70a7d6d3b2756f06bfd5bb62f133ad236 127.0.0.1:7000</div><div class="line">   slots:10923-16383 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">M: a79ab5c1558f64d37efb6ad3e775bcd32bee70fc 192.168.20.186:7000</div><div class="line">   slots:0-5460 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">S: ebbc18dca8215930cf6430c39671b7660ca1de0f 192.168.20.187:7001</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 5ca195e70a7d6d3b2756f06bfd5bb62f133ad236</div><div class="line">S: c195573125f0d0a87b0f1076dd7de392aa90a5f3 192.168.20.186:7001</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 0e590350177d69f337dc88188545dfe3c4c75742</div><div class="line">M: 0e590350177d69f337dc88188545dfe3c4c75742 192.168.20.184:7000</div><div class="line">   slots:5461-10922 (5462 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">S: b29210a818e15b1097422933163e92722c624ad8 192.168.20.184:7001</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates a79ab5c1558f64d37efb6ad3e775bcd32bee70fc</div><div class="line">[OK] All nodes agree about slots configuration.</div><div class="line"><span class="meta">&gt;</span>&gt;&gt; Check for open slots...</div><div class="line"><span class="meta">&gt;</span>&gt;&gt; Check slots coverage...</div><div class="line">[OK] All 16384 slots covered.</div><div class="line">这样子就可以了。至于测试的话可以从其他文章里面找到</div></pre></td></tr></table></figure>
+<p>附：</p>
+<p><a href="http://www.ithao123.cn/content-3619322.html" target="_blank" rel="external">http://www.ithao123.cn/content-3619322.html</a>     #redis 常见集群报错处理</p>
+
+	
+	</div>
+  <a type="button" href="/2017/08/15/redis搭建哨兵模式/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-08-15 </div>
+			<div class="article-title"><a href="/2017/08/15/python-gc回收机制/" >python-gc回收机制</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h3 id="gc-回收机制"><a href="#gc-回收机制" class="headerlink" title="gc 回收机制"></a>gc 回收机制</h3><p>gc 主要由以下3个部分组成</p>
+<ol>
+<li>引用计数</li>
+<li>标记-删除</li>
+<li>分代回收</li>
+</ol>
+<h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p>对象的引用计数可以通过 sys.getrefcount(object)得到</p>
+<p>引用数指的是对象被引用的次数,一般通过创建变量,变量绑定来增加,<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">a = <span class="number">1000</span></div><div class="line">sys.getrefcount(a) -&gt; 2 </div><div class="line"><span class="comment">###注意:sys.getrefcount(a)得到的是对象的引用计数,即变量a所指向的内存地址的值1000被引用的次数,这里得到2是因为</span></div><div class="line">a=<span class="number">1000</span>时引用了<span class="number">1</span>次 而sys.getrefcont(a)时又引用了一次</div><div class="line"></div><div class="line">b = a</div><div class="line">sys.getrefcount(a) -&gt; 3</div><div class="line"></div><div class="line"><span class="keyword">del</span> a</div><div class="line">sys.getrefcount(a) -&gt; 2</div><div class="line"></div><div class="line">id(b) -&gt; 3097439675248</div><div class="line"><span class="keyword">del</span> b</div><div class="line"></div><div class="line">c = <span class="number">1001</span></div><div class="line">id(c) -&gt; 3097439675248</div><div class="line"></div><div class="line"><span class="comment">###这里大家可以发现c与b之前的所指向的内存地址是同一个,这是因为在大部分情况下当1个内存地址引用计数为0时,python</span></div><div class="line"><span class="comment">###内部就会马上把这个内存地址回收,标记为可用地址,在下次请求地址时分发出去</span></div></pre></td></tr></table></figure></p>
+<h3 id="标记-删除"><a href="#标记-删除" class="headerlink" title="标记-删除"></a>标记-删除</h3><p>引用计数不是万能的,在一些特定的情况下,即使对象指向为空,但是引用计数并不为0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">list1 = []</div><div class="line">list2 = []</div><div class="line">list1.append(list2)</div><div class="line">list2.append(list1)</div><div class="line"></div><div class="line">sys.getrefcount(list1) -&gt; 3</div><div class="line">sys.getrefcount(list2) -&gt; 3</div><div class="line">###这时候 del list1,list2 只会使它们的引用计数减1</div><div class="line">del list1,list2</div></pre></td></tr></table></figure>
+<p>这时候list1,list2的内存并不会得到释放,直到python的回收计数达到阀值触发了回收机制,然后python内部会遍历所有对象,把被正确引用的对象作标记保留<br>而没有正确引用的对象则进行回收,释放内存<br>gc.get_count() 查看当前回收计数<br>gc.get_threshold() 查看回收阈值  默认为 (700,10,10) 分别对应一、二、三代回收阀值</p>
+<h3 id="分代回收"><a href="#分代回收" class="headerlink" title="分代回收"></a>分代回收</h3><p>而上述被标记的对象会被保存到二代对象当中,回收计数中的第二位会+1,<br>触发一代回收阀值时会检查新建对象,把被正确引用的对象作标记保留而没有正确引用的对象则进行回收,释放内存,存活对象保存到二代对象当中,二代回收计数+1<br>触发二代回收阀值时会检查新建对象与二代对象并回收,存活的对象被保存到三代对象中,三代回收计数+1<br>触发三代回收阀值时会检查新建对象与二代对象与三代对象,计数器清0<br>如此循环直至程序结束,所以Python程序占用的空间不会特别大,但是同时因为gc机制一直在后台运行各种操作,会在一定的程度上降低程序的效率.</p>
+
+	
+	</div>
+  <a type="button" href="/2017/08/15/python-gc回收机制/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+           
+		
+
+		</div>
+
+		<!-- pagination -->
+		<div>
+  		<center>
+		<div class="pagination">
+<ul class="pagination">
+	 
+		
+    	<li class="prev"><a href="/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> 上一页</a></li>
+  		
+
+        <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+
+		
+          <li class="next disabled"><a>下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>
+        
+	
+</ul>
+</div>
+
+  		</center>
+		</div>
+
+		
+		
+	</div> <!-- col-md-9 -->
+
+	
+		<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
+
+		
+			
+	<div class="widget">
+		<h4>分类</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/django/">django</label></a></li>
+		
+			<li><a href="/categories/linux/">linux</label></a></li>
+		
+			<li><a href="/categories/python/">python</label></a></li>
+		
+			<li><a href="/categories/saltstack/">saltstack</label></a></li>
+		
+		</ul>
+	</div>
+
+
+		
+			
+	<div class="widget">
+		<h4>标签云</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/tags/redis/">redis</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/jinja/">jinja</a></li>
+		
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/django/">django</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/oop/">oop</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>最新文章</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2017/09/21/jinja2/" ><i class="fa fa-file-o"></i>django中使用jinja2模板</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/14/salt-sls/" ><i class="fa fa-file-o"></i>saltstack(四)sls编写</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/salt-ssh/" ><i class="fa fa-file-o"></i>slatstack(三)salt-ssh批量安装min...</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/optimization/" ><i class="fa fa-file-o"></i>python之代码优化</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/async/" ><i class="fa fa-file-o"></i>python之异步编程</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>链接</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="fa fa-github"></i><a href="http://www.github.com/DearEirs" title="My Github account." target="_blank"]);">My Github</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+	
+	
+</div> <!-- row-fluid -->
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 Dear
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

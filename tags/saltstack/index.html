@@ -1,0 +1,378 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>saltstack | Dear&#39;s Blog</title>
+  <meta name="author" content="Dear">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="renderer" content="webkit">
+
+  
+  <meta property="og:site_name" content="Dear&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+
+  <!-- CSS -->
+  <!-- link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css" -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+  <!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  -->
+  <![endif]-->
+
+  <script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+  <meta name="baidu-site-verification" content="RXfcpfczu8" />
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Dear&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>目录
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于个人
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+<!-- title -->
+<div class="page-header page-header-inverse ">
+  <h1 class="archive-title-tag title title-inverse ">saltstack</h1>
+</div>
+
+<div class="row page">
+  <!-- cols -->
+  
+  <div class="col-md-9">
+	
+
+	  <div id="top_search"></div>
+
+      
+         <!-- display as entry -->
+	     <div class="mypage">
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-09-14 </div>
+			<div class="article-title"><a href="/2017/09/14/salt-sls/" >saltstack(四)sls编写</a></div>
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>sls文件作为saltstack中重要的一环,是必须掌握的</p>
+<h1 id="入门篇"><a href="#入门篇" class="headerlink" title="入门篇"></a>入门篇</h1><p>放在入门篇的开始,带大家来了解一下sls的执行顺序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">salt &apos;minion1&apos; state.sls nginx.install</div></pre></td></tr></table></figure>
+<p>这是一个执行sls的命令,那么这个命令会读取那些文件呢?</p>
+<ol>
+<li>遍历saltstack配置文件里边的file_roots</li>
+<li>寻找file_roots 里边的nginx目录</li>
+<li>访问java目录下的nginx.sls</li>
+</ol>
+<p>上面命令执行时,指定了Java目录下的nginx.sls文件,而实际上有时候是可以不指定的,如:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">salt &apos;minion1&apos; state.sls java</div></pre></td></tr></table></figure>
+<p>这时候saltstack就会访问到java目录下的init.sls</p>
+<hr>
+<p>简单的sls编写:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">nginx_install:   # sls_id 不可重复</div><div class="line">  pkg.installed: # 模块方法</div><div class="line">    - pkgs:      # 参数</div><div class="line">      - nginx</div><div class="line"></div><div class="line">nginx_conf:</div><div class="line">  file.managed:</div><div class="line">    - name: /etc/nginx/nginx.conf</div><div class="line">    - source: salt://nginx.conf</div><div class="line">    - require:</div><div class="line">      - pkg: nginx_install</div></pre></td></tr></table></figure></p>
+<ul>
+<li>:与- 后需要空格</li>
+<li>salt:// 想当于master的file_roots目录</li>
+<li>多个 - 表示列表</li>
+<li>每一级缩进由2个空格组成,不能用Tab</li>
+</ul>
+<p>就这一个简单的sls就可以安装nginx,并把nginx.conf替换成预先写好的配置文件</p>
+<p>而再看一下这个:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">nginx:</div><div class="line">  pkg.installed:</div><div class="line"></div><div class="line">/etc/nginx/nginx.conf:</div><div class="line">  file.managed:</div><div class="line">    - source: salt://nginx.conf</div><div class="line">    - require:</div><div class="line">      - pkg: nginx_install</div></pre></td></tr></table></figure></p>
+<p>这次的代码对比上面, - pkgs 和 - names 的内容不见了,相反把sls_id 的名字分别改成了nginx<br>和/etc/nginx/nginx.conf</p>
+<p>这样写和上面的效果是一样的,当sls执行需要指定名字是,如果sls里边没有定义,那么默认会用sls_id的值</p>
+<p>至于更多的模块方法可以到官网去找到<a href="https://docs.saltstack.com/en/latest/contents.html" target="_blank" rel="external">saltstack官网</a></p>
+<h3 id="引入其他sls文件"><a href="#引入其他sls文件" class="headerlink" title="引入其他sls文件"></a>引入其他sls文件</h3><p>include 就像nginx一样,include表示包含某个文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">include:</div><div class="line">  - nginx.install</div><div class="line">  - nginx.config</div></pre></td></tr></table></figure>
+<p>这样我们就在文件中引入了nginx目录下的install.sls(sls忽略不写了)和nginx.config.sls文件了</p>
+<h3 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h3><p>经常会听到别人说sls执行时是无序的,那么我们怎么做才能使得sls安装我们预期来执行呢?</p>
+<ol>
+<li>include引入的文件会被先执行</li>
+<li>每个sls定义时可以定义order值,order值从小到大执行</li>
+<li>按照依赖关系执行</li>
+</ol>
+<p>下面看看order的用法,至于依赖关系,可以看回文章开始时的使用,分辨出require与require_in的作用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">nginx:</div><div class="line">  pkg:</div><div class="line">  - installed</div><div class="line">  - order: 1</div><div class="line"></div><div class="line">/etc/nginx/nginx.conf:</div><div class="line">  file.managed:</div><div class="line">    - source: salt://nginx.conf</div><div class="line">    - require:</div><div class="line">      - pkg: nginx_install</div><div class="line">    - order: 2</div></pre></td></tr></table></figure></p>
+<h1 id="进阶篇"><a href="#进阶篇" class="headerlink" title="进阶篇"></a>进阶篇</h1><p>在知道了更多的模块方法后,我们基本可以用sls来完成大部分事情,但这还不能满足我们,下面再来看看一些关于sls的小技巧</p>
+<h3 id="jinja"><a href="#jinja" class="headerlink" title="jinja"></a>jinja</h3><p>在sls的文件中,我们还可以使用用jinja语法来控制sls执行,或者配置文件等</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&#123;% if grins[os] == &apos;Centos&apos; %&#125;</div><div class="line"></div><div class="line">nginx:</div><div class="line">  pkg.installed:</div><div class="line"></div><div class="line">/etc/nginx/nginx.conf:</div><div class="line">  file.managed:</div><div class="line">    - source: salt://nginx.conf</div><div class="line">    - require:</div><div class="line">      - pkg: nginx_install</div><div class="line">&#123;% endif %&#125;</div></pre></td></tr></table></figure>
+<p>一个十分简单的例子,但这并不能说明jinja的强大,除了if还有set,for,marco等等,jinja的强大之处还需要大家独自去领悟</p>
+<h3 id="引用外部变量"><a href="#引用外部变量" class="headerlink" title="引用外部变量"></a>引用外部变量</h3><p>知道了jinja控制和引用变量之后也都不能满足与所有需求,有时候我们需要在执行时来定义变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">salt &apos;minion1&apos; state.sls nginx.install pillar=&apos;&#123;&quot;version&quot;:&quot;1.13.4&quot;&#125;&apos;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">nginx:</div><div class="line">  pkg.installed:</div><div class="line">&#123;% if pillar[&quot;version&quot;] %&#125;</div><div class="line">  - version: &#123;&#123; pillar[&quot;version&quot;] &#125;&#125;</div><div class="line">&#123;% endif %&#125;</div></pre></td></tr></table></figure>
+<p>当然我们并不会每次都在执行命令时附带参数,我们可以把pillar,grains的数据预先设定好.下面来看看如何引入其他变量</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;% set files = salt[&apos;cmd.run&apos;](&quot;ls /data&quot;,&quot;default&quot;) %&#125;</div><div class="line"></div><div class="line">echo_files_name:</div><div class="line">  cmd.run:</div><div class="line">    - names:</div><div class="line">&#123;% for file in files %&#125;</div><div class="line">      - echo &#123;&#123; file &#125;&#125;</div><div class="line">&#123;% endfor %&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>salt 固定写法</li>
+<li>[‘cmd.run’] 表示执行cmd.run方法</li>
+<li>ls /data 表示执行命令</li>
+<li>“default” 最后的空字符代表默认值</li>
+</ul>
+<p>这种方法可以执行大部分salt命令来获取返回值,然后传入到sls文件中执行</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>有时候由于编写的sls文件太大,想测试一下刚添加进去的功能需要执行很久.</p>
+<p>其实可以通过sls_id方法来执行sls文件内的某个方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">salt &apos;minion1&apos; state.sls_id nginx_install nginx.install</div></pre></td></tr></table></figure>
+<p>这时候saltstack只会执行nginx.install.sls里边的nginx_install,而不会执行其他,但是我们要注意它的依赖关系</p>
+<h3 id="配置文件管理"><a href="#配置文件管理" class="headerlink" title="配置文件管理"></a>配置文件管理</h3><p>在很多时候,我们需要统一管理配置文件,但是每台机器的配置信息又不一样,我们想根据每一台机的具体配置来定义应用的配置文件</p>
+<p>通过saltstack file模块管理的文件,其实也可以使用jinja来获取,定义变量的</p>
+<p>下面来看一份postgres配置,由于配置过长,删减了部分<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">listen_addresses = &apos;*&apos;</div><div class="line">max_connections = &#123;&#123; conn &#125;&#125;</div><div class="line">&#123;% if ((grains.mem_total|int) / 4)|round|int &lt;= 8096 -%&#125;</div><div class="line">shared_buffers = &#123;&#123; ((grains.mem_total|int) / 4)|round|int &#125;&#125;MB</div><div class="line">&#123;% else -%&#125;</div><div class="line">shared_buffers = 4GB</div><div class="line">&#123;% endif -%&#125;</div><div class="line">work_mem = &#123;&#123; ((grains.mem_total|int) / conn * 2) |round|int &#125;&#125;MB</div><div class="line">&#123;% if ((grains.mem_total|int) / 16)|round|int &lt;= 2048 -%&#125;</div><div class="line">maintenance_work_mem = &#123;&#123; ((grains.mem_total|int) / 16)|round|int &#125;&#125;MB</div><div class="line">&#123;% else -%&#125;</div><div class="line">maintenance_work_mem = 2GB</div><div class="line">&#123;% endif -%&#125;</div><div class="line">temp_buffers = &#123;&#123; ((grains.mem_total|int) / conn) |round|int &#125;&#125;MB</div><div class="line">checkpoint_completion_target = 0.9</div><div class="line">effective_cache_size = &#123;&#123; (((grains.mem_total|int) * 3) / 4)|round|int &#125;&#125;MB</div></pre></td></tr></table></figure></p>
+<p>可以看到,配置文件内大量使用了granis来读取机器的配置信息,从而动态生产配置文件,这样所有的服务器都可以共用一份配置文件.</p>
+
+	
+	</div>
+  <a type="button" href="/2017/09/14/salt-sls/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+	       
+	     </div>
+	     <div>
+	       <center>
+	         <div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
+
+        <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+
+		
+		   <li class="next"> <a href="/tags/saltstack/page/2/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
+        
+	
+</ul>
+</div>
+
+	       </center>
+	     </div>	
+      
+
+</div> <!-- col-md-9/col-md-12 -->
+
+
+<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
+
+		
+			
+	<div class="widget">
+		<h4>分类</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/django/">django</label></a></li>
+		
+			<li><a href="/categories/linux/">linux</label></a></li>
+		
+			<li><a href="/categories/python/">python</label></a></li>
+		
+			<li><a href="/categories/saltstack/">saltstack</label></a></li>
+		
+		</ul>
+	</div>
+
+
+		
+			
+	<div class="widget">
+		<h4>标签云</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/oop/">oop</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/django/">django</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/jinja/">jinja</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/redis/">redis</a></li>
+		
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>最新文章</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2017/09/21/jinja2/" ><i class="fa fa-file-o"></i>django中使用jinja2模板</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/14/salt-sls/" ><i class="fa fa-file-o"></i>saltstack(四)sls编写</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/salt-ssh/" ><i class="fa fa-file-o"></i>slatstack(三)salt-ssh批量安装min...</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/optimization/" ><i class="fa fa-file-o"></i>python之代码优化</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/async/" ><i class="fa fa-file-o"></i>python之异步编程</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>链接</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="fa fa-github"></i><a href="http://www.github.com/DearEirs" title="My Github account." target="_blank"]);">My Github</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 Dear
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

@@ -1,0 +1,347 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>闭包 | Dear&#39;s Blog</title>
+  <meta name="author" content="Dear">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="renderer" content="webkit">
+
+  
+  <meta property="og:site_name" content="Dear&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+
+  <!-- CSS -->
+  <!-- link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css" -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+  <!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  -->
+  <![endif]-->
+
+  <script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+  <meta name="baidu-site-verification" content="RXfcpfczu8" />
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Dear&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>目录
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于个人
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+<!-- title -->
+<div class="page-header page-header-inverse ">
+  <h1 class="archive-title-tag title title-inverse ">闭包</h1>
+</div>
+
+<div class="row page">
+  <!-- cols -->
+  
+  <div class="col-md-9">
+	
+
+	  <div id="top_search"></div>
+
+      
+         <!-- display as entry -->
+	     <div class="mypage">
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-09-12 </div>
+			<div class="article-title"><a href="/2017/09/12/func/" >python之函数、闭包</a></div>
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<h3 id="函数的意义"><a href="#函数的意义" class="headerlink" title="函数的意义"></a>函数的意义</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#函数是对单一相关操作的有组织的可重用代码的块的封装</span></div><div class="line"><span class="comment">#为应用程序提供更好的模块化以及提高代码的复用程度</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">(x, y, z)</span>:</span></div><div class="line">    <span class="keyword">return</span> x + y + z</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">()</span>:</span></div><div class="line">    x, y, z = <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span></div><div class="line">    <span class="keyword">return</span> x + y + z </div><div class="line"></div><div class="line">func1(x=<span class="number">1</span>,y=<span class="number">2</span>,z=<span class="number">3</span>)</div><div class="line">func2()</div><div class="line"></div><div class="line"><span class="comment"># 函数并不意味着对一段重复使用的代码进行封装 如func2,在x, y, z,不变的情况下这样使用好像不会出问题</span></div><div class="line"><span class="comment"># 但是我们要的不仅仅是这个,在有可能的情况下,应该尽可能地提高函数的自定义程度,</span></div><div class="line">如同func1，传到函数里边的可以是<span class="number">3</span>个str,<span class="number">3</span>个int,<span class="number">3</span>个list等等,让使用者来自己定义函数的输入</div></pre></td></tr></table></figure>
+<h3 id="定义和调用规则"><a href="#定义和调用规则" class="headerlink" title="定义和调用规则"></a>定义和调用规则</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_mail</span><span class="params">(sender, password, receiver,  message, subject=None, smtpserver=<span class="string">'qq.smtp.com'</span>)</span> -&gt; bool:</span></div><div class="line">    <span class="string">''' function send_mail</span></div><div class="line"><span class="string">    </span></div><div class="line"><span class="string">    :param sender: 发件人的邮箱地址</span></div><div class="line"><span class="string">    :type sender: str</span></div><div class="line"><span class="string">    </span></div><div class="line"><span class="string">    :param password: 发件人的邮箱密码</span></div><div class="line"><span class="string">    :type password: str</span></div><div class="line"><span class="string">    </span></div><div class="line"><span class="string">    :param receiver: 收件人的邮箱地址</span></div><div class="line"><span class="string">    :type receiver: list</span></div><div class="line"><span class="string">    </span></div><div class="line"><span class="string">    :param message: 邮件内容</span></div><div class="line"><span class="string">    :type message: str</span></div><div class="line"><span class="string">    </span></div><div class="line"><span class="string">    :param subject: 邮件标题</span></div><div class="line"><span class="string">    :type subject: str</span></div><div class="line"><span class="string">    </span></div><div class="line"><span class="string">    :param smtpserver: 邮件服务器, 默认为'qq.smtp.com'</span></div><div class="line"><span class="string">    :type smtpserver: str</span></div><div class="line"><span class="string">    </span></div><div class="line"><span class="string">    :return bool</span></div><div class="line"><span class="string">    '''</span></div><div class="line">    msg=MIMEText(message)</div><div class="line">    msg[<span class="string">'Subject'</span>]=subject</div><div class="line">    msg[<span class="string">'Form'</span>]=sender</div><div class="line">    msg[<span class="string">'To'</span>]=receiver</div><div class="line">    result = <span class="keyword">False</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">      smtp=SMTP()</div><div class="line">      smtp.connect(smtpserver)</div><div class="line">      smtp.login(sender,password)</div><div class="line">      smtp.sendmail(sender,receiver,msg.as_string())</div><div class="line">      smtp.close()</div><div class="line">      retult = <span class="keyword">True</span></div><div class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">      print(e)</div><div class="line">      result = <span class="keyword">False</span></div><div class="line">    <span class="keyword">return</span> result</div><div class="line"></div><div class="line">result = send_mail(<span class="string">'369574757@qq.com'</span>, <span class="string">'123456'</span>, [<span class="string">'369574757@qq.com'</span>], <span class="string">'Hello World'</span>)</div><div class="line">print(result)</div></pre></td></tr></table></figure>
+<ul>
+<li>定义函数  从def所在行开始 直至函数所在的最后1行</li>
+<li>函数注释： 函数里边第一个注释块 help()会返回函数的注释</li>
+<li>函数返回值： return 所返回的值(默认为None)</li>
+<li>调用函数: send_mail() | result = send_mail()</li>
+<li>接收返回值： result = send_mail()</li>
+<li>内置函数与自定义函数：</li>
+<li>send_mail()就是自定义函数</li>
+<li>内置函数–&gt;不需要用户自己定义就能调用的(list,dict,tuple等)</li>
+</ul>
+<h3 id="函数的传参方式-按绑定关系传递"><a href="#函数的传参方式-按绑定关系传递" class="headerlink" title="函数的传参方式 按绑定关系传递"></a>函数的传参方式 按绑定关系传递</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">str1 = <span class="string">"dear"</span></div><div class="line">list1 = []</div><div class="line"></div><div class="line">print(sys.getrefcount(list1)) -&gt; 2</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(s:str, l:list)</span>:</span></div><div class="line"></div><div class="line">  print(sys.getrefcount(list1)) -&gt; 5</div><div class="line">  print(sys.getrefcount(l)) -&gt; 5</div><div class="line">  print(id(l),l)</div><div class="line"></div><div class="line">  l.append(s)</div><div class="line">  print(id(l),l)</div><div class="line">  </div><div class="line">  print(id(s),s)</div><div class="line">  s += <span class="string">"Eirs"</span></div><div class="line">  print(id(s),s)</div><div class="line"></div><div class="line"><span class="comment"># 由sys.getrefcount(list1)统计得知在参数传递的过程中  只是把list1的绑定关系传递给l 相当于l = list1 </span></div><div class="line"><span class="comment"># 由于l.append(s)只是对[]进行修改,并没有改变l与[]的绑定关系  所以两次print出来的id 是一样的</span></div><div class="line"><span class="comment"># s += "Eirs" 把变量s重新指向了新的元素'dearEirs', 变量从绑定'dear' 变为绑定'dearEirs'所以值的内存地址变了</span></div></pre></td></tr></table></figure>
+<h3 id="传参的形式"><a href="#传参的形式" class="headerlink" title="传参的形式"></a>传参的形式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(a, b, c=<span class="number">6</span>, *args)</span>:</span></div><div class="line">  <span class="keyword">return</span> id(a),id(b),id(c)</div><div class="line">  </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(x, y, z)</span>:</span></div><div class="line">  <span class="keyword">return</span> x-y+z</div></pre></td></tr></table></figure>
+<ul>
+<li>必选参数: a, b   func(1, 2)</li>
+<li>可选参数（默认参数): c  func(1, 2) func(1, 2, 3)</li>
+<li>按位置传参: func(1,2,3)  在第一、二、三位的参数1,2,3分别对应着参数a, b, c</li>
+<li>关键字参数: func(a=1, b=2, c=3)</li>
+<li>可变长参数: func(1,2,3,4,’dear’),在a,b,c 都接收到参数后,其余参数传递给*args</li>
+</ul>
+<h3 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">lambda</span> x: x % <span class="number">2</span></div><div class="line"></div><div class="line">相当于</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(x)</span>:</span></div><div class="line">  <span class="keyword">return</span> x % <span class="number">2</span></div><div class="line"></div><div class="line"><span class="comment">#使用情景: 函数体可以用1条表达式就可以解决时</span></div></pre></td></tr></table></figure>
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"></div><div class="line">x = <span class="number">1</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> <span class="keyword">True</span>:</div><div class="line">  y = <span class="number">2</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</div><div class="line">  z = x+i</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(x,y,z)</span>:</span></div><div class="line">  total = x + y + z</div><div class="line">  print(total)</div><div class="line">  <span class="keyword">return</span> total</div><div class="line"></div><div class="line"><span class="comment">#print(total)</span></div><div class="line">total = func()</div><div class="line">print(total)</div></pre></td></tr></table></figure>
+<ul>
+<li>全局作用域：在当前py文件里都生效</li>
+<li>局部作用域：从函数或类的定义开始到该函数或类最后1行代码 为该函数或类的 局部作用域</li>
+<li>全局变量：定格定义的变量（包含定格的if while for try里边定义的变量），在全局生效,可用globals()查看</li>
+<li>局部变量：在函数或类里边所定义的变量，只在该函数或类中生效,可用locals()查看</li>
+</ul>
+<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">a = <span class="number">10000</span></div><div class="line">sys.getrefcount(a) -&gt; 2</div><div class="line"><span class="keyword">del</span> a</div><div class="line">sys.getrefcount(a) -&gt; 1</div><div class="line"><span class="comment">#变量a的生命周期结束,如果不del a   那么变量a将会一直存在 直至程序关闭</span></div><div class="line"></div><div class="line"><span class="comment">#函数的生命周期</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(x,y,z)</span>:</span></div><div class="line">  total = x + y + z</div><div class="line">  print(total)</div><div class="line">  <span class="keyword">return</span> total</div><div class="line">  </div><div class="line"><span class="comment">#从函数第一行开始 到函数 return 返回值 若没return则到函数代码里的最后1行执行结束  即为函数的生命周期</span></div><div class="line"></div><div class="line"><span class="comment">#对象的生命周期</span></div><div class="line">当对象被垃圾回收机制回收时,对象才会结束它的生命周期</div></pre></td></tr></table></figure>
+<h1 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h1><h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># sys.getrefcount() 统计变量所指向内存地址被引用的次数</span></div><div class="line">a = <span class="number">1000</span></div><div class="line">sys.getrefcount(a) -&gt; 2</div><div class="line"></div><div class="line">b = c  = a </div><div class="line">sys.getrefcount(a) -&gt; 4</div><div class="line">sys.getrefcount(b) -&gt; 4</div><div class="line">sys.getrefcount(c) -&gt; 4</div><div class="line"></div><div class="line"><span class="comment"># 每当有1个变量1000时  1000的引用计数就会加1  a, b, c, d,都指向着1000</span></div><div class="line"></div><div class="line"><span class="keyword">del</span> a </div><div class="line"></div><div class="line">sys.getrefcount(a) -&gt; 1</div><div class="line">sys.getrefcount(b) -&gt; 3</div><div class="line">sys.getrefcount(c) -&gt; 3</div><div class="line"></div><div class="line">当变量a被销毁时, <span class="number">1000</span>的引用次数就会减<span class="number">1</span></div></pre></td></tr></table></figure>
+<h3 id="分代收集"><a href="#分代收集" class="headerlink" title="分代收集"></a>分代收集</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># gc.get_count() 查看当前回收计数</span></div><div class="line"><span class="comment"># gc.get_threshold() 查看回收阈值 -&gt; (700, 10, 10)</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> gc</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></div><div class="line">  <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">()</span>:</span></div><div class="line">    i = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> i&lt;<span class="number">200</span>:</div><div class="line">      c1 = A()</div><div class="line">      c2 = A()</div><div class="line">      c1.t = c2</div><div class="line">      c2.t = c1</div><div class="line">      <span class="keyword">del</span> c1</div><div class="line">      <span class="keyword">del</span> c2</div><div class="line">      i += <span class="number">1</span></div><div class="line"></div><div class="line">gc.get_count()</div><div class="line">func1()</div><div class="line">gc.get_count()</div></pre></td></tr></table></figure>
+<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><ul>
+<li>前提1：嵌套函数</li>
+<li>前提2：内层函数引用非全局变量</li>
+<li>前提3：不改变外部变量的绑定关系</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">查看函数是不是闭包：</span></div><div class="line"><span class="string">2.7:func.func_closure  返回cell对象即为闭包  返回None即不是</span></div><div class="line"><span class="string">3.6:func.__closure__</span></div><div class="line"><span class="string">'''</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">()</span>:</span></div><div class="line">  dict1 = &#123;&#125;</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">(key,value)</span>:</span></div><div class="line">    dict1[key] = value</div><div class="line">    <span class="keyword">return</span> dict1</div><div class="line">  <span class="keyword">return</span> inner</div><div class="line"></div><div class="line">f1 = outer()</div><div class="line">print(f.__closure__) -&gt; (&lt;cell at 0x000002BEE0BC57C8: dict object at 0x000002BEE0FD5F78&gt;,)</div><div class="line">f1(<span class="string">'key1'</span>,<span class="string">'value1'</span>)</div><div class="line">f1('key2','value2') -&gt; &#123;'key1': 'value1', 'key2': 'value2'&#125;</div><div class="line"></div><div class="line">f2 = outer()</div><div class="line">f2(<span class="string">'key3'</span>,<span class="string">'value3'</span>)</div><div class="line">f2('key4','value4') -&gt; &#123;'key3': 'value3', 'key4': 'value4'&#125;</div><div class="line"></div><div class="line"><span class="comment"># 当外部函数被调用时，返回一个闭包 即f,f2</span></div><div class="line"><span class="comment"># 闭包 = 子函数 + 依赖的外部变量  子函数 inner 外部变量 dict1</span></div><div class="line"><span class="comment"># 闭包是一种特殊的函数</span></div><div class="line"><span class="comment"># 每调一次外部函数，返回一个新闭包 f f2 的互不干扰,是2个不一样的闭包 各自指向着不同的内存地址</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 匿名函数可不可以是闭包</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">()</span>:</span></div><div class="line">  dict1 = &#123;&#125;</div><div class="line">  l = <span class="keyword">lambda</span> key, value: dict1.update(&#123;key:value&#125;)</div><div class="line">  <span class="keyword">return</span> l</div><div class="line"></div><div class="line">f = outer()</div><div class="line">print(f.__closure__) -&gt; (&lt;cell at 0x00000230A4645798: dict object at 0x00000230A46E2168&gt;,)</div><div class="line"></div><div class="line"><span class="comment"># 匿名函数也可以是闭包</span></div></pre></td></tr></table></figure>
+
+	
+	</div>
+  <a type="button" href="/2017/09/12/func/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+	       
+	     </div>
+	     <div>
+	       <center>
+	         <div class="pagination">
+<ul class="pagination">
+	 
+</ul>
+</div>
+
+	       </center>
+	     </div>	
+      
+
+</div> <!-- col-md-9/col-md-12 -->
+
+
+<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
+
+		
+			
+	<div class="widget">
+		<h4>分类</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/django/">django</label></a></li>
+		
+			<li><a href="/categories/linux/">linux</label></a></li>
+		
+			<li><a href="/categories/python/">python</label></a></li>
+		
+			<li><a href="/categories/saltstack/">saltstack</label></a></li>
+		
+		</ul>
+	</div>
+
+
+		
+			
+	<div class="widget">
+		<h4>标签云</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/jinja/">jinja</a></li>
+		
+			<li><a href="/tags/django/">django</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/oop/">oop</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/redis/">redis</a></li>
+		
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>最新文章</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2017/09/21/jinja2/" ><i class="fa fa-file-o"></i>django中使用jinja2模板</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/14/salt-sls/" ><i class="fa fa-file-o"></i>saltstack(四)sls编写</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/salt-ssh/" ><i class="fa fa-file-o"></i>slatstack(三)salt-ssh批量安装min...</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/optimization/" ><i class="fa fa-file-o"></i>python之代码优化</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/async/" ><i class="fa fa-file-o"></i>python之异步编程</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>链接</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="fa fa-github"></i><a href="http://www.github.com/DearEirs" title="My Github account." target="_blank"]);">My Github</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 Dear
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

@@ -1,0 +1,337 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>salestack | Dear&#39;s Blog</title>
+  <meta name="author" content="Dear">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="renderer" content="webkit">
+
+  
+  <meta property="og:site_name" content="Dear&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+
+  <!-- CSS -->
+  <!-- link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css" -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+  <!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  -->
+  <![endif]-->
+
+  <script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+  <meta name="baidu-site-verification" content="RXfcpfczu8" />
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Dear&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>目录
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于个人
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+<!-- title -->
+<div class="page-header page-header-inverse ">
+  <h1 class="archive-title-category title title-inverse ">salestack</h1>
+</div>
+
+<div class="row page">
+  <!-- cols -->
+  
+  <div class="col-md-9">
+	
+
+	  <div id="top_search"></div>
+
+      
+         <!-- display as entry -->
+	     <div class="mypage">
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-09-12 </div>
+			<div class="article-title"><a href="/2017/09/12/salt-ssh/" >slatstack-(三)salt-ssh批量安装minion</a></div>
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>saltstack 对比 ansible</strong> </p>
+<blockquote>
+<p>最大的不同就是saltstack使用的是c/s架构,即要安装minion才能访问客户端,而ansible则是使用ssh协议访问.不得不说,有一部分人就是因为觉得saltstack需要安装客户端,感觉很麻烦而选用了ansible.那么下面来说说salt如何通过salt-ssh来安装minion</p>
+</blockquote>
+<h1 id="salt-ssh"><a href="#salt-ssh" class="headerlink" title="salt-ssh"></a>salt-ssh</h1><p>salt-ssh 并没有包含在salt-master中,所以需要单独安装<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install salt-ssh</div></pre></td></tr></table></figure></p>
+<h3 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h3><p>salt-ssh 使用的前提条件就是roster,只有配置了roster文件后才能使用salt-ssh对机器进行操作</p>
+<p>下面来看一个roster文件的配置<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">test1:</div><div class="line"> host: 192.168.1.101</div><div class="line"> user: salt</div><div class="line"> passwd: redhat</div><div class="line"> minion_opts:</div><div class="line">   - id: test1</div></pre></td></tr></table></figure></p>
+<p>第1行test1: 表示该机器被salt-ssh识别到的id<br>第2-4行host: 指定机器的IP地址,用户,密码,用于ssh连接<br>第5行minion_opts: 表示执行命令时传递的参数</p>
+<p><strong>如果客户端IP没有在master的known_hosts文件中,需要先添加上去</strong></p>
+<p>测试连接是否成功<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">salt-ssh -i 'test1' test.ping</div></pre></td></tr></table></figure></p>
+<h3 id="编写安装minion的sls"><a href="#编写安装minion的sls" class="headerlink" title="编写安装minion的sls"></a>编写安装minion的sls</h3><p>既然已经连接上客户端,那么只需要在客户端上装上minion并启动就好了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>同步yum的repo</div><div class="line">minion_yum:</div><div class="line">  file.recurse:</div><div class="line">    - name: /etc/yum.repos.d</div><div class="line">    - source: salt://minions/yum.repos.d ##提前准备的yum文件路径</div><div class="line">    - user: root</div><div class="line">    - group: root</div><div class="line">    - file_mode: 644</div><div class="line">    - dir_mode: 755</div><div class="line">    - include_empty: True</div><div class="line">    - unless: test -e /etc/yum.repos.d/epel_aliyun.repo</div><div class="line"></div><div class="line"><span class="meta">#</span>安装minion</div><div class="line">minion_install:</div><div class="line">  pkg.installed:</div><div class="line">    - pkgs:</div><div class="line">      - salt-minion</div><div class="line">    - skip_verify: True</div><div class="line">    - require:</div><div class="line">      - file: minion_yum</div><div class="line">    - unless: rpm -qa | grep salt-minion</div><div class="line"></div><div class="line"><span class="meta">#</span>同步minion的配置文件</div><div class="line">minion_conf:</div><div class="line">  file.managed:</div><div class="line">    - name: /etc/salt/minion</div><div class="line">    - source: salt://minions/minion.conf  ##minion端需要配置的minion主配置文件</div><div class="line">    - user: root</div><div class="line">    - group: root</div><div class="line">    - mode: 640</div><div class="line">    - template: jinja</div><div class="line">    - defaults:</div><div class="line">       minion_id: &#123;&#123; grains['id'] &#125;&#125;</div><div class="line">    - require:</div><div class="line">      - pkg: minion_install</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#</span>启动minion</div><div class="line">minion_service:</div><div class="line">  service.running:</div><div class="line">    - name: salt-minion</div><div class="line">    - enable: True</div><div class="line">    - require:</div><div class="line">      - file: minion_conf</div></pre></td></tr></table></figure>
+<p><strong>文件需要自行准备,并放到salt root目录下</strong></p>
+<p>minion的主要配置,其他可以自行修改<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">id: &#123;&#123; minion_id &#125;&#125; </div><div class="line">master: 192.168.1.100</div></pre></td></tr></table></figure></p>
+<blockquote>
+<p>执行完sls后,就可以到master上通过salt-key 直接添加minion进行管理</p>
+</blockquote>
+<h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><ol>
+<li>通过kickstart批量安装centos</li>
+<li>通过Python脚本批量修改服务器IP</li>
+<li>master批量插入主机信息到roster</li>
+<li>salt-ssh 安装minion 进行管理</li>
+</ol>
+<h3 id="kickstart批量安装centos"><a href="#kickstart批量安装centos" class="headerlink" title="kickstart批量安装centos"></a>kickstart批量安装centos</h3><ol>
+<li><a href="http://www.cnblogs.com/mchina/p/centos-pxe-kickstart-auto-install-os.html" target="_blank" rel="external">安装</a></li>
+<li><a href="http://www.cnphp.info/quick-install-centos-6-0-with-kickstart.html" target="_blank" rel="external">配置脚本</a></li>
+</ol>
+<h3 id="批量插入主机信息到roster"><a href="#批量插入主机信息到roster" class="headerlink" title="批量插入主机信息到roster"></a>批量插入主机信息到roster</h3><p>为了更加方便,所以配置kickstart时,网络可以选择是dhcp模式,这样安装完系统之后就可以上网</p>
+<p>master端<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> json</div><div class="line"><span class="keyword">from</span> http.server <span class="keyword">import</span> BaseHTTPRequestHandler, HTTPServer</div><div class="line"></div><div class="line">template = <span class="string">'''</span></div><div class="line"><span class="string">&#123;id&#125;:</span></div><div class="line"><span class="string">  host: &#123;ip&#125;</span></div><div class="line"><span class="string">  user: root</span></div><div class="line"><span class="string">  passwd: password</span></div><div class="line"><span class="string">  minion_opts:</span></div><div class="line"><span class="string">    - id: &#123;id&#125;</span></div><div class="line"><span class="string">'''</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RequestHandler</span><span class="params">(BaseHTTPRequestHandler)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_POST</span><span class="params">(self)</span>:</span></div><div class="line">        response = self.rfile.read(int(self.headers[<span class="string">'content-length'</span>]))</div><div class="line">        self.send_response(<span class="number">200</span>)</div><div class="line">        self.send_header(<span class="string">'Content-Type'</span>, <span class="string">'application/json'</span>)</div><div class="line">        self.end_headers()</div><div class="line">        self.data_parse(response)</div><div class="line">        self.do_insert(self.data)</div><div class="line">        result = (<span class="string">'data: %s, send OK\n'</span> % response).encode(<span class="string">'ascii'</span>)</div><div class="line">        self.wfile.write(result)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_insert</span><span class="params">(self, data)</span>:</span></div><div class="line">        <span class="keyword">with</span> open(<span class="string">r'/etc/salt/roster'</span>, <span class="string">'a'</span>) <span class="keyword">as</span> f:</div><div class="line">            f.write(data + <span class="string">'\n'</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">data_parse</span><span class="params">(self, data)</span>:</span></div><div class="line">        print(data)</div><div class="line">        data = json.loads(data.decode(<span class="string">'utf-8'</span>))</div><div class="line">        print(data)</div><div class="line">        self.data = template.format(id=data[<span class="string">'id'</span>], ip=data[<span class="string">'ip'</span>])</div><div class="line">        print(self.data)</div><div class="line">        <span class="keyword">return</span> self.data</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    server_address = (<span class="string">''</span>, <span class="number">8099</span>)</div><div class="line">    httpd = HTTPServer(server_address, RequestHandler)</div><div class="line">    httpd.serve_forever()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure></p>
+<p>minion端<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ip=`ifconfig | grep <span class="string">'inet'</span> |grep -v <span class="string">'127.0.0.1'</span>|grep -v inet6 | sed <span class="string">'s/^[ \t]*//g'</span>|cut -d<span class="string">" "</span> -f2`</div><div class="line">hostname=`hostname`</div><div class="line">data=&#123;<span class="string">"id"</span>:<span class="string">"$hostname"</span>, <span class="string">"ip"</span>:$ip&#125;</div><div class="line">curl -X POST -d <span class="string">'&#123;"id":"'</span>$hostname<span class="string">'", "ip":"'</span>$ip<span class="string">'"&#125;'</span> <span class="string">"http://127.0.0.1:8099"</span></div></pre></td></tr></table></figure></p>
+
+	
+	</div>
+  <a type="button" href="/2017/09/12/salt-ssh/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+	       
+	     </div>
+	     <div>
+	       <center>
+	         <div class="pagination">
+<ul class="pagination">
+	 
+</ul>
+</div>
+
+	       </center>
+	     </div>	
+      
+
+</div> <!-- col-md-9/col-md-12 -->
+
+
+<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
+
+		
+			
+	<div class="widget">
+		<h4>分类</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/linux/">linux</label></a></li>
+		
+			<li><a href="/categories/python/">python</label></a></li>
+		
+			<li><a href="/categories/salestack/">salestack</label></a></li>
+		
+			<li><a href="/categories/saltstack/">saltstack</label></a></li>
+		
+		</ul>
+	</div>
+
+
+		
+			
+	<div class="widget">
+		<h4>标签云</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/tags/python-oop/">python, oop</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/django/">django</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/redis/">redis</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>最新文章</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2017/09/12/salt-ssh/" ><i class="fa fa-file-o"></i>slatstack-(三)salt-ssh批量安装mi...</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/optimization/" ><i class="fa fa-file-o"></i>python之代码优化</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/async/" ><i class="fa fa-file-o"></i>python之异步编程</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/func/" ><i class="fa fa-file-o"></i>python之函数、闭包</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/oop/" ><i class="fa fa-file-o"></i>python之面向对象编程</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>链接</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="fa fa-github"></i><a href="http://www.github.com/DearEirs" title="My Github account." target="_blank"]);">My Github</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 Dear
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

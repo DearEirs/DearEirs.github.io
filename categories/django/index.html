@@ -1,0 +1,321 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>django | Dear&#39;s Blog</title>
+  <meta name="author" content="Dear">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="renderer" content="webkit">
+
+  
+  <meta property="og:site_name" content="Dear&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+
+  <!-- CSS -->
+  <!-- link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css" -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+  <!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  -->
+  <![endif]-->
+
+  <script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+  <meta name="baidu-site-verification" content="RXfcpfczu8" />
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Dear&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>目录
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于个人
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+<!-- title -->
+<div class="page-header page-header-inverse ">
+  <h1 class="archive-title-category title title-inverse ">django</h1>
+</div>
+
+<div class="row page">
+  <!-- cols -->
+  
+  <div class="col-md-9">
+	
+
+	  <div id="top_search"></div>
+
+      
+         <!-- display as entry -->
+	     <div class="mypage">
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-09-21 </div>
+			<div class="article-title"><a href="/2017/09/21/jinja2/" >django中使用jinja2模板</a></div>
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<ol>
+<li>添加env.py文件</li>
+<li>添加backend.py文件</li>
+<li>修改setting.py配置</li>
+</ol>
+<blockquote>
+<p>env.py文件与backend.py文件添加到app目录下即可</p>
+</blockquote>
+<hr>
+<h3 id="env-py"><a href="#env-py" class="headerlink" title="env.py"></a>env.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">from django.contrib.staticfiles.storage import staticfiles_storage</div><div class="line">from django.urls import reverse</div><div class="line"></div><div class="line">from jinja2 import Environment</div><div class="line"></div><div class="line"></div><div class="line">def environment(**options):</div><div class="line">    env = Environment(**options)</div><div class="line">    env.globals.update(&#123;</div><div class="line">        &apos;static&apos;: staticfiles_storage.url,</div><div class="line">        &apos;url&apos;: reverse,</div><div class="line">    &#125;)</div><div class="line">    return env</div></pre></td></tr></table></figure>
+<h3 id="backend-py"><a href="#backend-py" class="headerlink" title="backend.py"></a>backend.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">import sys</div><div class="line"></div><div class="line">from django.template.backends import jinja2 as jinja2backend</div><div class="line">from django.template.backends.utils import csrf_input_lazy, csrf_token_lazy</div><div class="line">from django.template import TemplateDoesNotExist, TemplateSyntaxError</div><div class="line">from django.utils.module_loading import import_string</div><div class="line">import jinja2</div><div class="line">import six</div><div class="line"></div><div class="line"></div><div class="line"># Original link:</div><div class="line"># https://code.djangoproject.com/attachment/ticket/24694/24694.py</div><div class="line">__author__ = &apos;carljm&apos;</div><div class="line"></div><div class="line"></div><div class="line">class Jinja2Backend(jinja2backend.Jinja2):</div><div class="line">    def __init__(self, params):</div><div class="line">        self.context_processors = [</div><div class="line">            import_string(p)</div><div class="line">            for p in params[&apos;OPTIONS&apos;].pop(&apos;context_processors&apos;, [])</div><div class="line">        ]</div><div class="line">        super(Jinja2Backend, self).__init__(params)</div><div class="line"></div><div class="line">    def from_string(self, template_code):</div><div class="line">        return Template(</div><div class="line">            self.env.from_string(template_code), self.context_processors)</div><div class="line"></div><div class="line">    def get_template(self, template_name):</div><div class="line">        try:</div><div class="line">            return Template(</div><div class="line">                self.env.get_template(template_name), self.context_processors)</div><div class="line">        except jinja2.TemplateNotFound as exc:</div><div class="line">            six.reraise(TemplateDoesNotExist, TemplateDoesNotExist(exc.args),</div><div class="line">                        sys.exc_info()[2])</div><div class="line">        except jinja2.TemplateSyntaxError as exc:</div><div class="line">            six.reraise(TemplateSyntaxError, TemplateSyntaxError(exc.args),</div><div class="line">                        sys.exc_info()[2])</div><div class="line"></div><div class="line"></div><div class="line">class Template(jinja2backend.Template):</div><div class="line"></div><div class="line">    def __init__(self, template, context_processors):</div><div class="line">        self.template = template</div><div class="line">        self.context_processors = context_processors</div><div class="line"></div><div class="line">    def render(self, context=None, request=None):</div><div class="line">        if context is None:</div><div class="line">            context = &#123;&#125;</div><div class="line">        if request is not None:</div><div class="line">            context[&apos;request&apos;] = request</div><div class="line">            lazy_csrf_input = csrf_input_lazy(request)</div><div class="line">            context[&apos;csrf&apos;] = lambda: lazy_csrf_input</div><div class="line">            context[&apos;csrf_input&apos;] = lazy_csrf_input</div><div class="line">            context[&apos;csrf_token&apos;] = csrf_token_lazy(request)</div><div class="line">            for cp in self.context_processors:</div><div class="line">                context.update(cp(request))</div><div class="line">            print(context)</div><div class="line">        return self.template.render(context)</div></pre></td></tr></table></figure>
+<h3 id="settings-py"><a href="#settings-py" class="headerlink" title="settings.py"></a>settings.py</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">TEMPLATES = [ </div><div class="line">      &#123;   </div><div class="line">          &apos;BACKEND&apos;: &apos;django.template.backends.jinja2.Jinja2&apos;,</div><div class="line">          &apos;DIRS&apos;: [os.path.join(BASE_DIR, &apos;templates&apos;)],</div><div class="line">          &apos;APP_DIRS&apos;: True,</div><div class="line">          &apos;OPTIONS&apos;: &#123;</div><div class="line">              &apos;context_processors&apos;: [</div><div class="line">                  &apos;django.template.context_processors.debug&apos;,</div><div class="line">                  &apos;django.template.context_processors.request&apos;,</div><div class="line">                  &apos;django.contrib.auth.context_processors.auth&apos;,</div><div class="line">                  &apos;django.contrib.messages.context_processors.messages&apos;,</div><div class="line">                  &apos;yourappname.env.environment&apos;,</div><div class="line">              ],  </div><div class="line">          &#125;,  </div><div class="line">      &#125;,  </div><div class="line">]</div></pre></td></tr></table></figure>
+
+	
+	</div>
+  <a type="button" href="/2017/09/21/jinja2/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+	       
+	     </div>
+	     <div>
+	       <center>
+	         <div class="pagination">
+<ul class="pagination">
+	 
+</ul>
+</div>
+
+	       </center>
+	     </div>	
+      
+
+</div> <!-- col-md-9/col-md-12 -->
+
+
+<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
+
+		
+			
+	<div class="widget">
+		<h4>分类</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/django/">django</label></a></li>
+		
+			<li><a href="/categories/linux/">linux</label></a></li>
+		
+			<li><a href="/categories/python/">python</label></a></li>
+		
+			<li><a href="/categories/saltstack/">saltstack</label></a></li>
+		
+		</ul>
+	</div>
+
+
+		
+			
+	<div class="widget">
+		<h4>标签云</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/redis/">redis</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+			<li><a href="/tags/oop/">oop</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/django/">django</a></li>
+		
+			<li><a href="/tags/jinja/">jinja</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>最新文章</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2017/09/21/jinja2/" ><i class="fa fa-file-o"></i>django中使用jinja2模板</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/14/salt-sls/" ><i class="fa fa-file-o"></i>saltstack(四)sls编写</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/salt-ssh/" ><i class="fa fa-file-o"></i>slatstack(三)salt-ssh批量安装min...</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/optimization/" ><i class="fa fa-file-o"></i>python之代码优化</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/async/" ><i class="fa fa-file-o"></i>python之异步编程</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>链接</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="fa fa-github"></i><a href="http://www.github.com/DearEirs" title="My Github account." target="_blank"]);">My Github</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 Dear
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

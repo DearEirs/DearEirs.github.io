@@ -1,0 +1,358 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>第 2 页 | python | Dear&#39;s Blog</title>
+  <meta name="author" content="Dear">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="renderer" content="webkit">
+
+  
+  <meta property="og:site_name" content="Dear&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+
+  <!-- CSS -->
+  <!-- link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css" -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+  <!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  -->
+  <![endif]-->
+
+  <script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+  <meta name="baidu-site-verification" content="RXfcpfczu8" />
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Dear&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>目录
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于个人
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+<!-- title -->
+<div class="page-header page-header-inverse ">
+  <h1 class="archive-title-tag title title-inverse ">python</h1>
+</div>
+
+<div class="row page">
+  <!-- cols -->
+  
+  <div class="col-md-9">
+	
+
+	  <div id="top_search"></div>
+
+      
+         <!-- display as entry -->
+	     <div class="mypage">
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-09-12 </div>
+			<div class="article-title"><a href="/2017/09/12/async/" >python之异步编程</a></div>
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="线-进程池"><a href="#线-进程池" class="headerlink" title="线/进程池"></a>线/进程池</h1><p>python 3.2开始在标准库中新增了concurrent.futures模块,它主要提供了’ProcessPoolExecutor’, ‘ThreadPoolExecutor’ 两个类,提供了线/进程池的支持</p>
+<p>它们的使用方法相同:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> ProcessPoolExecutor(max_workers) <span class="keyword">as</span> pool:</div><div class="line">    pool.submit(task, args) <span class="comment"># 返回Future对象</span></div><div class="line">    pool.running() <span class="comment"># 判断task是否在运行</span></div><div class="line">    pool.done() <span class="comment"># 判断task是否执行完成</span></div><div class="line">    pool.result() <span class="comment"># 获取task的返回值 (阻塞)</span></div><div class="line">    pool.map(task, iterable) <span class="comment"># 迭代iterable,并当作参数传到task执行(有序)</span></div></pre></td></tr></table></figure></p>
+<ol>
+<li>pool.submit 会返回Future对象</li>
+<li>Future:可以简单理解为是未来将会完成的操作</li>
+<li>异步编程就是把需要等待的操作变成future,而释放CPU去执行其它代码</li>
+</ol>
+<h1 id="初涉异步"><a href="#初涉异步" class="headerlink" title="初涉异步"></a>初涉异步</h1><h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><ul>
+<li>阻塞:程序在等待某个操作完成期间，自身无法继续干别的事情，则称该程序在该操作上是阻塞的。</li>
+<li>非阻塞:程序在等待某操作过程中，自身不被阻塞，可以继续运行干别的事情，则称该程序在该操作上是非阻塞的。</li>
+<li>同步:不同程序单元为了完成某个任务，在执行过程中需靠某种通信方式以协调一致，称这些程序单元是同步执行的。</li>
+<li>异常:为完成某个任务，不同程序单元之间过程中无需通信协调，也能完成任务的方式。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor, ProcessPoolExecutor</div><div class="line"></div><div class="line"></div><div class="line">urls = [</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642780.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642781.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642782.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642783.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642784.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642785.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642786.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642787.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642788.html'</span>,</div><div class="line">]</div><div class="line"></div><div class="line">domain = <span class="string">'duanwenxue.com'</span></div><div class="line"></div><div class="line"><span class="comment"># 同步阻塞</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">blocking_way</span><span class="params">(url)</span>:</span></div><div class="line">    sock = socket.socket()</div><div class="line">    sock.connect((domain, <span class="number">80</span>))</div><div class="line">    request = <span class="string">'GET &#123;0&#125; HTTP/1.0\r\nHost: &#123;1&#125;\r\n\r\n'</span>.format(url, domain)</div><div class="line">    sock.send(request.encode(<span class="string">'ascii'</span>))</div><div class="line">    response = <span class="string">b''</span></div><div class="line">    block = sock.recv(<span class="number">4096</span>)</div><div class="line">    <span class="keyword">while</span> block:</div><div class="line">        response += block</div><div class="line">        block = sock.recv(<span class="number">4096</span>)</div><div class="line">    <span class="keyword">return</span> response</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">asyn_way</span><span class="params">()</span>:</span></div><div class="line">    start = time.time()</div><div class="line">    response = []</div><div class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</div><div class="line">        response.append(blocking_way(url))</div><div class="line">    <span class="comment"># use 1.8566324710845947</span></div><div class="line">    print(time.time() - start)</div><div class="line">    <span class="keyword">return</span> response</div></pre></td></tr></table></figure>
+<p>因为socket需要3次握手成功才能建立起连接,而3次握手的过程中,需要通过网络来传递信息,这需要的时间是不确定的,socket连接是会一直阻塞进程,直至3次握手成功,才继续执行下面的代码.<br>但是,如果对方服务器出现网络问题,而无法握手成功,那么socket就会一直阻塞,直至timeout,即使网络通畅,socket连接仍然需要不短时间<br>这时程序处理请求需要很长时间,假如处理1个请求要1秒,那么处理10个请求就需要10秒</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 多进程</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">multiproc_way</span><span class="params">()</span>:</span></div><div class="line">    start = time.time()</div><div class="line">    <span class="keyword">with</span> ProcessPoolExecutor(<span class="number">10</span>) <span class="keyword">as</span> executor:</div><div class="line">        proc_pool = &#123;executor.submit(blocking_way, url) <span class="keyword">for</span> url <span class="keyword">in</span> urls&#125;</div><div class="line">    <span class="comment"># use 0.6353843212127686</span></div><div class="line">    result = [proc.result() <span class="keyword">for</span> proc <span class="keyword">in</span> proc_pool]</div><div class="line">    print(time.time() - start)</div><div class="line">    <span class="keyword">return</span> proc_pool</div></pre></td></tr></table></figure>
+<p>多进程的使用使用,使得处理时间大幅度降低,利用多核CPU的资源,使得多个进程并行,从而加快程序处理速度, 但是这样做的代价就是需要消耗更多的资源.<br>下面来看多线程:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 多线程</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">multithread_way</span><span class="params">()</span>:</span></div><div class="line">    start = time.time()</div><div class="line">    <span class="keyword">with</span> ThreadPoolExecutor(<span class="number">10</span>) <span class="keyword">as</span> executor:</div><div class="line">        thread_pool = &#123;executor.submit(blocking_way, url) <span class="keyword">for</span> url <span class="keyword">in</span> urls&#125;</div><div class="line">    <span class="comment"># use 0.5409300327301025</span></div><div class="line">    result = [proc.result() <span class="keyword">for</span> proc <span class="keyword">in</span> thread_pool]</div><div class="line">    print(time.time() - start)</div></pre></td></tr></table></figure></p>
+<p>多线程执行时,其实每个线程还是阻塞的,<br>python中,由于有GIL的存在,多个线程之间实际上是不能在同一个时间并行的<br>多个线程中,其实每个线程还是阻塞的,只不过每个线程执行指定的指令数或者指定的时间就会释放GIL锁,让其他线程继续执行<br>实际运行的只有获取到GIL锁的那个线程,而当线程中遇到需要等待的操作时,切换到其他线程中继续执行代码,无形中就会减少代码的运行时间</p>
+<hr>
+<p>下面来看看非阻塞方式<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 非阻塞方式</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">nonbroking_way</span><span class="params">()</span>:</span></div><div class="line">    sock = socket.socket()</div><div class="line">    sock.setblocking(<span class="keyword">False</span>)</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        sock.connect((<span class="string">"www.duanwenxue.com"</span>, <span class="number">80</span>))</div><div class="line">    <span class="keyword">except</span> BlockingIOError:</div><div class="line">        <span class="keyword">pass</span></div><div class="line">    request = <span class="string">'GET &#123;0&#125; HTTP/1.0\r\nHost: &#123;1&#125;\r\n\r\n'</span>.format(url, domain)</div><div class="line">    data = request.encode(<span class="string">'ascii'</span>)</div><div class="line">    While <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            sock.send(data)</div><div class="line">            <span class="keyword">break</span></div><div class="line">        <span class="keyword">except</span> OSError:</div><div class="line">            <span class="keyword">pass</span></div><div class="line"></div><div class="line">    response = <span class="string">b''</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            chunk = sock.recv(<span class="number">4096</span>)</div><div class="line">            <span class="keyword">while</span> chunk:</div><div class="line">                response += chunk</div><div class="line">                chunk = sock.recv(<span class="number">4096</span>)</div><div class="line">            <span class="keyword">break</span></div><div class="line">        <span class="keyword">except</span> OSError:</div><div class="line">            <span class="keyword">pass</span></div><div class="line">        <span class="keyword">return</span> response</div></pre></td></tr></table></figure></p>
+<p>sock.setblocking(False) 把socket设置为非阻塞模式,那么socket 执行connect, recv等操作时是不会阻塞程序的<br>但是问题随之而来socket 执行完connect后再执行send操作,send的时候如何才能知道socket的连接已经成功建立了呢？<br>这时就需要不断循环去尝试,直至连接建立,并发送请求后,才继续执行下面的代码,而recv时也是同理.</p>
+<p>这样看起来,程序更加复杂,而且效率也没有得到提升,因为socket虽然是非阻塞的,但是代码中在send,recv时还是需要等待上一步的操作完成时才能执行<br>那么如果有一个人可以在socket建立完成时来通知程序,可以执行send操作了,那样在等待socket建立的过程中,CPU就可以去干其他的事情了.<br>简单的例子:周末去吃饭,但是餐厅人很多,需要等位,这时候如果你一直在这里等,你就不能走开去干其他事情,直至吃完饭之后.<br>那么如果你把电话号码留给服务员,让他在轮到你的时候给你电话,让你过来吃饭,那么在等待电话到来之前,你可以去干你想干的事情.</p>
+<ul>
+<li>epoll:提供了专门的系统模块让应用程序可以接收事件通知(把电话号码留给服务员)</li>
+<li>callback:在知道I/O状态发生改变后所需要执行的操作(服务员打电话通知可以过去吃饭)<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">from</span> selectors <span class="keyword">import</span> DefaultSelector, EVENT_WRITE, EVENT_READ</div><div class="line"></div><div class="line">selector = DefaultSelector()</div><div class="line">stopped = <span class="keyword">False</span> </div><div class="line">urls_todo = [<span class="string">'/'</span>, <span class="string">'/1'</span>, <span class="string">'/2'</span>, <span class="string">'/3'</span>, <span class="string">'/4'</span>, <span class="string">'/5'</span>, <span class="string">'/6'</span>, <span class="string">'/7'</span>, <span class="string">'/8'</span>, <span class="string">'/9'</span>]</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Crawler</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, url)</span>:</span></div><div class="line">        self.url = url</div><div class="line">        self.sock = <span class="keyword">None</span></div><div class="line">        self.response = <span class="string">b''</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fetch</span><span class="params">(self)</span>:</span></div><div class="line">        self.sock = socket.socket()</div><div class="line">        self.sock.setblocking(<span class="keyword">False</span>)</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            self.sock.connect((<span class="string">'www.baidu.com'</span>, <span class="number">80</span>))</div><div class="line">        <span class="keyword">except</span> BlockingIOError:</div><div class="line">            <span class="keyword">pass</span></div><div class="line">        selector.register(self.sock.fileno(), EVENT_WRITE, self.connected)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connected</span><span class="params">(self, key, mask)</span>:</span></div><div class="line">        selector.unregister(key.fd)</div><div class="line">        get = <span class="string">'GET &#123;0&#125; HTTP/1.0\r\nHost: www.baidu.com\r\n\r\n'</span>.format(self.url)</div><div class="line">        self.sock.send(get.encode(<span class="string">'ascii'</span>))</div><div class="line">        selector.register(key.fd, EVENT_READ, self.read_response)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">read_response</span><span class="params">(self, key, mask)</span>:</span></div><div class="line">        <span class="keyword">global</span> stopped</div><div class="line">        chunk = self.sock.recv(<span class="number">4096</span>)</div><div class="line">        <span class="keyword">if</span> chunk:</div><div class="line">            self.response += chunk</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            selector.unregister(key.fd)</div><div class="line">            urls_todo.remove(self.url)</div><div class="line">            <span class="keyword">if</span> <span class="keyword">not</span> urls_todo:</div><div class="line">                stopped = <span class="keyword">True</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">loop</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">not</span> stopped:</div><div class="line">        events = selector.select()</div><div class="line">        <span class="keyword">for</span> event_key, event_mask <span class="keyword">in</span> events:</div><div class="line">            callback = event_key.data</div><div class="line">            callback(event_key, event_mask)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="keyword">import</span> time</div><div class="line">    start = time.time()</div><div class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls_todo:</div><div class="line">        crawl = Crawler(<span class="string">'url'</span>)</div><div class="line">        crawl.fetch()</div><div class="line">    loop()</div><div class="line">    print(time.time() - start)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>register(fileobj, events, data=None) </p>
+<ul>
+<li>fileobj:可以是文件描述符也可以是文件对象</li>
+<li>events:位掩码，指明发生的是什么事件</li>
+<li>data:与指定文件与指定事件绑定在一起的数据</li>
+</ul>
+<p>selector.register 在该socket的写事件上绑定了回调函数connected.在该socket上第一次发生的写事件意味着连接的建立后会调用connected函数</p>
+<p>而connected函数在连接建立成功后再解除了该socket上所有绑定的数据。</p>
+<p>在connect函数中同样也用selector.register 绑定了read_response函数,当socket发生可读事件(即服务器已经返回数据)时调用read_response函数.</p>
+<p>这些事件触发后,我们就要执行回调了,我们可以用selector.select()来获取所触发的事件,当没有事件被触发时selector.select()会阻塞,直至事件触发.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">from</span> selectors <span class="keyword">import</span> DefaultSelector, EVENT_READ</div><div class="line"></div><div class="line">selector = DefaultSelector()</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Chat</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, host, port, max_clients)</span>:</span></div><div class="line">        self.clients = []</div><div class="line">        self.host = host</div><div class="line">        self.port = port</div><div class="line">        self.stoped = <span class="keyword">False</span></div><div class="line">        self.max_clients = max_clients</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        self.sock = socket.socket()</div><div class="line">        self.sock.bind((self.host, self.port))</div><div class="line">        self.sock.listen(self.max_clients)</div><div class="line">        self.sock.setblocking(<span class="keyword">False</span>)</div><div class="line">        selector.register(self.sock, EVENT_READ, self.accept)</div><div class="line">        self.loop()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">accept</span><span class="params">(self, key, mask)</span>:</span></div><div class="line">        print(<span class="string">'accept'</span>)</div><div class="line">        conn, addr = self.sock.accept()</div><div class="line">        self.clients.append(addr)</div><div class="line">        conn.setblocking(<span class="keyword">False</span>)</div><div class="line">        selector.register(conn, EVENT_READ, self.handle)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span><span class="params">(self, key, mask)</span>:</span></div><div class="line">        selector.unregister(key.fd)</div><div class="line">        print(<span class="string">'send'</span>)</div><div class="line">        conn = key.fileobj</div><div class="line">        print(conn.getpeername())</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            data = conn.recv(<span class="number">4096</span>)</div><div class="line">        <span class="keyword">except</span> BlockingIOError:</div><div class="line">            <span class="keyword">pass</span></div><div class="line">        <span class="keyword">if</span> data:</div><div class="line">            <span class="keyword">for</span> client <span class="keyword">in</span> self.clients:</div><div class="line">                <span class="keyword">if</span> client != conn.getpeername():</div><div class="line">                    self.sock.sendto(data, client)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">loop</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">while</span> <span class="keyword">not</span> self.stoped:</div><div class="line">            events = selector.select()</div><div class="line">            <span class="keyword">for</span> event_key, event_mask <span class="keyword">in</span> events:</div><div class="line">                callback = event_key.data</div><div class="line">                callback(event_key, event_mask)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">stop</span><span class="params">(self)</span>:</span></div><div class="line">        self.stoped = <span class="keyword">True</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    chat = Chat(<span class="string">'localhost'</span>, <span class="number">8000</span>, <span class="number">10</span>)</div><div class="line">    chat.run()</div></pre></td></tr></table></figure>
+<p>原理与刚才一样,当Chat.run()时在该socket的写事件上绑定了回调函数accept函数.在该socket上第一次发生的读事件意味着有新客户端连接后会调用accept函数<br>执行accept时又会把socket绑定到handle函数上,当socket发生可读事件(即有数据可获取时),调用handle函数,获取clinet发过来的数据,并转发到其他的client</p>
+
+	
+	</div>
+  <a type="button" href="/2017/09/12/async/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+	       
+	     </div>
+	     <div>
+	       <center>
+	         <div class="pagination">
+<ul class="pagination">
+	 
+		
+    	<li class="prev"><a href="/tags/python/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> 上一页</a></li>
+  		
+
+        <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+
+		
+		   <li class="next"> <a href="/tags/python/page/3/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
+        
+	
+</ul>
+</div>
+
+	       </center>
+	     </div>	
+      
+
+</div> <!-- col-md-9/col-md-12 -->
+
+
+<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
+
+		
+			
+	<div class="widget">
+		<h4>分类</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/django/">django</label></a></li>
+		
+			<li><a href="/categories/linux/">linux</label></a></li>
+		
+			<li><a href="/categories/python/">python</label></a></li>
+		
+			<li><a href="/categories/saltstack/">saltstack</label></a></li>
+		
+		</ul>
+	</div>
+
+
+		
+			
+	<div class="widget">
+		<h4>标签云</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/tags/jinja/">jinja</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/django/">django</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/oop/">oop</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/redis/">redis</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>最新文章</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2017/09/21/jinja2/" ><i class="fa fa-file-o"></i>django中使用jinja2模板</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/14/salt-sls/" ><i class="fa fa-file-o"></i>saltstack(四)sls编写</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/salt-ssh/" ><i class="fa fa-file-o"></i>slatstack(三)salt-ssh批量安装min...</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/optimization/" ><i class="fa fa-file-o"></i>python之代码优化</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/async/" ><i class="fa fa-file-o"></i>python之异步编程</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>链接</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="fa fa-github"></i><a href="http://www.github.com/DearEirs" title="My Github account." target="_blank"]);">My Github</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 Dear
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>

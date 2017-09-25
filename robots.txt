@@ -1,0 +1,31 @@
+# hexo robots.txt
+
+User-agent: *
+
+Allow: /
+
+Allow: /archives/
+
+Allow: /tags
+
+Allow: /categories
+
+Allow: /about
+
+
+Disallow: /vendors/
+
+Disallow: /js/
+
+Disallow: /css/
+
+Disallow: /fonts/
+
+Disallow: /vendors/
+
+Disallow: /fancybox/
+
+
+Sitemap: http://139.199.0.245/sitemap.xml
+
+Sitemap: http://139.199.0.245/baidusitemap.xml

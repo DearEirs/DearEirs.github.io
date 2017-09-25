@@ -1,0 +1,393 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>python | Dear&#39;s Blog</title>
+  <meta name="author" content="Dear">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="renderer" content="webkit">
+
+  
+  <meta property="og:site_name" content="Dear&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+
+  <!-- CSS -->
+  <!-- link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css" -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+  <!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  -->
+  <![endif]-->
+
+  <script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+  <meta name="baidu-site-verification" content="RXfcpfczu8" />
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Dear&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>目录
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于个人
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+<!-- title -->
+<div class="page-header page-header-inverse ">
+  <h1 class="archive-title-category title title-inverse ">python</h1>
+</div>
+
+<div class="row page">
+  <!-- cols -->
+  
+  <div class="col-md-9">
+	
+
+	  <div id="top_search"></div>
+
+      
+         <!-- display as entry -->
+	     <div class="mypage">
+	       
+		     
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-09-12 </div>
+			<div class="article-title"><a href="/2017/09/12/optimization/" >python之代码优化</a></div>
+		</h3>
+	
+
+
+		     <div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="代码的基本优化-调试"><a href="#代码的基本优化-调试" class="headerlink" title="代码的基本优化,调试"></a>代码的基本优化,调试</h1><h3 id="构造与初始化方法"><a href="#构造与初始化方法" class="headerlink" title="构造与初始化方法"></a>构造与初始化方法</h3><ul>
+<li><strong>init</strong>() 不是构造方法，它负责控制对象变量的初始化</li>
+<li><strong>new</strong>() 才是构造方法，它负责控制对象的创建</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls)</span>:</span></div><div class="line">    print(<span class="string">'正在创建类'</span>)</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(cls)</span>:</span></div><div class="line">    print(<span class="string">'类已经被创建'</span>)</div><div class="line">    print(<span class="string">'正在初始化类变量'</span>)</div><div class="line"></div><div class="line">a = A()</div></pre></td></tr></table></figure>
+<h3 id="对象序列化"><a href="#对象序列化" class="headerlink" title="对象序列化"></a>对象序列化</h3><ul>
+<li>json：最常见，效率稍差，但跨平台、跨语言、结构好</li>
+<li>pickle：比json效率稍微高一点点，只支持Python</li>
+<li>cPickle：效率比上述两者都高很多</li>
+<li>protobuf：Google提供的第三方库，效率更高，跨平台，跨语言，结构紧凑体积小，内存节省和传输效率更好，<br>但需引入第三方库，提前设计好的数据结构不可随意改动</li>
+</ul>
+<p>在序列化还没成为程序的瓶颈时,一般来说使用json就可以满足大部分需求.</p>
+<p>序列化：是把对象转换成可以write到文件里边的数字、字符、字符串<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">dict1 = &#123;<span class="string">'key%i'</span> % i:<span class="string">'value%i'</span> % i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>)&#125;</div><div class="line">f = open(<span class="string">r'C:\Users\Dear\Desktop\test.txt'</span>,<span class="string">'ab'</span>)</div><div class="line"></div><div class="line">json.dump(d,f) <span class="comment">#直接写入文件</span></div><div class="line">j = json.dumps(dict1) <span class="comment">#把dict1 转换成json格式</span></div><div class="line">d = json.loads(j) <span class="comment"># 把j反序列化为dict格式</span></div><div class="line"></div><div class="line"></div><div class="line">pickle.dump(dict1,f) <span class="comment">#直接写入文件</span></div><div class="line">p = pickle.dumps(d)  <span class="comment">#输出序列化后的二进制字符串</span></div><div class="line">d = pickle.loads(p) <span class="comment"># 把p反序列化为dict格式</span></div><div class="line"></div><div class="line"></div><div class="line">f.close()</div></pre></td></tr></table></figure></p>
+<h3 id="配置文件解析"><a href="#配置文件解析" class="headerlink" title="配置文件解析"></a>配置文件解析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">configparser INI风格</span></div><div class="line"><span class="string">文本形式类似 key value</span></div><div class="line"><span class="string">'''</span></div><div class="line"></div><div class="line">[db]</div><div class="line">db_host = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></div><div class="line">db_port = <span class="number">22</span></div><div class="line">db_user = root</div><div class="line">db_pass = rootroot</div><div class="line"></div><div class="line">[concurrent]</div><div class="line">thread = <span class="number">10</span></div><div class="line">processor = <span class="number">20</span></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">conf = configparser.ConfigParser()</span></div><div class="line"><span class="string">conf.read(r'C:\Users\Dear\Desktop\default.conf')</span></div><div class="line"><span class="string">conf.sections() --&gt; ['db', 'concurrent']</span></div><div class="line"><span class="string">conf.options('db') --&gt; ['db_host', 'db_port', 'db_user', 'db_pass']</span></div></pre></td></tr></table></figure>
+<h3 id="多个分支条件"><a href="#多个分支条件" class="headerlink" title="多个分支条件"></a>多个分支条件</h3><ul>
+<li>if…elif…elif…</li>
+<li>借助字典消除这种风格</li>
+<li>实在消除不掉注意先后顺序安排(在可读性差不多的情况下,尽量把匹配率高的条件写在前面)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 需求需要多重判断,实现类似与其他语言中switch case的效果</span></div><div class="line"></div><div class="line">ansers_dict = &#123;</div><div class="line">          <span class="string">'a'</span> : <span class="number">1</span>,</div><div class="line">          <span class="string">'b'</span> : <span class="number">2</span>,</div><div class="line">          <span class="string">'c'</span> : <span class="number">3</span>,</div><div class="line">          <span class="string">'d'</span> : <span class="number">4</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">question = (<span class="string">'人有多少个鼻子?'</span>)</div><div class="line">print(ansers_dict)</div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">  anser = read(<span class="string">'请选择 a,b,c,d中的一个'</span>)</div><div class="line">  <span class="keyword">if</span> anser <span class="keyword">in</span> ansers_dict:</div><div class="line">    print(<span class="string">'你选择的是%s,人有%s个鼻子'</span>, % (anser,ansers_dict[anser]))</div><div class="line">    <span class="keyword">break</span></div></pre></td></tr></table></figure>
+<h3 id="短路运算"><a href="#短路运算" class="headerlink" title="短路运算"></a>短路运算</h3><ul>
+<li>and：前一个表达式为假不再进行后一个表达式的计算</li>
+<li>or：前一个表达式为真不再进行后一个表达式的计算</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># and</span></div><div class="line">timeit.timeit('if 0 and 1 : pass',number=100000000) --&gt; 1.397503963655573</div><div class="line">timeit.timeit('if 1 and 0 : pass',number=100000000) --&gt; 2.149041756294938</div><div class="line"></div><div class="line"><span class="comment"># or</span></div><div class="line">timeit.timeit('if 1 or 0 : pass',number=100000000)  --&gt; 1.587524198216385</div><div class="line">timeit.timeit('if 0 or 1 : pass',number=100000000)  --&gt; 2.823067097259937</div></pre></td></tr></table></figure>
+<h3 id="成员测试"><a href="#成员测试" class="headerlink" title="成员测试"></a>成员测试</h3><p>判断一个元素是否在某个容器（列表、集合、字典、字符串序列）时，直接用 in 或 not in 操作符判断，无需用 find 、 index 等方法</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">timeit.timeit('list1 = [i for i in range(1000,1010)];list1.index(1005)',number=10000000) --&gt; 11.784954835659846</div><div class="line">timeit.timeit('list1 = [i for i in range(1000,1010)];1005 in list1 ',number=10000000) --&gt; 9.56750599126508</div></pre></td></tr></table></figure>
+<h3 id="内置排序"><a href="#内置排序" class="headerlink" title="内置排序"></a>内置排序</h3><ul>
+<li>sort(): 只是 list 的一个方法，直接修改原列表，返回值为None</li>
+<li>sorted(): 可排序所有可迭代对象，返回排序后的结果</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">list1 = [<span class="number">3</span>,<span class="number">41</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">1</span>]</div><div class="line"></div><div class="line">new_list = sorted(list1)</div><div class="line">print(list1) --&gt; [3,41,2,5,1]</div><div class="line">print(new_list) --&gt; [1,2,3,5,41]</div><div class="line"></div><div class="line">list1.sort()</div><div class="line">print(list1) --&gt; [1,2,3,5,41]</div></pre></td></tr></table></figure>
+<h3 id="list、tuple、set选择"><a href="#list、tuple、set选择" class="headerlink" title="list、tuple、set选择"></a>list、tuple、set选择</h3><ul>
+<li>list：有序、可变长、元素可重复</li>
+<li>tuple：有序、不可变长、元素可重复</li>
+<li>set：无序、可变长、元素不可重复</li>
+</ul>
+<p>拒绝万年list,拒绝万年list,拒绝万年list,</p>
+<p>一般来说:<br>长度,元素不可变的情况下 选tuple<br>对顺序无要求,元素不可重复的情况下,选set<br>其他情况下才考虑list</p>
+<h3 id="避免命名空间污染"><a href="#避免命名空间污染" class="headerlink" title="避免命名空间污染"></a>避免命名空间污染</h3><p>尽量使用 import a.B 的形式，而不是使用 from a import B</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> a <span class="keyword">import</span> B</div><div class="line"><span class="keyword">import</span> a.b</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">b</span>:</span></div><div class="line">  <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">b(1) --&gt; Error</div><div class="line">a.b(1) --&gt; Sucess</div></pre></td></tr></table></figure>
+<h3 id="True-amp-False"><a href="#True-amp-False" class="headerlink" title="True &amp; False"></a>True &amp; False</h3><p>python2.x 中 if True 会比 if 1 慢<br>python3.x 中 没有这个问题</p>
+<p>python2.x 中 True相当于一个指向1的变量,使用True时 需要先把内存中的1提取出来再做判断</p>
+<p>#python2.x<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; def func():</div><div class="line">...   if 1:</div><div class="line">...     pass</div><div class="line">...</div><div class="line">&gt;&gt;&gt; def func2():</div><div class="line">...   if True:</div><div class="line">...     pass</div><div class="line">...</div><div class="line">&gt;&gt;&gt; dis.dis(func)</div><div class="line">  3           0 LOAD_CONST               0 (None)</div><div class="line">              3 RETURN_VALUE</div><div class="line">&gt;&gt;&gt; dis.dis(func2)</div><div class="line">  2           0 LOAD_GLOBAL              0 (True)   </div><div class="line">              3 POP_JUMP_IF_FALSE        9</div><div class="line"></div><div class="line">  3           6 JUMP_FORWARD             0 (to 9)</div><div class="line">        &gt;&gt;    9 LOAD_CONST               0 (None)</div><div class="line">             12 RETURN_VALUE</div></pre></td></tr></table></figure></p>
+<p>#python3.x<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; import dis</div><div class="line">&gt;&gt;&gt; def func():</div><div class="line">...   if 1:</div><div class="line">...     pass</div><div class="line">...</div><div class="line">&gt;&gt;&gt; def func2():</div><div class="line">...   if True:</div><div class="line">...     pass</div><div class="line">...</div><div class="line">&gt;&gt;&gt; dis.dis(func)</div><div class="line">  3           0 LOAD_CONST               0 (None)</div><div class="line">              2 RETURN_VALUE</div><div class="line">&gt;&gt;&gt; dis.dis(func2)</div><div class="line">  3           0 LOAD_CONST               0 (None)</div><div class="line">              2 RETURN_VALUE</div></pre></td></tr></table></figure></p>
+<h3 id="变量值交换"><a href="#变量值交换" class="headerlink" title="变量值交换"></a>变量值交换</h3><p>推荐使用 x, y = y, x<br>性能更快且可读性高</p>
+<h3 id="上下文管理器"><a href="#上下文管理器" class="headerlink" title="上下文管理器"></a>上下文管理器</h3><p>尽量使用 with…as… 来实现对象的上下文管理，避免忘记显式地关闭资源<br>with 结束时 系统会自动关闭打开的对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># 写一个可用于上下文管理的对象</div><div class="line"># __enter__()  open时触发</div><div class="line"># __exit__()  with 结束时触发</div><div class="line"></div><div class="line">class WithTest:</div><div class="line">  def __enter__(self):</div><div class="line">    print(&apos;start&apos;)</div><div class="line">    self.file = open(&apos;myfile&apos;)</div><div class="line">    return self.file</div><div class="line">  def __exit__(self, *args):</div><div class="line">    print(&apos;end&apos;)</div><div class="line">    return True</div><div class="line"></div><div class="line">wt = WithTest()</div><div class="line"></div><div class="line">with a as file:</div><div class="line">  file.readlines()</div></pre></td></tr></table></figure></p>
+<h3 id="字符串连接"><a href="#字符串连接" class="headerlink" title="字符串连接"></a>字符串连接</h3><ul>
+<li>join 与 + 两种方式</li>
+<li>前者更省内存</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">list1 = [<span class="string">'a'</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>)]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line">  s = <span class="string">''</span>.join(list1)</div><div class="line">  </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span>:</span></div><div class="line">  s = <span class="string">''</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> list1:</div><div class="line">    s += i</div><div class="line"></div><div class="line">timeit.timeit(func,number=10000) --&gt; 4.525133861871087</div><div class="line">timeit.timeit(func2number=10000) --&gt;</div></pre></td></tr></table></figure>
+<h3 id="深浅拷贝"><a href="#深浅拷贝" class="headerlink" title="深浅拷贝"></a>深浅拷贝</h3><ul>
+<li>浅拷贝 copy.copy(obj) 只拷贝“第一层”对象</li>
+<li>深拷贝 copy.deepcopy(obj) 递归拷贝“每一层”对象</li>
+<li>不论深浅拷贝，不会为 全由不可变对象组成的对象 申请新内存空间</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#深、浅拷贝</span></div><div class="line">l = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,[<span class="string">'d'</span>]]</div><div class="line">l1 = copy.copy(l)</div><div class="line">l2 = copy.deepcopy(l)</div><div class="line"></div><div class="line">l is l1  --&gt; False</div><div class="line">l is l2  --&gt; False</div><div class="line"></div><div class="line">l[3] is l1[3] --&gt; True</div><div class="line">l[3] is l2[3] --&gt; False</div><div class="line"></div><div class="line"><span class="comment">#浅拷贝只会拷贝第一层对象,而对于深层的对象 引用的还是原来的内存地址的值</span></div><div class="line"><span class="comment">#深拷贝会进行递归拷贝,拷贝出来的对象与原对象除了值一样,没有其他关系</span></div><div class="line"></div><div class="line">l[<span class="number">-1</span>][<span class="number">0</span>] = <span class="string">'e'</span></div><div class="line">print(l)  --&gt; ['a', 'b', 'c', ['e']]</div><div class="line">print(l1) --&gt; ['a', 'b', 'c', ['e']]</div><div class="line">print(l2) --&gt; ['a', 'b', 'c', ['d']]</div><div class="line"></div><div class="line"><span class="comment">#不论深浅拷贝，不会为 全由不可变对象组成的对象 申请新内存空间</span></div><div class="line"></div><div class="line">t = (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</div><div class="line">id(t) --&gt; 46640872</div><div class="line">t1 = copy.copy(t)</div><div class="line">id(t1) --&gt; 46640872</div><div class="line">t2 = copy.deepcopy(t)</div><div class="line">id(t2) --&gt; 46640872</div></pre></td></tr></table></figure>
+<h3 id="节省内存开销"><a href="#节省内存开销" class="headerlink" title="节省内存开销"></a>节省内存开销</h3><ul>
+<li>生成器惰性求值，只迭代一遍</li>
+<li>f = open(‘filename’); “for line in f”  vs for line in f.readlines()</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">list1 = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>)]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> list1:</div><div class="line">   <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> list1:</div><div class="line">    <span class="keyword">yield</span> i</div><div class="line"></div><div class="line">timeit.timeit(func,number=1000) --&gt; 0.9298560397275537</div><div class="line">timeit.timeit(func,number=1000) --&gt; 0.0002835632612345762</div></pre></td></tr></table></figure>
+<h3 id="循环优化"><a href="#循环优化" class="headerlink" title="循环优化"></a>循环优化</h3><ul>
+<li>尽量减少循环体内操作</li>
+<li>尽量减少循环嵌套层数</li>
+<li>大多数情况下大循环放在更里层效率更高</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</div><div class="line">      <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">      <span class="keyword">pass</span></div><div class="line"></div><div class="line">timeit.timeit(func,number=1000) --&gt; 20.439412046114683</div><div class="line">timeit.timeit(func2,number=1000) --&gt; 38.57239906224004</div></pre></td></tr></table></figure>
+<h3 id="变量命名空间"><a href="#变量命名空间" class="headerlink" title="变量命名空间"></a>变量命名空间</h3><ul>
+<li>能使用局部变量就不要使用全局变量</li>
+<li>能放在循环更外层的就不要放到循环更里层</li>
+<li>最小权限原则</li>
+</ul>
+
+	
+	</div>
+  <a type="button" href="/2017/09/12/optimization/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+	       
+	     </div>
+	     <div>
+	       <center>
+	         <div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
+
+        <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
+
+		
+		   <li class="next"> <a href="/categories/python/page/2/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
+        
+	
+</ul>
+</div>
+
+	       </center>
+	     </div>	
+      
+
+</div> <!-- col-md-9/col-md-12 -->
+
+
+<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
+
+		
+			
+	<div class="widget">
+		<h4>分类</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/django/">django</label></a></li>
+		
+			<li><a href="/categories/linux/">linux</label></a></li>
+		
+			<li><a href="/categories/python/">python</label></a></li>
+		
+			<li><a href="/categories/saltstack/">saltstack</label></a></li>
+		
+		</ul>
+	</div>
+
+
+		
+			
+	<div class="widget">
+		<h4>标签云</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/tags/django/">django</a></li>
+		
+			<li><a href="/tags/redis/">redis</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/oop/">oop</a></li>
+		
+			<li><a href="/tags/jinja/">jinja</a></li>
+		
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>最新文章</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2017/09/21/jinja2/" ><i class="fa fa-file-o"></i>django中使用jinja2模板</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/14/salt-sls/" ><i class="fa fa-file-o"></i>saltstack(四)sls编写</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/salt-ssh/" ><i class="fa fa-file-o"></i>slatstack(三)salt-ssh批量安装min...</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/optimization/" ><i class="fa fa-file-o"></i>python之代码优化</a>
+      </li>
+    
+      <li>
+        <a href="/2017/09/12/async/" ><i class="fa fa-file-o"></i>python之异步编程</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>链接</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="fa fa-github"></i><a href="http://www.github.com/DearEirs" title="My Github account." target="_blank"]);">My Github</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 Dear
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>
