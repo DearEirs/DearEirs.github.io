@@ -148,9 +148,41 @@
 		
             
 		
+            
+		
         
         <!-- render other articles -->
         
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-09-29 </div>
+			<div class="article-title"><a href="/2017/09/29/k-vim/" >k-vim安装配置</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h3 id="安装环境"><a href="#安装环境" class="headerlink" title="安装环境"></a>安装环境</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">yum install -y git python-devel.x86_64 the_silver_searcher cmake wget zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-develtk-devel gdbm-devel db4-devel libpcap-devel xz-devel readline</div><div class="line"></div><div class="line">yum groupinstall -y &apos;Development Tools&apos;</div><div class="line">rpm -Uvh https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm</div></pre></td></tr></table></figure>
+<h3 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py</div><div class="line">python ./get-pip.py</div><div class="line"></div><div class="line"># pip 设置代理</div><div class="line">1. pip install xxx -i https://pypi.tuna.tsinghua.edu.cn/simple</div><div class="line"></div><div class="line">2. 用户家目录下新建.pip目录 添加pip.conf文件如下</div><div class="line">[global]</div><div class="line">index-url = https://pypi.tuna.tsinghua.edu.cn/simple</div></pre></td></tr></table></figure>
+<h3 id="安装pyenv-virtualenv"><a href="#安装pyenv-virtualenv" class="headerlink" title="安装pyenv-virtualenv"></a>安装pyenv-virtualenv</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash</div><div class="line"></div><div class="line">添加到/etc/profile</div><div class="line">export PATH=&quot;~/.pyenv/bin:$PATH&quot;</div><div class="line">eval &quot;$(pyenv init -)&quot;</div><div class="line">eval &quot;$(pyenv virtualenv-init -)&quot;</div></pre></td></tr></table></figure>
+<h3 id="安装Python3-6"><a href="#安装Python3-6" class="headerlink" title="安装Python3.6"></a>安装Python3.6</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"># 先添加环境变量  不然后边安装YCM会有坑！！！</div><div class="line">export PYTHON_CONFIGURE_OPTS=&quot;--enable-shared&quot;</div><div class="line">pyenv install  3.6.1</div><div class="line"></div><div class="line"># 安装本地软件包的方法</div><div class="line"># 指定安装URL</div><div class="line">export PYTHON_BUILD_MIRROR_URL=&quot;http://127.0.0.1:8000/&quot;</div><div class="line"># 到含有软件包的目录下运行</div><div class="line">python -m SimpleHTTPServer 8000</div><div class="line"># 然后新开一个终端执行</div><div class="line">pyenv install 3.6.1 </div><div class="line"># 这时第一个终端会报错</div><div class="line">&quot;HEAD /a01810ddfcec216bcdb357a84bfaafdfaa0ca42bbdaa4cb7ff74f5a9961e4041 HTTP/1.1&quot; 404 -</div><div class="line"># 然后把python安装包命名为a01810ddfcec216bcdb357a84bfaafdfaa0ca42bbdaa4cb7ff74f5a9961e4041重新安装即可</div><div class="line">mv ./Python-3.6.1.tar.xz  ./a01810ddfcec216bcdb357a84bfaafdfaa0ca42bbdaa4cb7ff74f5a9961e4041</div><div class="line">pyenv install 3.6.1</div><div class="line"># 切换到3.6.1版本</div><div class="line">pyenv global 3.6.1 </div><div class="line"># 这时候pyenv就会到本地安装</div></pre></td></tr></table></figure>
+<h3 id="安装vim"><a href="#安装vim" class="headerlink" title="安装vim"></a>安装vim</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">wget ftp://ftp.vim.org/pub/vim/unix/vim-8.0.tar.bz2 -O vim-8.0.tar.bz2</div><div class="line">tar -xvf ./vim-8.0.tar.bz2 </div><div class="line">cd ./vim80</div><div class="line">./configure --with-features=huge \</div><div class="line">            --enable-multibyte \</div><div class="line">            --enable-pythoninterp=yes \</div><div class="line">            --with-python-config-dir=/usr/lib64/python2.7/config \</div><div class="line">            --enable-python3interp=yes \</div><div class="line">            --with-python3-config-dir=/root/.pyenv/versions/3.6.1/lib/python3.6/config-3.6m-x86_64-linux-gnu \</div><div class="line">            --enable-gui=gtk3 --enable-cscope --prefix=/data/vim80</div><div class="line"></div><div class="line">make &amp;&amp; make install </div><div class="line"></div><div class="line"># 备份 vi</div><div class="line">mv /usr/bin/vi /usr/bin/vi.bak</div><div class="line">ln -s /data/vim80/bin/vim /usr/bin/vi</div><div class="line"># 检查vim  输出中有+python3即可</div><div class="line">vi --version</div></pre></td></tr></table></figure>
+<h3 id="编译安装clang"><a href="#编译安装clang" class="headerlink" title="编译安装clang"></a>编译安装clang</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">wget http://releases.llvm.org/3.3/llvm-3.3.src.tar.gz </div><div class="line">wget http://releases.llvm.org/3.3/cfe-3.3.src.tar.gz</div><div class="line">wget http://releases.llvm.org/3.3/clang-tools-extra-3.3.src.tar.gz</div><div class="line">wget http://releases.llvm.org/3.3/compiler-rt-3.3.src.tar.gz</div><div class="line">wget http://releases.llvm.org/3.3/libcxx-3.3.src.tar.gz</div><div class="line"></div><div class="line">mv cfe-3.3.src clang</div><div class="line">mv clang/ llvm-3.3.src/tools/</div><div class="line"></div><div class="line">mv clang-tools-extra-3.3.src extra</div><div class="line">mv extra/ llvm-3.3.src/tools/clang/</div><div class="line"></div><div class="line">mv compiler-rt-3.3.src compiler-rt</div><div class="line">mv compiler-rt llvm-3.3.src/projects/</div><div class="line"></div><div class="line"></div><div class="line">mkdir build-3.3</div><div class="line">cd ./build-3.3</div><div class="line"># 编译前换回系统默认的Python版本</div><div class="line">pyenv global system </div><div class="line">../llvm-3.3.src/configure --enable-optimized --enable-targets=host-only</div><div class="line">make -j8</div><div class="line">make install</div></pre></td></tr></table></figure>
+<h3 id="安装k-vim"><a href="#安装k-vim" class="headerlink" title="安装k-vim"></a>安装k-vim</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">pip install flake8 yapf</div><div class="line">git clone https://github.com/wklken/k-vim.git k-vim</div><div class="line">cd k-vim</div><div class="line"># 先安装YCM</div><div class="line">mkdir ./bundle</div><div class="line">wget -O YouCompleteMe.tar.gz &quot;http://ohpunyak1.bkt.clouddn.com/YouCompleteMe.tar.gz?v=9999&quot;</div><div class="line">tar -zxvf ./YouCompleteMe.tar.gz</div><div class="line">cd ./YouCompleteMe</div><div class="line">CXX=&quot;/usr/local/bin/clang++&quot; ./install.py </div><div class="line"># 回到 k-vim的目录</div><div class="line">cd ~/k-vim</div><div class="line">sh ./install.sh </div><div class="line"># 这时候依然会报错,但是已经可以用了</div></pre></td></tr></table></figure>
+
+	
+	</div>
+  <a type="button" href="/2017/09/29/k-vim/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+           
+		
            
 			  
 	
@@ -715,61 +747,6 @@
 
            
 		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-08-30 </div>
-			<div class="article-title"><a href="/2017/08/30/RocketMQ双主集群/" >RocketMQ双主集群</a></div>
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="RocketMQ-双主集群"><a href="#RocketMQ-双主集群" class="headerlink" title="RocketMQ 双主集群"></a>RocketMQ 双主集群</h1><table>
-<thead>
-<tr>
-<th style="text-align:center">主机名</th>
-<th style="text-align:center">环境</th>
-<th style="text-align:center">IP</th>
-<th style="text-align:center">角色</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">zstd1</td>
-<td style="text-align:center">centos7</td>
-<td style="text-align:center">172.16.0.89</td>
-<td style="text-align:center">master1</td>
-</tr>
-<tr>
-<td style="text-align:center">zstd1</td>
-<td style="text-align:center">centos7</td>
-<td style="text-align:center">172.16.0.221</td>
-<td style="text-align:center">master2</td>
-</tr>
-</tbody>
-</table>
-<h2 id="1-安装"><a href="#1-安装" class="headerlink" title="1.安装"></a>1.安装</h2><p>安装这里选择在官网上下载源码包安装。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget -O /data/softs/src/rocketmq.tar.gz </div><div class="line">tar -zxvf /data/softs/src/rocketmq.tar.gz</div><div class="line">mv /data/softs/src/alibaba-rocketmq /data/softs/src/rocketmq</div><div class="line">cd /data/softs/src/rocketmq &amp;&amp; make &amp;&amp; make install</div></pre></td></tr></table></figure></p>
-<h2 id="2-修改配置"><a href="#2-修改配置" class="headerlink" title="2.修改配置"></a>2.修改配置</h2><p>安装完成后可以在$ROCKETMQ_HOME/conf/2m-noslave 下找到所需的配置文件</p>
-<p>需求修改的地方不多</p>
-<p>master1 对应修改broker-a.properties文件,master2 对应修改broker-b.properties文件</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">brokerClusterName=rocketmq-cluster  #所属集群名字 这个名字要一致</div><div class="line">brokerName=broker-a/broker-b    #这里2个分别对应文件名</div><div class="line">brokerId=0</div><div class="line">namesrvAddr=172.16.0.89:9876;172.16.0.221:9876</div><div class="line">listenPort=10911 #Broker 对外服务的监听端口</div></pre></td></tr></table></figure>
-<h2 id="3-启动服务"><a href="#3-启动服务" class="headerlink" title="3.启动服务"></a>3.启动服务</h2><p>启动服务的顺序： nameserver—-broker</p>
-<p>关闭服务的顺序： broker—-nameserver</p>
-<p>对应命令：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">nohup sh $ROCKETMQ_HOME/bin/mqnamesrv &amp; #启动nameserver</div><div class="line"></div><div class="line">nohup sh $ROCKETMQ_HOME/bin/mqbroker -n 172.16.0.89:9876 -c $ROCKETMQ_HOME/conf/2m-noslave/broker-a/b.properties &amp;</div><div class="line">#启动broker</div><div class="line">#两台master 启动 指定的IP要一致,即指定到同1台nameserver上</div><div class="line"></div><div class="line">mqadmin clusterList  -n 172.16.0.89:9876#查看集群信息</div></pre></td></tr></table></figure></p>
-
-	
-	</div>
-  <a type="button" href="/2017/08/30/RocketMQ双主集群/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-           
-		
 
 		</div>
 
@@ -836,33 +813,35 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/tags/saltstack/">saltstack</a></li>
-		
-			<li><a href="/tags/异步/">异步</a></li>
-		
 			<li><a href="/tags/闭包/">闭包</a></li>
-		
-			<li><a href="/tags/decorator/">decorator</a></li>
-		
-			<li><a href="/tags/函数/">函数</a></li>
-		
-			<li><a href="/tags/django/">django</a></li>
-		
-			<li><a href="/tags/redis/">redis</a></li>
-		
-			<li><a href="/tags/代码优化/">代码优化</a></li>
 		
 			<li><a href="/tags/python/">python</a></li>
 		
-			<li><a href="/tags/gc/">gc</a></li>
+			<li><a href="/tags/函数/">函数</a></li>
 		
-			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/django/">django</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
 		
 			<li><a href="/tags/jinja/">jinja</a></li>
 		
-			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+			<li><a href="/tags/vim/">vim</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
 		
 			<li><a href="/tags/oop/">oop</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/redis/">redis</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
 		
 		 
 		</ul>
@@ -874,6 +853,10 @@
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2017/09/29/k-vim/" ><i class="fa fa-file-o"></i>k-vim安装配置</a>
+      </li>
     
       <li>
         <a href="/2017/09/21/jinja2/" ><i class="fa fa-file-o"></i>django中使用jinja2模板</a>
@@ -889,10 +872,6 @@
     
       <li>
         <a href="/2017/09/12/optimization/" ><i class="fa fa-file-o"></i>python之代码优化</a>
-      </li>
-    
-      <li>
-        <a href="/2017/09/12/async/" ><i class="fa fa-file-o"></i>python之异步编程</a>
       </li>
     
   </ul>
