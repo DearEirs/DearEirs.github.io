@@ -239,19 +239,19 @@
 
     
   <url>
-    <loc>http://139.199.0.245/2017/08/30/saltstack-%E4%BA%8C-%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</loc>
+    <loc>http://139.199.0.245/2017/08/30/RocketMQ%E5%8F%8C%E4%B8%BB%E9%9B%86%E7%BE%A4/</loc>
     <lastmod>2017-08-30T10:35:54.385Z</lastmod>
     <data>
         <display>
-        <title>saltstack(二)简单使用</title>
-        <pubTime>2017-08-30T09:50:31.000Z</pubTime>
+        <title>RocketMQ双主集群</title>
+        <pubTime>2017-08-30T09:59:52.000Z</pubTime>
         
-        <tag>saltstack</tag>
+        <tag>rocketmq</tag>
          
          
            
              
-              <breadCrumb title="saltstack" url="http://139.199.0.245/categories/saltstack/"/>
+              <breadCrumb title="linux" url="http://139.199.0.245/categories/linux/"/>
           
         </display>
     </data>
@@ -279,14 +279,34 @@
 
     
   <url>
-    <loc>http://139.199.0.245/2017/08/30/RocketMQ%E5%8F%8C%E4%B8%BB%E9%9B%86%E7%BE%A4/</loc>
+    <loc>http://139.199.0.245/2017/08/30/saltstack-%E4%BA%8C-%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2017-08-30T10:35:54.385Z</lastmod>
     <data>
         <display>
-        <title>RocketMQ双主集群</title>
-        <pubTime>2017-08-30T09:59:52.000Z</pubTime>
+        <title>saltstack(二)简单使用</title>
+        <pubTime>2017-08-30T09:50:31.000Z</pubTime>
         
-        <tag>rocketmq</tag>
+        <tag>saltstack</tag>
+         
+         
+           
+             
+              <breadCrumb title="saltstack" url="http://139.199.0.245/categories/saltstack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/08/30/redis%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2017-08-30T10:35:54.384Z</lastmod>
+    <data>
+        <display>
+        <title>redis集群模式搭建</title>
+        <pubTime>2017-08-30T09:56:16.000Z</pubTime>
+        
+        <tag>redis</tag>
          
          
            
@@ -305,26 +325,6 @@
         <display>
         <title>redis搭建哨兵模式</title>
         <pubTime>2017-08-15T03:28:06.000Z</pubTime>
-        
-        <tag>redis</tag>
-         
-         
-           
-             
-              <breadCrumb title="linux" url="http://139.199.0.245/categories/linux/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://139.199.0.245/2017/08/30/redis%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2017-08-30T10:35:54.384Z</lastmod>
-    <data>
-        <display>
-        <title>redis集群模式搭建</title>
-        <pubTime>2017-08-30T09:56:16.000Z</pubTime>
         
         <tag>redis</tag>
          
