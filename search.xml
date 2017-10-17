@@ -786,6 +786,40 @@
     </entry>
     
     <entry>
+      <title><![CDATA[python-gc回收机制]]></title>
+      <url>/2017/08/15/python-gc%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/</url>
+      <content type="html"><![CDATA[<h3 id="gc-回收机制"><a href="#gc-回收机制" class="headerlink" title="gc 回收机制"></a>gc 回收机制</h3><p>gc 主要由以下3个部分组成</p>
+<ol>
+<li>引用计数</li>
+<li>标记-删除</li>
+<li>分代回收</li>
+</ol>
+<h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p>对象的引用计数可以通过 sys.getrefcount(object)得到</p>
+<p>引用数指的是对象被引用的次数,一般通过创建变量,变量绑定来增加,<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">a = <span class="number">1000</span></div><div class="line">sys.getrefcount(a) -&gt; 2 </div><div class="line"><span class="comment">###注意:sys.getrefcount(a)得到的是对象的引用计数,即变量a所指向的内存地址的值1000被引用的次数,这里得到2是因为</span></div><div class="line">a=<span class="number">1000</span>时引用了<span class="number">1</span>次 而sys.getrefcont(a)时又引用了一次</div><div class="line"></div><div class="line">b = a</div><div class="line">sys.getrefcount(a) -&gt; 3</div><div class="line"></div><div class="line"><span class="keyword">del</span> a</div><div class="line">sys.getrefcount(a) -&gt; 2</div><div class="line"></div><div class="line">id(b) -&gt; 3097439675248</div><div class="line"><span class="keyword">del</span> b</div><div class="line"></div><div class="line">c = <span class="number">1001</span></div><div class="line">id(c) -&gt; 3097439675248</div><div class="line"></div><div class="line"><span class="comment">###这里大家可以发现c与b之前的所指向的内存地址是同一个,这是因为在大部分情况下当1个内存地址引用计数为0时,python</span></div><div class="line"><span class="comment">###内部就会马上把这个内存地址回收,标记为可用地址,在下次请求地址时分发出去</span></div></pre></td></tr></table></figure></p>
+<h3 id="标记-删除"><a href="#标记-删除" class="headerlink" title="标记-删除"></a>标记-删除</h3><p>引用计数不是万能的,在一些特定的情况下,即使对象指向为空,但是引用计数并不为0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">list1 = []</div><div class="line">list2 = []</div><div class="line">list1.append(list2)</div><div class="line">list2.append(list1)</div><div class="line"></div><div class="line">sys.getrefcount(list1) -&gt; 3</div><div class="line">sys.getrefcount(list2) -&gt; 3</div><div class="line">###这时候 del list1,list2 只会使它们的引用计数减1</div><div class="line">del list1,list2</div></pre></td></tr></table></figure>
+<p>这时候list1,list2的内存并不会得到释放,直到python的回收计数达到阀值触发了回收机制,然后python内部会遍历所有对象,把被正确引用的对象作标记保留<br>而没有正确引用的对象则进行回收,释放内存<br>gc.get_count() 查看当前回收计数<br>gc.get_threshold() 查看回收阈值  默认为 (700,10,10) 分别对应一、二、三代回收阀值</p>
+<h3 id="分代回收"><a href="#分代回收" class="headerlink" title="分代回收"></a>分代回收</h3><p>而上述被标记的对象会被保存到二代对象当中,回收计数中的第二位会+1,<br>触发一代回收阀值时会检查新建对象,把被正确引用的对象作标记保留而没有正确引用的对象则进行回收,释放内存,存活对象保存到二代对象当中,二代回收计数+1<br>触发二代回收阀值时会检查新建对象与二代对象并回收,存活的对象被保存到三代对象中,三代回收计数+1<br>触发三代回收阀值时会检查新建对象与二代对象与三代对象,计数器清0<br>如此循环直至程序结束,所以Python程序占用的空间不会特别大,但是同时因为gc机制一直在后台运行各种操作,会在一定的程度上降低程序的效率.</p>
+]]></content>
+      
+        <categories>
+            
+            <category> python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> gc </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[redis搭建哨兵模式]]></title>
       <url>/2017/08/15/redis%E6%90%AD%E5%BB%BA%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><blockquote>
@@ -832,40 +866,6 @@
         <tags>
             
             <tag> redis </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[python-gc回收机制]]></title>
-      <url>/2017/08/15/python-gc%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/</url>
-      <content type="html"><![CDATA[<h3 id="gc-回收机制"><a href="#gc-回收机制" class="headerlink" title="gc 回收机制"></a>gc 回收机制</h3><p>gc 主要由以下3个部分组成</p>
-<ol>
-<li>引用计数</li>
-<li>标记-删除</li>
-<li>分代回收</li>
-</ol>
-<h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p>对象的引用计数可以通过 sys.getrefcount(object)得到</p>
-<p>引用数指的是对象被引用的次数,一般通过创建变量,变量绑定来增加,<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">a = <span class="number">1000</span></div><div class="line">sys.getrefcount(a) -&gt; 2 </div><div class="line"><span class="comment">###注意:sys.getrefcount(a)得到的是对象的引用计数,即变量a所指向的内存地址的值1000被引用的次数,这里得到2是因为</span></div><div class="line">a=<span class="number">1000</span>时引用了<span class="number">1</span>次 而sys.getrefcont(a)时又引用了一次</div><div class="line"></div><div class="line">b = a</div><div class="line">sys.getrefcount(a) -&gt; 3</div><div class="line"></div><div class="line"><span class="keyword">del</span> a</div><div class="line">sys.getrefcount(a) -&gt; 2</div><div class="line"></div><div class="line">id(b) -&gt; 3097439675248</div><div class="line"><span class="keyword">del</span> b</div><div class="line"></div><div class="line">c = <span class="number">1001</span></div><div class="line">id(c) -&gt; 3097439675248</div><div class="line"></div><div class="line"><span class="comment">###这里大家可以发现c与b之前的所指向的内存地址是同一个,这是因为在大部分情况下当1个内存地址引用计数为0时,python</span></div><div class="line"><span class="comment">###内部就会马上把这个内存地址回收,标记为可用地址,在下次请求地址时分发出去</span></div></pre></td></tr></table></figure></p>
-<h3 id="标记-删除"><a href="#标记-删除" class="headerlink" title="标记-删除"></a>标记-删除</h3><p>引用计数不是万能的,在一些特定的情况下,即使对象指向为空,但是引用计数并不为0</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">list1 = []</div><div class="line">list2 = []</div><div class="line">list1.append(list2)</div><div class="line">list2.append(list1)</div><div class="line"></div><div class="line">sys.getrefcount(list1) -&gt; 3</div><div class="line">sys.getrefcount(list2) -&gt; 3</div><div class="line">###这时候 del list1,list2 只会使它们的引用计数减1</div><div class="line">del list1,list2</div></pre></td></tr></table></figure>
-<p>这时候list1,list2的内存并不会得到释放,直到python的回收计数达到阀值触发了回收机制,然后python内部会遍历所有对象,把被正确引用的对象作标记保留<br>而没有正确引用的对象则进行回收,释放内存<br>gc.get_count() 查看当前回收计数<br>gc.get_threshold() 查看回收阈值  默认为 (700,10,10) 分别对应一、二、三代回收阀值</p>
-<h3 id="分代回收"><a href="#分代回收" class="headerlink" title="分代回收"></a>分代回收</h3><p>而上述被标记的对象会被保存到二代对象当中,回收计数中的第二位会+1,<br>触发一代回收阀值时会检查新建对象,把被正确引用的对象作标记保留而没有正确引用的对象则进行回收,释放内存,存活对象保存到二代对象当中,二代回收计数+1<br>触发二代回收阀值时会检查新建对象与二代对象并回收,存活的对象被保存到三代对象中,三代回收计数+1<br>触发三代回收阀值时会检查新建对象与二代对象与三代对象,计数器清0<br>如此循环直至程序结束,所以Python程序占用的空间不会特别大,但是同时因为gc机制一直在后台运行各种操作,会在一定的程度上降低程序的效率.</p>
-]]></content>
-      
-        <categories>
-            
-            <category> python </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> python </tag>
-            
-            <tag> gc </tag>
             
         </tags>
         
