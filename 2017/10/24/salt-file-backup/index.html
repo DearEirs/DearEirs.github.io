@@ -7,14 +7,8 @@
 
   <meta name="author" content="Dear">
   
-  <meta name="description" content="前言前言次分发文件时,如果有文件被修改,那么就将文件备份到指定目录,这样就算出错,我们也可以把原文件替换回去.
-
-那么我们有2种方法:
-
-在minion的配置文件中添加backup_mode: minion
-在执行分发文件的states时,添加参数backup: minion
-
-12345# 借用">
+  <meta name="description" content="前言
+在日常工作中,我们经常会用saltstack来分发文件,但是如果稍有不慎就会不小心覆盖掉之前不想修改的文件,这样我们就需要回滚,但是又不知道具体被修改了那些地方,那么我们就需要一个备份的功能,每次分发文件时,如果有文件被修改,那么就将文件备份到指定目录,这样就算出错,我们也可以把原文件替换回去">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -155,7 +149,9 @@
 	<div class="mypage">		
 	  		
 
-	  <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前言次分发文件时,如果有文件被修改,那么就将文件备份到指定目录,这样就算出错,我们也可以把原文件替换回去.</p>
+	  <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
+<p>在日常工作中,我们经常会用saltstack来分发文件,但是如果稍有不慎就会不小心覆盖掉之前不想修改的文件,这样我们就需要回滚,但是又不知道具体被修改了那些地方,那么我们就需要一个备份的功能,每次分发文件时,如果有文件被修改,那么就将文件备份到指定目录,这样就算出错,我们也可以把原文件替换回去.</p>
+</blockquote>
 <hr>
 <p>那么我们有2种方法:</p>
 <ol>
