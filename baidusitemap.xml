@@ -5,10 +5,10 @@
     
   <url>
     <loc>http://139.199.0.245/2017/10/24/salt-file-backup/</loc>
-    <lastmod>2017-10-24T10:09:41.911Z</lastmod>
+    <lastmod>2017-10-24T10:11:35.492Z</lastmod>
     <data>
         <display>
-        <title>salt分发文件时备份</title>
+        <title>salt分发文件时自动备份</title>
         <pubTime>2017-10-24T10:08:32.000Z</pubTime>
         
         <tag>saltstack</tag>
@@ -319,12 +319,12 @@
 
     
   <url>
-    <loc>http://139.199.0.245/2017/08/30/redis%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F%E6%90%AD%E5%BB%BA/</loc>
+    <loc>http://139.199.0.245/2017/08/15/redis%E6%90%AD%E5%BB%BA%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2017-08-30T10:35:54.384Z</lastmod>
     <data>
         <display>
-        <title>redis集群模式搭建</title>
-        <pubTime>2017-08-30T09:56:16.000Z</pubTime>
+        <title>redis搭建哨兵模式</title>
+        <pubTime>2017-08-15T03:28:06.000Z</pubTime>
         
         <tag>redis</tag>
          
@@ -339,12 +339,12 @@
 
     
   <url>
-    <loc>http://139.199.0.245/2017/08/15/redis%E6%90%AD%E5%BB%BA%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/</loc>
+    <loc>http://139.199.0.245/2017/08/30/redis%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2017-08-30T10:35:54.384Z</lastmod>
     <data>
         <display>
-        <title>redis搭建哨兵模式</title>
-        <pubTime>2017-08-15T03:28:06.000Z</pubTime>
+        <title>redis集群模式搭建</title>
+        <pubTime>2017-08-30T09:56:16.000Z</pubTime>
         
         <tag>redis</tag>
          

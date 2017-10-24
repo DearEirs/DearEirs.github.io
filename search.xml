@@ -3,7 +3,7 @@
   
     
     <entry>
-      <title><![CDATA[salt分发文件时备份]]></title>
+      <title><![CDATA[salt分发文件时自动备份]]></title>
       <url>/2017/10/24/salt-file-backup/</url>
       <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>前言次分发文件时,如果有文件被修改,那么就将文件备份到指定目录,这样就算出错,我们也可以把原文件替换回去.</p>
 <hr>
