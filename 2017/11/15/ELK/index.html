@@ -1,0 +1,334 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ELK | Dear&#39;s Blog</title>
+
+  <meta name="author" content="Dear">
+  
+  <meta name="description" content="环境
+系统：centos7.2 
+redis：3.2.6 
+filebeat：5.6.3
+elasticsearch：5.6.3
+kibana：5.6.3
+x-pack：5.6.3
+jdk：1.8
+
+ELK的版本尽量统一
+下载1234567891011121314elasticsearchhttps">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="renderer" content="webkit">
+
+  <meta property="og:title" content="ELK"/>
+  <meta property="og:site_name" content="Dear&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+
+  <!-- CSS -->
+  <!-- link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css" -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+  <!-- <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.7/es5-sham.min.js"></script>
+  -->
+  <![endif]-->
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-8073696482754398",
+    enable_page_level_ads: true
+  });
+</script>
+<script language="javascript" type="text/javascript" src="//js.users.51.la/19306385.js"></script>
+<noscript>
+  <a href="//www.51.la/?19306385" target="_blank">
+    <img alt="&#x6211;&#x8981;&#x5566;&#x514D;&#x8D39;&#x7EDF;&#x8BA1;" src="//img.users.51.la/19306385.asp" style="border:none" />
+  </a>
+</noscript>
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+  <script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+  <meta name="baidu-site-verification" content="RXfcpfczu8" />
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Dear&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>目录
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于个人
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> ELK</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><ul>
+<li>系统：centos7.2 </li>
+<li>redis：3.2.6 </li>
+<li>filebeat：5.6.3</li>
+<li>elasticsearch：5.6.3</li>
+<li>kibana：5.6.3</li>
+<li>x-pack：5.6.3</li>
+<li>jdk：1.8</li>
+</ul>
+<p><strong>ELK的版本尽量统一</strong></p>
+<h1 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">elasticsearch</div><div class="line">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.3.tar.gz</div><div class="line"></div><div class="line">filebeat</div><div class="line">https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.6.3-linux-x86_64.tar.gz</div><div class="line"></div><div class="line">kibana</div><div class="line">https://artifacts.elastic.co/downloads/kibana/kibana-5.6.3-linux-x86_64.tar.gz</div><div class="line"></div><div class="line">logstash</div><div class="line">https://artifacts.elastic.co/downloads/logstash/logstash-5.6.3.tar.gz</div><div class="line"></div><div class="line">redis</div><div class="line">http://download.redis.io/releases/redis-3.2.6.tar.gz</div></pre></td></tr></table></figure>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><blockquote>
+<p>安装的话只需要把下载回来的tar包解压即可,项目运行需要jdk支持, jdk自行安装</p>
+</blockquote>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h3 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h3><blockquote>
+<p>redis不是本文重点, 所以配置就不展开细说.</p>
+</blockquote>
+<h3 id="filebeat"><a href="#filebeat" class="headerlink" title="filebeat"></a>filebeat</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"># 输入</div><div class="line">filebeat:</div><div class="line">  prospectors: # 可加多个, 用-分割, 每个prospectors可以有不同的配置</div><div class="line">    -</div><div class="line">      input_type: log</div><div class="line">      paths: # 可加多个, 每行一个用-分割</div><div class="line">        - /data/logs/portal/logs/info.log</div><div class="line">      fields: # 需要添加的字段</div><div class="line">        app: portal</div><div class="line">        host: zsmd2</div><div class="line">      include_lines: [&quot;ERROR&quot;] # 匹配包含&quot;INFO&quot;的消息</div><div class="line">      # 开启多行匹配</div><div class="line">      # pattern 消息按指定内容划分, </div><div class="line">      multiline.pattern: &apos;^\[&apos;</div><div class="line">      multiline.negate: true</div><div class="line">      multiline.match: after</div><div class="line">    -</div><div class="line">      input_type: log</div><div class="line">      paths: # 路径匹配也可以用正则</div><div class="line">        - /data/apps/ops/demo-service-provider*/bin/api.log</div><div class="line">      fields:</div><div class="line">        app: dubbo</div><div class="line">        host: zsmd2</div><div class="line">      multiline.pattern: &apos;^\d&#123;2&#125;:\d&#123;4&#125;:\d&#123;2&#125;&apos;</div><div class="line">      multiline.negate: true</div><div class="line">      multiline.match: after</div><div class="line">    -</div><div class="line">      input_type: log</div><div class="line">      paths:</div><div class="line">        - /data/apps/ops/smart-schedule/schedule/logs/error.log</div><div class="line">      fields:</div><div class="line">        app: schedule</div><div class="line">        host: zsmd2</div><div class="line">      multiline.pattern: &apos;^\[&apos;</div><div class="line">      multiline.negate: true</div><div class="line">      multiline.match: after</div><div class="line"></div><div class="line"># 输出</div><div class="line"># 输出到redis</div><div class="line">output.redis:</div><div class="line">   enabled: true</div><div class="line">   hosts: [&quot;172.16.0.237:6379&quot;] # 有多个的话用逗号分隔, 写在列表里边</div><div class="line">   key: &quot;zsdata&quot;</div><div class="line">   datatype: list</div><div class="line">   input_type: logs</div><div class="line">   password: &apos;redis&apos;</div><div class="line"></div><div class="line"># 输出到控制台, 可以省略, 搭建时主要为了方便看到数据</div><div class="line">output.console:</div><div class="line">  enabled: true</div><div class="line"></div><div class="line">参考：http://blog.csdn.net/chengxuyuanyonghu/article/details/54378778</div></pre></td></tr></table></figure>
+<h3 id="elasticsearch"><a href="#elasticsearch" class="headerlink" title="elasticsearch"></a>elasticsearch</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">cluster.name: elasticsearch-cluster # 集群名</div><div class="line">node.name: zsad1 # 节点名</div><div class="line">node.master: true </div><div class="line">network.host: 0.0.0.0</div><div class="line">http.port: 9200</div><div class="line">discovery.zen.minimum_master_nodes: 1 # </div><div class="line"># xpack参数 不用的话可略, 下面再细讲xpack破解</div><div class="line">xpack.security.enabled: true</div></pre></td></tr></table></figure>
+<h3 id="logstash"><a href="#logstash" class="headerlink" title="logstash"></a>logstash</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"># 输入</div><div class="line">input&#123;</div><div class="line">    redis &#123;</div><div class="line">        host =&gt; &quot;172.16.0.237&quot;</div><div class="line">        port =&gt; 6379</div><div class="line">        threads =&gt; 5 </div><div class="line">        data_type =&gt; &quot;list&quot;</div><div class="line">        type =&gt; &apos;redis-input&apos;</div><div class="line">        key =&gt; &quot;zsdata&quot;</div><div class="line">        password =&gt; &apos;password&apos;</div><div class="line">    &#125;</div><div class="line"># 过滤</div><div class="line">    # 移除不需要的字段</div><div class="line">    mutate&#123;</div><div class="line">        remove_field =&gt; [&quot;type&quot;, &quot;input_type&quot;, &quot;offset&quot;, &quot;beat&quot;, &quot;\@version&quot;, &apos;@version&apos;, &quot;@version&quot;]</div><div class="line">    &#125;</div><div class="line"></div><div class="line"># 输出</div><div class="line">output&#123;</div><div class="line">    # 输出数据到elasticsearch</div><div class="line">    elasticsearch&#123;</div><div class="line">      hosts =&gt; [&quot;172.16.0.80:9200&quot;]</div><div class="line">      user =&gt; &apos;username&apos;</div><div class="line">      password =&gt; &apos;password&apos;</div><div class="line">      index =&gt; &quot;zsdata-%&#123;+dd-MM-YYYY&#125;&quot; # 索引</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    # 判断是否有错误日志, 有的话就调用脚本发送邮件,  127.0.0.1:5000是自己写的发送邮件脚本</div><div class="line">    if &quot;ERROR&quot; in [message] &#123;</div><div class="line">      exec &#123;</div><div class="line">         command =&gt; &quot;curl  -XPOST -H  &apos;Content-Type: application/json&apos; 127.0.0.1:5000/email -d &apos;&#123;\&quot;message\&quot;: \&quot;%&#123;message&#125;\nsource at %&#123;source&#125;\&quot;, \&quot;from\&quot;:\&quot;xxxxxxxx@qq.com\&quot;, \&quot;to\&quot;:\&quot;xxxxxxxx@qq.com\&quot;, \&quot;subject\&quot;: \&quot;%&#123;fields[app]&#125; Get Error log in  %&#123;fields[host]&#125;\&quot;&#125;&apos; &quot;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    # 输出到控制台, 方便调试</div><div class="line">    stdout&#123; codec=&gt; &quot;rubydebug&quot; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="kibana"><a href="#kibana" class="headerlink" title="kibana"></a>kibana</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">server.host: 0.0.0.0</div><div class="line"># elasticsearch 的地址</div><div class="line">elasticsearch.url: &quot;http://172.16.0.80:9200&quot;</div><div class="line"># 使用xpack后需要登录 以下为默认账号</div><div class="line">elasticsearch.username: &quot;elastic&quot;</div><div class="line">elasticsearch.password: &quot;changeme&quot;</div><div class="line">xpack.monitoring.enabled: true</div><div class="line">i18n.defaultLocale: &quot;cn&quot;</div></pre></td></tr></table></figure>
+<h3 id="xpack破解"><a href="#xpack破解" class="headerlink" title="xpack破解"></a>xpack破解</h3><p><a href="http://blog.csdn.net/mvpboss1004/article/details/65445023" target="_blank" rel="external">参考地址：http://blog.csdn.net/mvpboss1004/article/details/65445023</a></p>
+	  
+	</div>
+
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+        
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2017/10/24/salt-file-backup/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+    <div class="bdsharebuttonbox">
+        <a href="#" class="bds_more" data-cmd="more"></a>
+        <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+        <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+        <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+        <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+        <a href="#" class="bds_linkedin" data-cmd="linkedin" title="分享到linkedin"></a>
+        <a href="#" class="bds_evernotecn" data-cmd="evernotecn" title="分享到印象笔记"></a>
+        <a href="#" class="bds_youdao" data-cmd="youdao" title="分享到有道云笔记"></a>
+        <a href="#" class="bds_copy" data-cmd="copy" title="分享到复制网址"></a>
+    </div>
+    <script>
+        window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"1","bdSize":"24"},"share":{}};
+        with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+    </script>
+
+
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2017-11-15 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/linux/">linux<span>4</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/ELK/">ELK<span>1</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2017 Dear
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>
