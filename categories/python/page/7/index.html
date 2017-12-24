@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>第 7 页 | python | Dear&#39;s Blog</title>
+  <title>Página 7 | python | Dear&#39;s Blog</title>
 
   <meta name="author" content="Dear">
   
@@ -144,8 +144,8 @@
 	
 	<!-- display as entry -->	
 		<h3 class="title">
-			<div class="date"> 2017-08-15 </div>
-			<div class="article-title"><a href="/2017/08/15/python-gc回收机制/" >python-gc回收机制</a></div>
+			<div class="date"> 2017-08-30 </div>
+			<div class="article-title"><a href="/2017/08/30/部署Nginx-uwsgi-django/" >部署Nginx+uwsgi+django</a></div>
 		</h3>
 	
 
@@ -154,22 +154,42 @@
   <div class="row">
 	
 	
-		<h3 id="gc-回收机制"><a href="#gc-回收机制" class="headerlink" title="gc 回收机制"></a>gc 回收机制</h3><p>gc 主要由以下3个部分组成</p>
+		<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>访问流程:用户–&gt;nginx–&gt;uwsgi–&gt;django</p>
 <ol>
-<li>引用计数</li>
-<li>标记-删除</li>
-<li>分代回收</li>
+<li>用户访问nginx</li>
+<li>nginx设置反向代理,将请求转发给uwsgi</li>
+<li>uwsgi接收请求</li>
+<li>django代码处理返回结果</li>
 </ol>
-<h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p>对象的引用计数可以通过 sys.getrefcount(object)得到</p>
-<p>引用数指的是对象被引用的次数,一般通过创建变量,变量绑定来增加,<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">a = <span class="number">1000</span></div><div class="line">sys.getrefcount(a) -&gt; 2 </div><div class="line"><span class="comment">###注意:sys.getrefcount(a)得到的是对象的引用计数,即变量a所指向的内存地址的值1000被引用的次数,这里得到2是因为</span></div><div class="line">a=<span class="number">1000</span>时引用了<span class="number">1</span>次 而sys.getrefcont(a)时又引用了一次</div><div class="line"></div><div class="line">b = a</div><div class="line">sys.getrefcount(a) -&gt; 3</div><div class="line"></div><div class="line"><span class="keyword">del</span> a</div><div class="line">sys.getrefcount(a) -&gt; 2</div><div class="line"></div><div class="line">id(b) -&gt; 3097439675248</div><div class="line"><span class="keyword">del</span> b</div><div class="line"></div><div class="line">c = <span class="number">1001</span></div><div class="line">id(c) -&gt; 3097439675248</div><div class="line"></div><div class="line"><span class="comment">###这里大家可以发现c与b之前的所指向的内存地址是同一个,这是因为在大部分情况下当1个内存地址引用计数为0时,python</span></div><div class="line"><span class="comment">###内部就会马上把这个内存地址回收,标记为可用地址,在下次请求地址时分发出去</span></div></pre></td></tr></table></figure></p>
-<h3 id="标记-删除"><a href="#标记-删除" class="headerlink" title="标记-删除"></a>标记-删除</h3><p>引用计数不是万能的,在一些特定的情况下,即使对象指向为空,但是引用计数并不为0</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">list1 = []</div><div class="line">list2 = []</div><div class="line">list1.append(list2)</div><div class="line">list2.append(list1)</div><div class="line"></div><div class="line">sys.getrefcount(list1) -&gt; 3</div><div class="line">sys.getrefcount(list2) -&gt; 3</div><div class="line">###这时候 del list1,list2 只会使它们的引用计数减1</div><div class="line">del list1,list2</div></pre></td></tr></table></figure>
-<p>这时候list1,list2的内存并不会得到释放,直到python的回收计数达到阀值触发了回收机制,然后python内部会遍历所有对象,把被正确引用的对象作标记保留<br>而没有正确引用的对象则进行回收,释放内存<br>gc.get_count() 查看当前回收计数<br>gc.get_threshold() 查看回收阈值  默认为 (700,10,10) 分别对应一、二、三代回收阀值</p>
-<h3 id="分代回收"><a href="#分代回收" class="headerlink" title="分代回收"></a>分代回收</h3><p>而上述被标记的对象会被保存到二代对象当中,回收计数中的第二位会+1,<br>触发一代回收阀值时会检查新建对象,把被正确引用的对象作标记保留而没有正确引用的对象则进行回收,释放内存,存活对象保存到二代对象当中,二代回收计数+1<br>触发二代回收阀值时会检查新建对象与二代对象并回收,存活的对象被保存到三代对象中,三代回收计数+1<br>触发三代回收阀值时会检查新建对象与二代对象与三代对象,计数器清0<br>如此循环直至程序结束,所以Python程序占用的空间不会特别大,但是同时因为gc机制一直在后台运行各种操作,会在一定的程度上降低程序的效率.</p>
+<hr>
+<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">centos IP：192.168.1.1</div><div class="line">python：2.7.11</div><div class="line">django：1.9.5</div><div class="line">nginx:1.10.1</div></pre></td></tr></table></figure>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">django</div><div class="line">pip install django==1.9.5</div><div class="line">uwsgi </div><div class="line">pip install uwsgi</div><div class="line">nginx</div><div class="line">yum install nginx -y</div></pre></td></tr></table></figure>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h3 id="django"><a href="#django" class="headerlink" title="django"></a>django</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">首先要确定django项目可运行</div><div class="line">python /project/manage.py runserver 0.0.0.0:8000</div><div class="line">curl -i &apos;127.0.0.1:8000&apos;</div><div class="line">curl返回200则成功</div></pre></td></tr></table></figure>
+<h3 id="uwsgi"><a href="#uwsgi" class="headerlink" title="uwsgi"></a>uwsgi</h3><p>首先新建1个test.uwsgi.py文件在项目的根目录。即/project (与manage.py同目录)</p>
+<p>文件内容如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">#coding:utf-8</div><div class="line">import os</div><div class="line">import sys</div><div class="line">reload(sys)</div><div class="line">sys.setdefaultencoding(&apos;utf8&apos;)</div><div class="line"></div><div class="line">from django.core.wsgi import get_wsgi_application</div><div class="line"></div><div class="line">os.environ.setdefault(&quot;DJANGO_SETTINGS_MODULE&quot;, &quot;project.settings&quot;)    #project为项目名，请按需求修改</div><div class="line"> </div><div class="line">application = get_wsgi_application()</div></pre></td></tr></table></figure></p>
+<p>uwsgi的话有2种开启方法</p>
+<p>第一种是直接在命令行输入命令打开，如：</p>
+<blockquote>
+<p>uwsgi –http 192.168.1.1:8000 –chdir /project –module test_uwsgi –chmod-socket=666</p>
+</blockquote>
+<p>第二种就是添加ini或xml配置文件</p>
+<p>新建文件test.ini在项目根目录<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">cat /project/test.ini</div><div class="line"></div><div class="line">[uwsgi]</div><div class="line">http = 192.157.1.1:8000 #监听IP和端口</div><div class="line">chdir = /project     #项目根目录</div><div class="line">module = test_uwsgi    #uwsgi文件，注意不用把后缀.py加上去</div><div class="line">processes = 4       #开启4个进程（按需更改）</div><div class="line">threads = 2           #每个进程开启4个线程</div><div class="line">enable-threads = True    #支持线程启动</div><div class="line">daemonize = /var/log/uwsgi.log    #后台启动，并把日志记录到指定文件</div><div class="line">buffer-size = 21573</div><div class="line">stats = 192.157.1.1:9000</div></pre></td></tr></table></figure></p>
+<p>示例中用的是ini配置文件，如需使用xml配置，请另行百度xml配置文件。更多的参数使用也可以自行百度添加上去</p>
+<p>当ini配置文件写好后执行</p>
+<p>uwsgi –ini /project/blog.ini #–ini 表示使用ini配置文件，xml文件就用–xml</p>
+<p>做完这些之后就访问192.168.1.1:8000端口，如无意外的话是可以访问成功的</p>
+<p>如果出现问题无法访问成功，请<strong>仔细阅读</strong>启动uwsgi之后弹出来的一系列信息，里面一般都包含有<strong>错误信息</strong>。按照提示修改即可。</p>
+<p>因为网页可以访问成功而且静态文件本来就是打算放在nginx上让用户直接访问，所以我就继续把配置进行下去了。</p>
+<h3 id="nginx"><a href="#nginx" class="headerlink" title="nginx"></a>nginx</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">cat /etc/nginx/nginx.conf</div><div class="line"></div><div class="line"></div><div class="line">http &#123;</div><div class="line">    include       /etc/nginx/mime.types;</div><div class="line">    default_type  application/octet-stream;</div><div class="line"></div><div class="line">    log_format  main  &apos;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &apos;</div><div class="line">                      &apos;$status $body_bytes_sent &quot;$http_referer&quot; &apos;</div><div class="line">                      &apos;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&apos;;</div><div class="line"></div><div class="line">    access_log  /var/log/nginx/access.log  main;</div><div class="line"></div><div class="line">    sendfile        on;</div><div class="line">    #tcp_nopush     on;</div><div class="line">    server&#123;</div><div class="line">            listen       80 ;    #监听80端口</div><div class="line">            access_log /var/log/nginx/access.log;    #日志文件位置</div><div class="line">            error_log  /var/log/nginx/error.log;</div><div class="line">            location / &#123;#访问/时</div><div class="line">              include         uwsgi_params; #加载uwsgi模块</div><div class="line">              proxy_pass http://192.168.1.1:8000;  #将连接转到该IP</div><div class="line">            &#125;</div><div class="line">            error_page   500 502 503 504  /50x.html;</div><div class="line">              location = /50x.html &#123;</div><div class="line">                  root   html;</div><div class="line">            &#125;</div><div class="line">            location /static/ &#123;</div><div class="line">                alias  /project/static/;    #访问/static时直接访问到/project/static </div><div class="line">            &#125;</div><div class="line">    &#125;</div><div class="line">    keepalive_timeout  65;</div><div class="line"></div><div class="line">    #gzip  on;</div><div class="line"></div><div class="line">    include /etc/nginx/conf.d/*.conf;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>修改完nginx配置后nginx重新加载下配置 </p>
+<p>nginx -s reload</p>
+<p>到此配置完成,测试</p>
+<p>curl -i ‘192.168.1.1’</p>
+<p>正常的话会返回django的/页面</p>
 
 	
 	</div>
-  <a type="button" href="/2017/08/15/python-gc回收机制/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/08/30/部署Nginx-uwsgi-django/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
 	       
@@ -180,13 +200,13 @@
 <ul class="pagination">
 	 
 		
-    	<li class="prev"><a href="/categories/python/page/6/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> 上一页</a></li>
+    	<li class="prev"><a href="/categories/python/page/6/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> Anterior</a></li>
   		
 
         <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
 
 		
-          <li class="next disabled"><a>下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>
+		   <li class="next"> <a href="/categories/python/page/8/" class="alignright next">Próximo<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
         
 	
 </ul>
@@ -205,7 +225,7 @@
 			
   <div id="site_search">
    <div class="form-group">
-    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Busca" class="st-search-input st-default-search-input form-control"/>
    </div>  
   <div id="local-search-result"></div>
   </div>
@@ -214,7 +234,7 @@
 		
 			
 	<div class="widget">
-		<h4>分类</h4>
+		<h4>Categorias</h4>
 		<ul class="tag_box inline list-unstyled">
 		
 			<li><a href="/categories/django/">django</label></a></li>
@@ -232,40 +252,42 @@
 		
 			
 	<div class="widget">
-		<h4>标签云</h4>
+		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">
-		
-			<li><a href="/tags/oop/">oop</a></li>
 		
 			<li><a href="/tags/异步/">异步</a></li>
 		
-			<li><a href="/tags/闭包/">闭包</a></li>
+			<li><a href="/tags/vim/">vim</a></li>
 		
 			<li><a href="/tags/saltstack/">saltstack</a></li>
 		
-			<li><a href="/tags/redis/">redis</a></li>
-		
-			<li><a href="/tags/代码优化/">代码优化</a></li>
-		
-			<li><a href="/tags/jinja/">jinja</a></li>
-		
-			<li><a href="/tags/decorator/">decorator</a></li>
-		
-			<li><a href="/tags/gc/">gc</a></li>
-		
-			<li><a href="/tags/函数/">函数</a></li>
-		
-			<li><a href="/tags/vim/">vim</a></li>
-		
-			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+			<li><a href="/tags/闭包/">闭包</a></li>
 		
 			<li><a href="/tags/django/">django</a></li>
 		
+			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
+		
+			<li><a href="/tags/oop/">oop</a></li>
+		
 			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/jinja/">jinja</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/ELK/">ELK</a></li>
 		
 			<li><a href="/tags/uwsgi/">uwsgi</a></li>
 		
-			<li><a href="/tags/ELK/">ELK</a></li>
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/redis/">redis</a></li>
 		
 		 
 		</ul>
@@ -275,11 +297,15 @@
 		
 			
 <div class="widget">
-  <h4>最新文章</h4>
+  <h4>Posts recentes</h4>
   <ul class="entry list-unstyled">
     
       <li>
-        <a href="/2017/11/15/ELK/" ><i class="fa fa-file-o"></i>ELK</a>
+        <a href="/2017/12/24/agile/" ><i class="fa fa-file-o"></i>初涉敏捷开发</a>
+      </li>
+    
+      <li>
+        <a href="/2017/11/15/ELK/" ><i class="fa fa-file-o"></i>ELK搭建</a>
       </li>
     
       <li>
@@ -294,17 +320,13 @@
         <a href="/2017/09/21/jinja2/" ><i class="fa fa-file-o"></i>django中使用jinja2模板</a>
       </li>
     
-      <li>
-        <a href="/2017/09/14/salt-sls/" ><i class="fa fa-file-o"></i>saltstack(四)sls编写</a>
-      </li>
-    
   </ul>
 </div>
 
 		
 			
 <div class="widget">
-	<h4>链接</h4>
+	<h4>Links</h4>
 	<ul class="blogroll list-unstyled">
 	
 		<li><i class="fa fa-github"></i><a href="http://www.github.com/DearEirs" title="My Github account." target="_blank"]);">My Github</a></li>

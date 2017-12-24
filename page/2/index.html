@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>第 2 页 | Dear&#39;s Blog</title>
+  <title>Página 2 | Dear&#39;s Blog</title>
 
   <meta name="author" content="Dear">
   
@@ -145,6 +145,56 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2017-09-12 </div>
+			<div class="article-title"><a href="/2017/09/12/oop/" >python之面向对象编程</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<p>面向对象的基本特点</p>
+<ul>
+<li>封装</li>
+<li>继承</li>
+<li>多态</li>
+</ul>
+<hr>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Humen</span>:</span></div><div class="line">  count = <span class="number">0</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, age, hight, weight)</span></span></div><div class="line">    self.name = name</div><div class="line">    self.age = age</div><div class="line">    self.hight = hight</div><div class="line">    self.weight = weight</div><div class="line">    count += <span class="number">1</span></div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">walk</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"walk slow"</span>)</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">sleep</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">xiaoming = Humen(<span class="string">'xiaoming'</span>, <span class="number">18</span>, <span class="number">180</span>, <span class="number">100</span>)</div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">类(Class) ：用户通过定义一组属性以定义一种对象的原型，用于表征该类的任何对象。属性是指数据成员（类变量和实例变量）和方法。</span></div><div class="line"><span class="string">对象（Object）：根据类定义的实例，包含数据成员与方法。</span></div><div class="line"><span class="string">实例（ Instance ）：类的一个单独的对象，是该类所代表的原型的特定实例之一。</span></div><div class="line"><span class="string">类变量（Class variable）：被类的所有实例共享的变量。类变量定义在类里，但再任何方法之外。</span></div><div class="line"><span class="string">实例变量（Instance variable）：定义在方法内部，且只属于当前实例的变量。</span></div><div class="line"><span class="string">数据成员（ Data member ）：类或实例的变量，用于保存相关联的数据。</span></div><div class="line"><span class="string">方法（Method）：定义在类里面的函数，代表着类的实例具有的行为。</span></div><div class="line"><span class="string">'''</span></div></pre></td></tr></table></figure>
+<ul>
+<li>类(Class) ：Humen</li>
+<li>对象（Object）：数据成员：xiaoming.name|age|hight|weight,方法：xiaoming.<strong>init</strong>|walk|sleep</li>
+<li>实例（ Instance ）：xiaoming</li>
+<li>类变量（Class variable）：count</li>
+<li>实例变量（Instance variable）：xiaoming.name|age|hight|weight</li>
+<li>数据成员（ Data member ）：xiaoming.name|age|hight|weight</li>
+<li>方法（Method）：xiaoming.<strong>init</strong>|walk|sleep 和其他内置方法</li>
+</ul>
+<h3 id="基本概念-1"><a href="#基本概念-1" class="headerlink" title="基本概念"></a>基本概念</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 承接上面</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Man</span><span class="params">(Humen)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    super().__init__()</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__add__</span><span class="params">(self, value)</span>:</span></div><div class="line">    self.age = self.age + value</div><div class="line">    <span class="keyword">return</span> self.age</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">walk</span><span class="params">(sefl)</span>:</span></div><div class="line">    print(<span class="string">'walk fast'</span>)</div><div class="line"></div><div class="line">daming = Man(<span class="string">'xiaoming'</span>, <span class="number">28</span>, <span class="number">170</span>, <span class="number">120</span>)</div><div class="line">daming + <span class="number">1</span></div><div class="line">print(daming.age) -&gt; 29</div><div class="line"></div><div class="line">实例化（ Instantiation ）：daming = Man(<span class="string">'daming'</span>, <span class="number">28</span>, <span class="number">170</span>, <span class="number">120</span>)</div><div class="line">继承（ Inheritance ）：<span class="class"><span class="keyword">class</span> <span class="title">Man</span><span class="params">(Humen)</span>:</span></div><div class="line">函数重载（Function overloading）：</div><div class="line">运算符重载（Operator overloading）：</div><div class="line">派生类/子类:<span class="class"><span class="keyword">class</span> <span class="title">Man</span></span></div><div class="line"><span class="class">基类/父类:</span>classHumen</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls, *args, *kwargs)</span>:</span></div><div class="line">    print(<span class="string">"method __new__ run"</span>)</div><div class="line">    </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"method __init__ run"</span>)</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(a)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">a = A()</div><div class="line"><span class="comment"># 输出</span></div><div class="line"><span class="comment"># "method __new__ run"</span></div><div class="line"><span class="comment"># "method __init__ run"</span></div><div class="line"><span class="comment"># 类在实例化过程中, 会先执行__new__ 再执行__init__</span></div><div class="line"><span class="comment"># __new__ 方法的第一个参数为cls  __init__ 方法的第一个参数为self</span></div><div class="line"><span class="comment"># 可以理解为 实例化类时 需要把类cls传到 __new__方法去构造1个实例  得到self 然后__init__再对实例self进行初始化</span></div><div class="line"><span class="comment"># 但是在类中定义方法时.可以把self 换成其他字符串, 这样是可以行 但是不建议这么做,</span></div><div class="line"><span class="comment"># 因为使用self和cls 是开发者们的一个"约定",而且使用self,cls更容易让人理解</span></div></pre></td></tr></table></figure>
+<h3 id="属性访问"><a href="#属性访问" class="headerlink" title="属性访问"></a>属性访问</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name)</span>:</span></div><div class="line">    self.name = name</div><div class="line"></div><div class="line">b = B(<span class="string">'Dear'</span>)</div><div class="line">b.name  -&gt; 'Dear'</div><div class="line">getattr(Object, name, defalut)</div><div class="line">getattr(b, 'name') -&gt; 'Dear'</div><div class="line">b.__getattribute__('name') -&gt; 'Dear'</div><div class="line">getattr(b, 'age') -&gt; AttributeError</div><div class="line">getattr(b, 'age', 18) -&gt; 18</div><div class="line">hasattr(obj, name)</div><div class="line">hasattr(b, 'name')  -&gt; True</div><div class="line">hasattr(b, 'haha')  -&gt; False</div><div class="line">setattr(Object, name, value)</div><div class="line">setattr(b, <span class="string">'name'</span>, <span class="string">'haha'</span>)</div><div class="line">b.name -&gt; 'haha'</div><div class="line">setattr(b, <span class="string">'age'</span>, <span class="number">18</span>) == b.__setattr__(<span class="string">'age'</span>, <span class="number">18</span>) == b.age=<span class="number">18</span></div><div class="line">b.age -&gt; 18</div><div class="line">delattr(obj, name)</div><div class="line">delattr(b, <span class="string">'age'</span>) == b.__delattr(<span class="string">'age'</span>)</div></pre></td></tr></table></figure>
+<h3 id="内置属性"><a href="#内置属性" class="headerlink" title="内置属性"></a>内置属性</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>:</span></div><div class="line">  <span class="string">''' This is Object C '''</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, name, age)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">c = C(<span class="string">'Dear'</span>, <span class="number">18</span>)</div><div class="line">print(c.__dict__)  -&gt; &#123;'name': 'Dear', 'age': 18&#125; #当前实例所拥有属性组成的字典</div><div class="line"><span class="comment"># c.a = 1  == c.__dict__[a] = 1 </span></div><div class="line">print(c.__doc__)  -&gt; 'This is Object C' #与函数注释一样会被help函数显示</div><div class="line">print(c.__module__)  -&gt; '__main__' #显示函数被那个模块所调用,当前为__main__</div><div class="line">print(C.__bases__) -&gt; (&lt;class 'object'&gt;,) #由父类组成的元组, 注意用的是类C 而不是实例c </div><div class="line"><span class="comment">#类在没有继承其他类的情况下,默认会继承object类</span></div></pre></td></tr></table></figure>
+<h3 id="继承与多继承"><a href="#继承与多继承" class="headerlink" title="继承与多继承"></a>继承与多继承</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Father</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, first_name, name)</span></span></div><div class="line">    self.first_name = name</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">full_name</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">return</span> first_name + name</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"Fater's func"</span>)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span><span class="params">(Father)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, gender, name)</span>:</span></div><div class="line">    self.gender = gender</div><div class="line">    self.name = name</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"Child's func"</span>)</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">father_func</span><span class="params">(self)</span>:</span></div><div class="line">    super().func()</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child2</span><span class="params">(Child, Father)</span>:</span> <span class="comment">#多继承时,如继承的类之间有继承关系,那么子类需写在父类前面</span></div><div class="line">  <span class="keyword">pass</span></div><div class="line"></div><div class="line">f = Father(<span class="string">'chen'</span>, <span class="string">'ergou'</span>)</div><div class="line">c = Child(<span class="string">'Male'</span>, <span class="string">'sangou'</span>)</div><div class="line">c.first_name -&gt; 'chen' #子类可以继承父类的数据成员与方法</div><div class="line">c.func() -&gt; 'Child's func' #也可以重写父类的数据成员与方法</div><div class="line">c.father_func() -&gt; "Fater's func" #子类可以通过super() 来调用父类中的方法</div><div class="line">c2 = Child2() </div><div class="line">issubclass(Child2, Father) -&gt; True #判断Child2 是否为 Father 的子类</div><div class="line">isinstance(Father, Child2) -&gt; True </div><div class="line"><span class="comment">#如果参数object是classinfo的实例,或者object是classinfo类的子类的一个实例,返回True.如果object不是一个给定类型的的对象,则返回结果总是False.</span></div></pre></td></tr></table></figure>
+<h3 id="常内置方法重载"><a href="#常内置方法重载" class="headerlink" title="常内置方法重载"></a>常内置方法重载</h3><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, host, port)</span>:</span></div><div class="line">    self.host = host</div><div class="line">    self.port = port</div><div class="line">    print(<span class="string">'connect db'</span>)</div><div class="line">    </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__del__</span><span class="params">(self)</span></span></div><div class="line"><span class="function">    <span class="title">print</span><span class="params">(<span class="string">'disconncet db'</span>)</span></span></div><div class="line"><span class="function">    </span></div><div class="line"><span class="function">  <span class="title">def</span> <span class="title">__repr__</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'__repr__'</span></div><div class="line">    </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__str__</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'__str__'</span></div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="keyword">return</span>  <span class="number">1</span></div><div class="line"></div><div class="line">d = D('192.168.0.1', '3306') -&gt; 'connect db'  #__init__ 方法在类实例化时就会调用</div><div class="line">print(d) -&gt; '__str__' #__str__方法在打印实例信息时被输出,必须返回str</div><div class="line">repr(d) -&gt; '__repr__' #打印实例信息时,若__str__里没返回信息 那么就会把__repr__的信息返回,同样__repr__返回的必须是str</div><div class="line"><span class="comment"># 当__str__和__repr__ 都没返回信息时  默认打印类的信息 如&lt;__main__.F object at 0x000001C904692A58&gt;</span></div><div class="line">len(d) -&gt; 1 #__len__ 方法在len(Object) 时被调用</div></pre></td></tr></table></figure>
+<h3 id="常用运算符重载"><a href="#常用运算符重载" class="headerlink" title="常用运算符重载"></a>常用运算符重载</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">E</span>:</span></div><div class="line">  flag = <span class="keyword">True</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, value)</span>:</span></div><div class="line">    self.value = value</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__bool__</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="keyword">return</span> Flag</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__add__</span><span class="params">(self, value)</span>:</span></div><div class="line">    self.value = self.value + value</div><div class="line">    <span class="keyword">return</span> self.value</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__radd__</span><span class="params">(self, value)</span>:</span></div><div class="line">    <span class="keyword">return</span> self.value</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__iadd__</span><span class="params">(self, value)</span>:</span></div><div class="line">    self.value += value</div><div class="line">    <span class="keyword">return</span> self.value</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__or__</span><span class="params">(self, value)</span>:</span></div><div class="line">    reslut = self.value <span class="keyword">or</span> value</div><div class="line">    <span class="keyword">return</span> reslut</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__lt__</span><span class="params">(self, value)</span>:</span></div><div class="line">    reslut = self.value &lt; value</div><div class="line">    <span class="keyword">return</span> reslut</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__gt__</span><span class="params">(self, value)</span>:</span></div><div class="line">    reslut = self.value &gt; value</div><div class="line">    <span class="keyword">return</span> reslut</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__le__</span><span class="params">(self, value)</span>:</span></div><div class="line">    result = self.value &lt;= value</div><div class="line">    <span class="keyword">return</span> result</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__ge__</span><span class="params">(self, value)</span>:</span></div><div class="line">    result = self.value &gt;= value</div><div class="line">    <span class="keyword">return</span> result</div><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">__bool__（self）: 使用bool(object) 时触发</span></div><div class="line"><span class="string">__add__(self, other): 使用object + other 时触发</span></div><div class="line"><span class="string">__radd__(self, other): 使用other + object 时触发</span></div><div class="line"><span class="string">__iadd__(self, other): 使用object += other 时触发</span></div><div class="line"><span class="string">__or__(self, other): 使用object or other 时触发</span></div><div class="line"><span class="string">__lt__(self, other): 使用object &lt;  other 时触发</span></div><div class="line"><span class="string">__gt__(self, other): 使用object &gt;  other 时触发</span></div><div class="line"><span class="string">__le__(self, other): 使用object &lt;= other 时触发</span></div><div class="line"><span class="string">__ge__(self, other): 使用object &gt;= other 时触发</span></div><div class="line"><span class="string">lt = less than</span></div><div class="line"><span class="string">gt = greater than</span></div><div class="line"><span class="string">le = less and equal</span></div><div class="line"><span class="string">ge = greater and equal</span></div><div class="line"><span class="string">'''</span></div></pre></td></tr></table></figure>
+<h3 id="属性隐藏"><a href="#属性隐藏" class="headerlink" title="属性隐藏"></a>属性隐藏</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">F</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    self._name = <span class="string">'Dear'</span></div><div class="line">    self.__age = <span class="number">18</span></div><div class="line"></div><div class="line">f = F()</div><div class="line">f._name in dir(f) -&gt; True</div><div class="line">f.__age in dir(f) -&gt; False</div><div class="line"><span class="comment"># python 实际在不存在只能由该类访问的私有属性 只是通过一些方法隐藏起来</span></div><div class="line"><span class="comment"># _name 保护性质的属性,不建议修改, 可以通过f._name 来访问得到</span></div><div class="line"><span class="comment"># __age 私有性质的属性,但是实际上还是可以访问得到,通过 __ 所定义的"私有属性" 在python中会被转成 _Object__Attr 即_F__age</span></div><div class="line"><span class="comment"># _F__age 通过命名方式就可以大概知道 __age 这个属性是属性 F 这个类的</span></div></pre></td></tr></table></figure>
+<h3 id="类方法与静态方法"><a href="#类方法与静态方法" class="headerlink" title="类方法与静态方法"></a>类方法与静态方法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">encrypt</span><span class="params">(password)</span>:</span></div><div class="line">  <span class="keyword">return</span> md5(password)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Login</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, username, password)</span>:</span></div><div class="line">    self.username = username</div><div class="line">    self.password = password</div><div class="line">    self.login(username, password)</div><div class="line">  </div><div class="line"><span class="meta">  @classmethod</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">login_by_phone</span><span class="params">(cls, phone)</span>:</span></div><div class="line">    print(<span class="string">'connect db'</span>)</div><div class="line">    print(<span class="string">'get username and password by phone'</span>)</div><div class="line">    <span class="keyword">return</span> cls(username,password)</div><div class="line">  </div><div class="line"><span class="meta">  @staticmethod</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">encrypt</span><span class="params">(password)</span>:</span></div><div class="line">    <span class="keyword">return</span> md5(password)</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">login</span><span class="params">(self, username, password)</span>:</span></div><div class="line">    <span class="comment">#password = encrypt(password) #效果一样</span></div><div class="line">    password = self.encrypt(password)</div><div class="line">    print(login)</div><div class="line"></div><div class="line">cls == <span class="class"><span class="keyword">class</span> <span class="title">Object</span></span></div><div class="line">self == 实例本身</div><div class="line"></div><div class="line">login = Login.login_by_phone(<span class="number">13123456789</span>)</div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">@classmethod：常用于定义备选构造方法，</span></div><div class="line"><span class="string">@staticmethod：静态方法和在普通的非class的method作用是一样的，只不过是命名空间是在类里面。</span></div><div class="line"><span class="string">一般使用场景就是和类相关的操作，但是又不会依赖和改变类、实例的状态。</span></div><div class="line"><span class="string">'''</span></div></pre></td></tr></table></figure>
+<h1 id="设计程序"><a href="#设计程序" class="headerlink" title="设计程序"></a>设计程序</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># Hosts 主机类</span></div><div class="line"><span class="comment"># Salt_Hosts 被Salt 监控的主机类</span></div><div class="line"><span class="comment"># Salt_Master Salt Master 类, 管理minion包括Syndic的minion</span></div><div class="line"><span class="comment"># Salt_Syndic Syndic类 管理自己的minion 但被master 管理</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Hosts</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, hostname, ip)</span></span></div><div class="line">    self.hostname = hostname</div><div class="line">    self.ip = ip</div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">is_alive</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line">  </div><div class="line">  </div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SaltHosts</span><span class="params">(Hosts)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, hostname, ip, salt_id)</span></span></div><div class="line"><span class="function">    <span class="title">super</span><span class="params">()</span>.<span class="title">__init__</span><span class="params">(hostname, ip)</span></span></div><div class="line"><span class="function">  </span></div><div class="line"><span class="function">  <span class="title">def</span> <span class="title">salt_run</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="comment">#在本机执行salt命令 所有salt客户端都可执行</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">is_master</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="comment">#判断机器是否为master </span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">is_syndic</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="comment">#判断机器是否为Syndic</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SaltMaster</span><span class="params">(Salt_Hosts)</span>:</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">keys_manager</span><span class="params">(self, target=None, action=<span class="string">'list-all'</span> )</span>:</span></div><div class="line">    <span class="comment"># 秘钥管理 根据action 与target 作出相关操作</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">excute_cmd</span><span class="params">(self, target, cmd)</span>:</span></div><div class="line">    <span class="comment"># 对指定target 执行命令  salt target cmd.run cmd </span></div><div class="line">    <span class="comment"># 常用</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">excute_sls</span><span class="params">(self, target, sls)</span>:</span></div><div class="line">    <span class="comment"># 对指定target 执行命令 salt target state.sls sls</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">excute_salt_cmd</span><span class="params">(self, target, cmd)</span>:</span></div><div class="line">    <span class="comment">#  执行自定义的salt 命令</span></div><div class="line">    <span class="comment">#  target = '*'</span></div><div class="line">    <span class="comment">#  cmd = 'pillar.get os'</span></div><div class="line">    <span class="comment">#  salt '*' pillar.get os</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">install_minions</span><span class="params">(self, target)</span>:</span></div><div class="line">    <span class="comment"># 使用salt-ssh 对target 安装salt-minion客户端</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">SaltSyndic</span><span class="params">(Salt_Master)</span>:</span></div><div class="line"></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, hostname, ip, salt_id, master)</span></span></div><div class="line">    self.salt_id = salt_id</div><div class="line">    self.master = master</div><div class="line">    super().__init__(hostname, ip)</div></pre></td></tr></table></figure>
+
+	
+	</div>
+  <a type="button" href="/2017/09/12/oop/#more" class="btn btn-default more">Leia Mais</a>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-09-12 </div>
 			<div class="article-title"><a href="/2017/09/12/decorator/" >python之装饰器的使用</a></div>
 		</h3>
 	
@@ -203,7 +253,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/09/12/decorator/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/09/12/decorator/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -258,7 +308,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/08/30/部署Nginx-uwsgi-django/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/08/30/部署Nginx-uwsgi-django/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -313,7 +363,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/08/30/RocketMQ双主集群/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/08/30/RocketMQ双主集群/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -368,7 +418,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/08/30/redis集群模式搭建/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/08/30/redis集群模式搭建/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -431,7 +481,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/08/30/saltstack-二-简单使用/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/08/30/saltstack-二-简单使用/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -478,7 +528,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/08/30/saltstack-一-安装与配置/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/08/30/saltstack-一-安装与配置/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -533,7 +583,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/08/15/redis搭建哨兵模式/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/08/15/redis搭建哨兵模式/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -568,7 +618,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/08/15/python-gc回收机制/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/08/15/python-gc回收机制/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -583,13 +633,13 @@
 <ul class="pagination">
 	 
 		
-    	<li class="prev"><a href="/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> 上一页</a></li>
+    	<li class="prev"><a href="/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i> Anterior</a></li>
   		
 
         <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
 
 		
-          <li class="next disabled"><a>下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>
+          <li class="next disabled"><a>Próximo<i class="fa fa-arrow-circle-o-right"></i></a></li>
         
 	
 </ul>
@@ -609,7 +659,7 @@
 			
   <div id="site_search">
    <div class="form-group">
-    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Busca" class="st-search-input st-default-search-input form-control"/>
    </div>  
   <div id="local-search-result"></div>
   </div>
@@ -618,7 +668,7 @@
 		
 			
 	<div class="widget">
-		<h4>分类</h4>
+		<h4>Categorias</h4>
 		<ul class="tag_box inline list-unstyled">
 		
 			<li><a href="/categories/django/">django</label></a></li>
@@ -636,40 +686,42 @@
 		
 			
 	<div class="widget">
-		<h4>标签云</h4>
+		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">
-		
-			<li><a href="/tags/函数/">函数</a></li>
-		
-			<li><a href="/tags/ELK/">ELK</a></li>
-		
-			<li><a href="/tags/闭包/">闭包</a></li>
-		
-			<li><a href="/tags/rocketmq/">rocketmq</a></li>
-		
-			<li><a href="/tags/代码优化/">代码优化</a></li>
-		
-			<li><a href="/tags/jinja/">jinja</a></li>
-		
-			<li><a href="/tags/uwsgi/">uwsgi</a></li>
-		
-			<li><a href="/tags/decorator/">decorator</a></li>
-		
-			<li><a href="/tags/python/">python</a></li>
-		
-			<li><a href="/tags/saltstack/">saltstack</a></li>
-		
-			<li><a href="/tags/redis/">redis</a></li>
-		
-			<li><a href="/tags/gc/">gc</a></li>
-		
-			<li><a href="/tags/vim/">vim</a></li>
-		
-			<li><a href="/tags/oop/">oop</a></li>
 		
 			<li><a href="/tags/异步/">异步</a></li>
 		
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/redis/">redis</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/jinja/">jinja</a></li>
+		
+			<li><a href="/tags/oop/">oop</a></li>
+		
+			<li><a href="/tags/ELK/">ELK</a></li>
+		
 			<li><a href="/tags/django/">django</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
+		
+			<li><a href="/tags/vim/">vim</a></li>
 		
 		 
 		</ul>
@@ -679,11 +731,15 @@
 		
 			
 <div class="widget">
-  <h4>最新文章</h4>
+  <h4>Posts recentes</h4>
   <ul class="entry list-unstyled">
     
       <li>
-        <a href="/2017/11/15/ELK/" ><i class="fa fa-file-o"></i>ELK</a>
+        <a href="/2017/12/24/agile/" ><i class="fa fa-file-o"></i>初涉敏捷开发</a>
+      </li>
+    
+      <li>
+        <a href="/2017/11/15/ELK/" ><i class="fa fa-file-o"></i>ELK搭建</a>
       </li>
     
       <li>
@@ -698,17 +754,13 @@
         <a href="/2017/09/21/jinja2/" ><i class="fa fa-file-o"></i>django中使用jinja2模板</a>
       </li>
     
-      <li>
-        <a href="/2017/09/14/salt-sls/" ><i class="fa fa-file-o"></i>saltstack(四)sls编写</a>
-      </li>
-    
   </ul>
 </div>
 
 		
 			
 <div class="widget">
-	<h4>链接</h4>
+	<h4>Links</h4>
 	<ul class="blogroll list-unstyled">
 	
 		<li><i class="fa fa-github"></i><a href="http://www.github.com/DearEirs" title="My Github account." target="_blank"]);">My Github</a></li>
