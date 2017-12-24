@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[初涉敏捷开发]]></title>
       <url>/2017/12/24/agile/</url>
-      <content type="html"><![CDATA[<h1 id="传统开发"><a href="#传统开发" class="headerlink" title="传统开发"></a>传统开发</h1><h3 id="瀑布模型"><a href="#瀑布模型" class="headerlink" title="瀑布模型"></a>瀑布模型</h3><p><img src="https://github.com/DearEirs/learn_python/blob/master/AgileDevelopment/瀑布模型.png" alt=""></p>
+      <content type="html"><![CDATA[<h1 id="传统开发"><a href="#传统开发" class="headerlink" title="传统开发"></a>传统开发</h1><h3 id="瀑布模型"><a href="#瀑布模型" class="headerlink" title="瀑布模型"></a>瀑布模型</h3><p><img src="https://raw.githubusercontent.com/DearEirs/learn_python/master/AgileDevelopment/%E7%80%91%E5%B8%83%E6%A8%A1%E5%9E%8B.png" alt=""></p>
 <p>优点：</p>
 <pre><code>瀑布模型中把开发过程细分成多个步骤, 每个人各司其职,
 开发人员只需按照文档完成需求即可
@@ -33,7 +33,7 @@
 <li>尊重：互相尊重，通过努力工作获得认同</li>
 <li>勇气：如实反馈进展和预估，不为没完成的计划找借口，<br>勇于根据根据情况随时调整工作方式</li>
 </ul>
-<p><img src="https://github.com/DearEirs/learn_python/blob/master/AgileDevelopment/XP.png" alt=""></p>
+<p><img src="https://raw.githubusercontent.com/DearEirs/learn_python/master/AgileDevelopment/XP.png" alt=""></p>
 <p>XP的核心实践：</p>
 <ul>
 <li>Whole Team: 用户参与到开发团队, 协作开发更好地开发出用户所需要的功能</li>
@@ -52,7 +52,7 @@
 </ul>
 <p>XP的过程：从用户根据用户故事提起需求后, 进行架构刺探, 功能刺探, 然后指定发布计划, 每次迭代发布周期为1-2周, 开发出完整功能后进行验收测试, 通过方可发布.</p>
 <hr>
-<h4 id="Scrum"><a href="#Scrum" class="headerlink" title="Scrum"></a>Scrum</h4><p><img src="https://github.com/DearEirs/learn_python/blob/master/AgileDevelopment/Scrum.png" alt=""></p>
+<h4 id="Scrum"><a href="#Scrum" class="headerlink" title="Scrum"></a>Scrum</h4><p><img src="https://raw.githubusercontent.com/DearEirs/learn_python/master/AgileDevelopment/Scrum.png" alt=""></p>
 <p>由用户提起需求, 产品经理分析用户需求做出产品订单后, 进行冲刺计划会议, 制定每次冲刺需要完成的需求, 而一次冲刺的周期为3-4周,在冲刺过程中,成员自由领取冲刺订单,冲刺订单中包含着细化后的需求信息.冲刺期间每日都要召开站立会议,成员们各自讲述自己昨天你完成了哪些工作?今天你打算做什么?完成你的目标是否存在什么障碍?而在冲刺结束后, 同样会有冲刺回顾会议,会议上所有成员对这次会议进行反思</p>
 <h4 id="XP-VS-Scrum"><a href="#XP-VS-Scrum" class="headerlink" title="XP VS Scrum"></a>XP VS Scrum</h4><p>XP相对于Scrum：</p>
 <ul>
