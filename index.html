@@ -176,9 +176,72 @@
 		
             
 		
+            
+		
         
         <!-- render other articles -->
         
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-03-12 </div>
+			<div class="article-title"><a href="/2018/03/12/new-style-class-and-classic-class/" >新式类与旧式类</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>本文中代码运行的python版本一律采取2.7.13</strong></p>
+<p>科普:</p>
+<p>经典类:classic class</p>
+<p>新式类:new-style class</p>
+<ol>
+<li><p>python2.2 之前并没有新式类</p>
+</li>
+<li><p>python2.2-2.7 新式类与经典类并存, 默认使用经典类, 除非显示继承object</p>
+</li>
+<li><p>python3.X 中去除了经典类, 用户定义的所有类都隐式继承自object</p>
+</li>
+</ol>
+<h3 id="如何使用新式类"><a href="#如何使用新式类" class="headerlink" title="如何使用新式类"></a>如何使用新式类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">New</span><span class="params">(object)</span>:</span> <span class="comment"># 显示继承object类</span></div><div class="line">  <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Old</span>:</span>  </div><div class="line">  <span class="keyword">pass</span></div><div class="line">  </div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Old2</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<p>上述代码中的3种定义类的方法, 只有第一种方法定义的是新式类.</p>
+<h3 id="新式类VS经典类"><a href="#新式类VS经典类" class="headerlink" title="新式类VS经典类"></a>新式类VS经典类</h3><blockquote>
+<p>新式类与经典类最主要的区别在于继承顺序, 事实上, 对于用户定义的每一个类, python 都会计算出一个<strong>方法解析顺序（Method Resolution Order, MRO）列表，它代表了类继承的顺序</strong>, 而由于经典类与新式类采用的算法不一致, 相同的继承顺序可能会出现不一样的MRO列表.</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> inspect</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(D)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(D)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(B, C)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line">    </div><div class="line"></div><div class="line"><span class="keyword">print</span> inspect.getmro(A)</div><div class="line"></div><div class="line"><span class="comment"># (&lt;class __main__.A at 0x000000000322BB88&gt;, </span></div><div class="line"><span class="comment"># &lt;class __main__.B at 0x000000000322B9A8&gt;, </span></div><div class="line"><span class="comment"># &lt;class __main__.D at 0x000000000322BC48&gt;, </span></div><div class="line"><span class="comment"># &lt;class __main__.C at 0x000000000322B948&gt;)</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(D)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(D)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(B, C)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> inspect.getmro(A)</div><div class="line"></div><div class="line"><span class="comment"># (&lt;class '__main__.A'&gt;, </span></div><div class="line">&lt;class '__main__.B'&gt;, </div><div class="line">&lt;class '__main__.C'&gt;, </div><div class="line">&lt;class '__main__.D'&gt;, </div><div class="line">&lt;type <span class="string">'object'</span>&gt;)</div></pre></td></tr></table></figure>
+<p>可以看到, 经典类的MRO顺序A-B-D-C 与新式类的MRO顺序 A-B-C-D-object 是存在差异的, 这可能会是我们日常会遇到的坑. </p>
+<p>而除了继承顺序的差异, 新式类还添加了内置属性<strong>slots</strong></p>
+<blockquote>
+<p>一般来说, 每个实例都有一个字典来管理实例的属性, 我们可以用<strong>dict</strong> 来查看(<strong>dict</strong>并不保存类属性),它允许我们动态地修改实例的属性, 但是这也意味着每个实例都会有1个独立的字典需要我们去维护, 当我们需要创建大量的实例时, 这个操作是十分消耗内存的.</p>
+<p>当我们在定义类时添加了<strong>slots</strong>属性后, 对象在实例化时就不会创建字典来管理实例属性, 而实例只能定义在slots里边已经设定好的属性名, 不允许动态添加其他未在<strong>slots</strong>里定义的属性</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span><span class="params">(object)</span>:</span></div><div class="line">  __slots__ = (<span class="string">'id'</span>, <span class="string">'name'</span>, <span class="string">'gender'</span>)</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">exam</span><span class="params">(self)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line">s1 = Student()</div><div class="line"></div><div class="line"><span class="string">'__dict__'</span> <span class="keyword">in</span> dir(s1) <span class="comment"># False</span></div><div class="line">s1.id = <span class="number">10001</span></div><div class="line">s1.<span class="keyword">class</span> = <span class="number">1</span> </div><div class="line"><span class="comment"># AttributeError: 'Student' object has no attribute 'class'</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">pass</span></div><div class="line"></div><div class="line">s1.exam = func </div><div class="line"><span class="comment"># AttributeError: 'Student' object attribute 'f' is read-only</span></div></pre></td></tr></table></figure>
+<p>使用<strong>slots</strong> 后我们不再能够动态地修改实例的属性, 那么使用<strong>slots</strong>究竟有什么好处呢?</p>
+<p>优点：</p>
+<ol>
+<li>节省内存</li>
+<li>提高属性访问速度</li>
+</ol>
+<p>缺点:</p>
+<ol>
+<li>不能动态修改实例属性</li>
+</ol>
+<hr>
+<p>当然, 除了继承顺序和<strong>slots</strong>, 新式类添加了<strong>getattribute</strong>方法, 还修改了实例的类型</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">New</span><span class="params">(object)</span>:</span></div><div class="line">  <span class="keyword">pass</span></div><div class="line">  </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Old</span>:</span></div><div class="line">  <span class="keyword">pass</span></div><div class="line">  </div><div class="line"> </div><div class="line">new = New()</div><div class="line">old = Old()</div><div class="line"></div><div class="line">print(new)</div><div class="line"><span class="comment"># &lt;__main__.New object at 0x0000000003262208&gt;</span></div><div class="line">print(old)</div><div class="line"><span class="comment"># &lt;__main__.Old instance at 0x000000000321C6C8&gt;</span></div></pre></td></tr></table></figure>
+
+	
+	</div>
+  <a type="button" href="/2018/03/12/new-style-class-and-classic-class/#more" class="btn btn-default more">Leia Mais</a>
+</div>
+
+           
+		
            
 			  
 	
@@ -206,7 +269,7 @@
 - 用户没有参与开发过程,不能很好地知道开发出来的产品
 有没有符合客户的要求
 </code></pre><h1 id="敏捷开发"><a href="#敏捷开发" class="headerlink" title="敏捷开发"></a>敏捷开发</h1><h3 id="敏捷开发是什么"><a href="#敏捷开发是什么" class="headerlink" title="敏捷开发是什么"></a>敏捷开发是什么</h3><p>敏捷开发不是一套明确的流程,也不是一种方法或者工具,敏捷开发是遵循着敏捷宣言的一种思想, 所有遵循这种思想的实践都可以称为敏捷开发.</p>
-<p>敏捷开发的核心思想：<strong>以人为本，专注交付对<br>客户有价值的软件。在高度协作的环境中，使用迭代式的<br>方式进行增量开发，经常根据反馈进行思考、反省和总结<br>，不停地自我调整和完善，让软件开发与交付轻量而敏捷。</strong></p>
+<p>敏捷开发的核心思想：<strong>以人为本，专注交付对客户有价值的软件。在高度协作的环境中，使用迭代式的方式进行增量开发，经常根据反馈进行思考、反省和总结，不停地自我调整和完善，让软件开发与交付轻量而敏捷。</strong></p>
 <h5 id="敏捷宣言"><a href="#敏捷宣言" class="headerlink" title="敏捷宣言"></a>敏捷宣言</h5><ul>
 <li>个体和互动 高于 流程和工具</li>
 <li>工作的文件 高于 详尽的文档</li>
@@ -245,7 +308,7 @@
 <p>由用户提起需求, 产品经理分析用户需求做出产品订单后, 进行冲刺计划会议, 制定每次冲刺需要完成的需求, 而一次冲刺的周期为3-4周,在冲刺过程中,成员自由领取冲刺订单,冲刺订单中包含着细化后的需求信息.冲刺期间每日都要召开站立会议,成员们各自讲述自己昨天你完成了哪些工作?今天你打算做什么?完成你的目标是否存在什么障碍?而在冲刺结束后, 同样会有冲刺回顾会议,会议上所有成员对这次会议进行反思</p>
 <h4 id="XP-VS-Scrum"><a href="#XP-VS-Scrum" class="headerlink" title="XP VS Scrum"></a>XP VS Scrum</h4><p>XP相对于Scrum：</p>
 <ul>
-<li>迭代周期: XP迭代周期为1-2周, Scrum迭代周期为3-4周</li>
+<li>迭代周期: XP迭代周期为1-2周, Scrum迭代周期为3-4周(现在多为1-2周)</li>
 <li>应付新需求: 在XP中, 有限制地允许用户更改需求, 而Scrum中则不允许这样做, 一旦需求确定, 不可更改</li>
 <li>开发过程: 在开发过程中, XP严格按照需求的优先级来开发, 而Scrum可以不按照需求优先级开发</li>
 <li>实施规范: Scrum实施的过程中, 并没有规定采用XP中要求的结对编程、TDD、简单设计等行为</li>
@@ -664,12 +727,14 @@
 <li>尽量减少循环嵌套层数</li>
 <li>大多数情况下大循环放在更里层效率更高</li>
 </ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</div><div class="line">      <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">      <span class="keyword">pass</span></div><div class="line"></div><div class="line">timeit.timeit(func,number=1000) --&gt; 20.439412046114683</div><div class="line">timeit.timeit(func2,number=1000) --&gt; 38.57239906224004</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</div><div class="line">      <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">      <span class="keyword">pass</span></div><div class="line"></div><div class="line">timeit.timeit(func,number=1000) --&gt; 20.439412046114683</div><div class="line">timeit.timeit(func2,number=1000) --&gt; 38.57239906224004</div><div class="line"></div><div class="line">- 时间局部性: 如果一个信息项正在被访问，那么在近期它很可能还会被再次访问。</div><div class="line">- 空间局部性: 在最近的将来将用到的信息很可能与现在正在使用的信息在空间地址上是临近的。</div></pre></td></tr></table></figure>
 <h3 id="变量命名空间"><a href="#变量命名空间" class="headerlink" title="变量命名空间"></a>变量命名空间</h3><ul>
 <li>能使用局部变量就不要使用全局变量</li>
 <li>能放在循环更外层的就不要放到循环更里层</li>
 <li>最小权限原则</li>
 </ul>
+<blockquote>
+</blockquote>
 
 	
 	</div>
@@ -740,67 +805,6 @@
 
            
 		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-09-12 </div>
-			<div class="article-title"><a href="/2017/09/12/func/" >python之函数、闭包</a></div>
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<h3 id="函数的意义"><a href="#函数的意义" class="headerlink" title="函数的意义"></a>函数的意义</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#函数是对单一相关操作的有组织的可重用代码的块的封装</span></div><div class="line"><span class="comment">#为应用程序提供更好的模块化以及提高代码的复用程度</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">(x, y, z)</span>:</span></div><div class="line">    <span class="keyword">return</span> x + y + z</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">()</span>:</span></div><div class="line">    x, y, z = <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span></div><div class="line">    <span class="keyword">return</span> x + y + z </div><div class="line"></div><div class="line">func1(x=<span class="number">1</span>,y=<span class="number">2</span>,z=<span class="number">3</span>)</div><div class="line">func2()</div><div class="line"></div><div class="line"><span class="comment"># 函数并不意味着对一段重复使用的代码进行封装 如func2,在x, y, z,不变的情况下这样使用好像不会出问题</span></div><div class="line"><span class="comment"># 但是我们要的不仅仅是这个,在有可能的情况下,应该尽可能地提高函数的自定义程度,</span></div><div class="line">如同func1，传到函数里边的可以是<span class="number">3</span>个str,<span class="number">3</span>个int,<span class="number">3</span>个list等等,让使用者来自己定义函数的输入</div></pre></td></tr></table></figure>
-<h3 id="定义和调用规则"><a href="#定义和调用规则" class="headerlink" title="定义和调用规则"></a>定义和调用规则</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_mail</span><span class="params">(sender, password, receiver,  message, subject=None, smtpserver=<span class="string">'qq.smtp.com'</span>)</span> -&gt; bool:</span></div><div class="line">    <span class="string">''' function send_mail</span></div><div class="line"><span class="string">    </span></div><div class="line"><span class="string">    :param sender: 发件人的邮箱地址</span></div><div class="line"><span class="string">    :type sender: str</span></div><div class="line"><span class="string">    </span></div><div class="line"><span class="string">    :param password: 发件人的邮箱密码</span></div><div class="line"><span class="string">    :type password: str</span></div><div class="line"><span class="string">    </span></div><div class="line"><span class="string">    :param receiver: 收件人的邮箱地址</span></div><div class="line"><span class="string">    :type receiver: list</span></div><div class="line"><span class="string">    </span></div><div class="line"><span class="string">    :param message: 邮件内容</span></div><div class="line"><span class="string">    :type message: str</span></div><div class="line"><span class="string">    </span></div><div class="line"><span class="string">    :param subject: 邮件标题</span></div><div class="line"><span class="string">    :type subject: str</span></div><div class="line"><span class="string">    </span></div><div class="line"><span class="string">    :param smtpserver: 邮件服务器, 默认为'qq.smtp.com'</span></div><div class="line"><span class="string">    :type smtpserver: str</span></div><div class="line"><span class="string">    </span></div><div class="line"><span class="string">    :return bool</span></div><div class="line"><span class="string">    '''</span></div><div class="line">    msg=MIMEText(message)</div><div class="line">    msg[<span class="string">'Subject'</span>]=subject</div><div class="line">    msg[<span class="string">'Form'</span>]=sender</div><div class="line">    msg[<span class="string">'To'</span>]=receiver</div><div class="line">    result = <span class="keyword">False</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">      smtp=SMTP()</div><div class="line">      smtp.connect(smtpserver)</div><div class="line">      smtp.login(sender,password)</div><div class="line">      smtp.sendmail(sender,receiver,msg.as_string())</div><div class="line">      smtp.close()</div><div class="line">      retult = <span class="keyword">True</span></div><div class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</div><div class="line">      print(e)</div><div class="line">      result = <span class="keyword">False</span></div><div class="line">    <span class="keyword">return</span> result</div><div class="line"></div><div class="line">result = send_mail(<span class="string">'369574757@qq.com'</span>, <span class="string">'123456'</span>, [<span class="string">'369574757@qq.com'</span>], <span class="string">'Hello World'</span>)</div><div class="line">print(result)</div></pre></td></tr></table></figure>
-<ul>
-<li>定义函数  从def所在行开始 直至函数所在的最后1行</li>
-<li>函数注释： 函数里边第一个注释块 help()会返回函数的注释</li>
-<li>函数返回值： return 所返回的值(默认为None)</li>
-<li>调用函数: send_mail() | result = send_mail()</li>
-<li>接收返回值： result = send_mail()</li>
-<li>内置函数与自定义函数：</li>
-<li>send_mail()就是自定义函数</li>
-<li>内置函数–&gt;不需要用户自己定义就能调用的(list,dict,tuple等)</li>
-</ul>
-<h3 id="函数的传参方式-按绑定关系传递"><a href="#函数的传参方式-按绑定关系传递" class="headerlink" title="函数的传参方式 按绑定关系传递"></a>函数的传参方式 按绑定关系传递</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">str1 = <span class="string">"dear"</span></div><div class="line">list1 = []</div><div class="line"></div><div class="line">print(sys.getrefcount(list1)) -&gt; 2</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(s:str, l:list)</span>:</span></div><div class="line"></div><div class="line">  print(sys.getrefcount(list1)) -&gt; 5</div><div class="line">  print(sys.getrefcount(l)) -&gt; 5</div><div class="line">  print(id(l),l)</div><div class="line"></div><div class="line">  l.append(s)</div><div class="line">  print(id(l),l)</div><div class="line">  </div><div class="line">  print(id(s),s)</div><div class="line">  s += <span class="string">"Eirs"</span></div><div class="line">  print(id(s),s)</div><div class="line"></div><div class="line"><span class="comment"># 由sys.getrefcount(list1)统计得知在参数传递的过程中  只是把list1的绑定关系传递给l 相当于l = list1 </span></div><div class="line"><span class="comment"># 由于l.append(s)只是对[]进行修改,并没有改变l与[]的绑定关系  所以两次print出来的id 是一样的</span></div><div class="line"><span class="comment"># s += "Eirs" 把变量s重新指向了新的元素'dearEirs', 变量从绑定'dear' 变为绑定'dearEirs'所以值的内存地址变了</span></div></pre></td></tr></table></figure>
-<h3 id="传参的形式"><a href="#传参的形式" class="headerlink" title="传参的形式"></a>传参的形式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(a, b, c=<span class="number">6</span>, *args)</span>:</span></div><div class="line">  <span class="keyword">return</span> id(a),id(b),id(c)</div><div class="line">  </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(x, y, z)</span>:</span></div><div class="line">  <span class="keyword">return</span> x-y+z</div></pre></td></tr></table></figure>
-<ul>
-<li>必选参数: a, b   func(1, 2)</li>
-<li>可选参数（默认参数): c  func(1, 2) func(1, 2, 3)</li>
-<li>按位置传参: func(1,2,3)  在第一、二、三位的参数1,2,3分别对应着参数a, b, c</li>
-<li>关键字参数: func(a=1, b=2, c=3)</li>
-<li>可变长参数: func(1,2,3,4,’dear’),在a,b,c 都接收到参数后,其余参数传递给*args</li>
-</ul>
-<h3 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">lambda</span> x: x % <span class="number">2</span></div><div class="line"></div><div class="line">相当于</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(x)</span>:</span></div><div class="line">  <span class="keyword">return</span> x % <span class="number">2</span></div><div class="line"></div><div class="line"><span class="comment">#使用情景: 函数体可以用1条表达式就可以解决时</span></div></pre></td></tr></table></figure>
-<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python</span></div><div class="line"></div><div class="line">x = <span class="number">1</span></div><div class="line"></div><div class="line"><span class="keyword">if</span> <span class="keyword">True</span>:</div><div class="line">  y = <span class="number">2</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</div><div class="line">  z = x+i</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(x,y,z)</span>:</span></div><div class="line">  total = x + y + z</div><div class="line">  print(total)</div><div class="line">  <span class="keyword">return</span> total</div><div class="line"></div><div class="line"><span class="comment">#print(total)</span></div><div class="line">total = func()</div><div class="line">print(total)</div></pre></td></tr></table></figure>
-<ul>
-<li>全局作用域：在当前py文件里都生效</li>
-<li>局部作用域：从函数或类的定义开始到该函数或类最后1行代码 为该函数或类的 局部作用域</li>
-<li>全局变量：定格定义的变量（包含定格的if while for try里边定义的变量），在全局生效,可用globals()查看</li>
-<li>局部变量：在函数或类里边所定义的变量，只在该函数或类中生效,可用locals()查看</li>
-</ul>
-<h3 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">a = <span class="number">10000</span></div><div class="line">sys.getrefcount(a) -&gt; 2</div><div class="line"><span class="keyword">del</span> a</div><div class="line">sys.getrefcount(a) -&gt; 1</div><div class="line"><span class="comment">#变量a的生命周期结束,如果不del a   那么变量a将会一直存在 直至程序关闭</span></div><div class="line"></div><div class="line"><span class="comment">#函数的生命周期</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">(x,y,z)</span>:</span></div><div class="line">  total = x + y + z</div><div class="line">  print(total)</div><div class="line">  <span class="keyword">return</span> total</div><div class="line">  </div><div class="line"><span class="comment">#从函数第一行开始 到函数 return 返回值 若没return则到函数代码里的最后1行执行结束  即为函数的生命周期</span></div><div class="line"></div><div class="line"><span class="comment">#对象的生命周期</span></div><div class="line">当对象被垃圾回收机制回收时,对象才会结束它的生命周期</div></pre></td></tr></table></figure>
-<h1 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h1><h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># sys.getrefcount() 统计变量所指向内存地址被引用的次数</span></div><div class="line">a = <span class="number">1000</span></div><div class="line">sys.getrefcount(a) -&gt; 2</div><div class="line"></div><div class="line">b = c  = a </div><div class="line">sys.getrefcount(a) -&gt; 4</div><div class="line">sys.getrefcount(b) -&gt; 4</div><div class="line">sys.getrefcount(c) -&gt; 4</div><div class="line"></div><div class="line"><span class="comment"># 每当有1个变量1000时  1000的引用计数就会加1  a, b, c, d,都指向着1000</span></div><div class="line"></div><div class="line"><span class="keyword">del</span> a </div><div class="line"></div><div class="line">sys.getrefcount(a) -&gt; 1</div><div class="line">sys.getrefcount(b) -&gt; 3</div><div class="line">sys.getrefcount(c) -&gt; 3</div><div class="line"></div><div class="line">当变量a被销毁时, <span class="number">1000</span>的引用次数就会减<span class="number">1</span></div></pre></td></tr></table></figure>
-<h3 id="分代收集"><a href="#分代收集" class="headerlink" title="分代收集"></a>分代收集</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># gc.get_count() 查看当前回收计数</span></div><div class="line"><span class="comment"># gc.get_threshold() 查看回收阈值 -&gt; (700, 10, 10)</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> gc</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></div><div class="line">  <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">()</span>:</span></div><div class="line">    i = <span class="number">0</span></div><div class="line">    <span class="keyword">while</span> i&lt;<span class="number">200</span>:</div><div class="line">      c1 = A()</div><div class="line">      c2 = A()</div><div class="line">      c1.t = c2</div><div class="line">      c2.t = c1</div><div class="line">      <span class="keyword">del</span> c1</div><div class="line">      <span class="keyword">del</span> c2</div><div class="line">      i += <span class="number">1</span></div><div class="line"></div><div class="line">gc.get_count()</div><div class="line">func1()</div><div class="line">gc.get_count()</div></pre></td></tr></table></figure>
-<h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><ul>
-<li>前提1：嵌套函数</li>
-<li>前提2：内层函数引用非全局变量</li>
-<li>前提3：不改变外部变量的绑定关系</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">查看函数是不是闭包：</span></div><div class="line"><span class="string">2.7:func.func_closure  返回cell对象即为闭包  返回None即不是</span></div><div class="line"><span class="string">3.6:func.__closure__</span></div><div class="line"><span class="string">'''</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">()</span>:</span></div><div class="line">  dict1 = &#123;&#125;</div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">inner</span><span class="params">(key,value)</span>:</span></div><div class="line">    dict1[key] = value</div><div class="line">    <span class="keyword">return</span> dict1</div><div class="line">  <span class="keyword">return</span> inner</div><div class="line"></div><div class="line">f1 = outer()</div><div class="line">print(f.__closure__) -&gt; (&lt;cell at 0x000002BEE0BC57C8: dict object at 0x000002BEE0FD5F78&gt;,)</div><div class="line">f1(<span class="string">'key1'</span>,<span class="string">'value1'</span>)</div><div class="line">f1('key2','value2') -&gt; &#123;'key1': 'value1', 'key2': 'value2'&#125;</div><div class="line"></div><div class="line">f2 = outer()</div><div class="line">f2(<span class="string">'key3'</span>,<span class="string">'value3'</span>)</div><div class="line">f2('key4','value4') -&gt; &#123;'key3': 'value3', 'key4': 'value4'&#125;</div><div class="line"></div><div class="line"><span class="comment"># 当外部函数被调用时，返回一个闭包 即f,f2</span></div><div class="line"><span class="comment"># 闭包 = 子函数 + 依赖的外部变量  子函数 inner 外部变量 dict1</span></div><div class="line"><span class="comment"># 闭包是一种特殊的函数</span></div><div class="line"><span class="comment"># 每调一次外部函数，返回一个新闭包 f f2 的互不干扰,是2个不一样的闭包 各自指向着不同的内存地址</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 匿名函数可不可以是闭包</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">outer</span><span class="params">()</span>:</span></div><div class="line">  dict1 = &#123;&#125;</div><div class="line">  l = <span class="keyword">lambda</span> key, value: dict1.update(&#123;key:value&#125;)</div><div class="line">  <span class="keyword">return</span> l</div><div class="line"></div><div class="line">f = outer()</div><div class="line">print(f.__closure__) -&gt; (&lt;cell at 0x00000230A4645798: dict object at 0x00000230A46E2168&gt;,)</div><div class="line"></div><div class="line"><span class="comment"># 匿名函数也可以是闭包</span></div></pre></td></tr></table></figure>
-
-	
-	</div>
-  <a type="button" href="/2017/09/12/func/#more" class="btn btn-default more">Leia Mais</a>
-</div>
-
-           
-		
 
 		</div>
 
@@ -867,39 +871,39 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+			<li><a href="/tags/saltstack/">saltstack</a></li>
 		
 			<li><a href="/tags/oop/">oop</a></li>
 		
-			<li><a href="/tags/gc/">gc</a></li>
-		
-			<li><a href="/tags/rocketmq/">rocketmq</a></li>
-		
-			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
-		
-			<li><a href="/tags/django/">django</a></li>
-		
-			<li><a href="/tags/jinja/">jinja</a></li>
-		
-			<li><a href="/tags/ELK/">ELK</a></li>
-		
-			<li><a href="/tags/decorator/">decorator</a></li>
-		
 			<li><a href="/tags/python/">python</a></li>
-		
-			<li><a href="/tags/异步/">异步</a></li>
-		
-			<li><a href="/tags/redis/">redis</a></li>
-		
-			<li><a href="/tags/vim/">vim</a></li>
-		
-			<li><a href="/tags/闭包/">闭包</a></li>
-		
-			<li><a href="/tags/函数/">函数</a></li>
 		
 			<li><a href="/tags/代码优化/">代码优化</a></li>
 		
-			<li><a href="/tags/saltstack/">saltstack</a></li>
+			<li><a href="/tags/redis/">redis</a></li>
+		
+			<li><a href="/tags/jinja/">jinja</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/vim/">vim</a></li>
+		
+			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/ELK/">ELK</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/django/">django</a></li>
 		
 		 
 		</ul>
@@ -911,6 +915,10 @@
 <div class="widget">
   <h4>Posts recentes</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2018/03/12/new-style-class-and-classic-class/" ><i class="fa fa-file-o"></i>新式类与旧式类</a>
+      </li>
     
       <li>
         <a href="/2017/12/24/agile/" ><i class="fa fa-file-o"></i>初涉敏捷开发</a>
@@ -926,10 +934,6 @@
     
       <li>
         <a href="/2017/09/29/k-vim/" ><i class="fa fa-file-o"></i>k-vim安装配置</a>
-      </li>
-    
-      <li>
-        <a href="/2017/09/21/jinja2/" ><i class="fa fa-file-o"></i>django中使用jinja2模板</a>
       </li>
     
   </ul>

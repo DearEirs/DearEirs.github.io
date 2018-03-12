@@ -4,14 +4,56 @@
 
     
   <url>
+    <loc>http://139.199.0.245/2018/03/12/new-style-class-and-classic-class/</loc>
+    <lastmod>2018-03-12T10:20:59.527Z</lastmod>
+    <data>
+        <display>
+        <title>新式类与旧式类</title>
+        <pubTime>2018-03-12T10:19:36.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://139.199.0.245/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://139.199.0.245/2017/12/24/agile/</loc>
-    <lastmod>2017-12-24T13:16:39.495Z</lastmod>
+    <lastmod>2018-01-04T03:39:02.490Z</lastmod>
     <data>
         <display>
         <title>初涉敏捷开发</title>
         <pubTime>2017-12-24T13:02:50.000Z</pubTime>
         
         <tag>敏捷开发</tag>
+         
+         
+           
+             
+              <breadCrumb title="python" url="http://139.199.0.245/categories/python/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/09/12/optimization/</loc>
+    <lastmod>2018-01-04T02:53:39.413Z</lastmod>
+    <data>
+        <display>
+        <title>python之代码优化</title>
+        <pubTime>2017-09-12T02:32:58.000Z</pubTime>
+        
+        <tag>python</tag>
+         
+        <tag>代码优化</tag>
          
          
            
@@ -151,28 +193,6 @@
         <tag>python</tag>
          
         <tag>oop</tag>
-         
-         
-           
-             
-              <breadCrumb title="python" url="http://139.199.0.245/categories/python/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://139.199.0.245/2017/09/12/optimization/</loc>
-    <lastmod>2017-09-12T03:58:13.440Z</lastmod>
-    <data>
-        <display>
-        <title>python之代码优化</title>
-        <pubTime>2017-09-12T02:32:58.000Z</pubTime>
-        
-        <tag>python</tag>
-         
-        <tag>代码优化</tag>
          
          
            
@@ -359,12 +379,12 @@
 
     
   <url>
-    <loc>http://139.199.0.245/2017/08/15/redis%E6%90%AD%E5%BB%BA%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/</loc>
+    <loc>http://139.199.0.245/2017/08/30/redis%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F%E6%90%AD%E5%BB%BA/</loc>
     <lastmod>2017-08-30T10:35:54.384Z</lastmod>
     <data>
         <display>
-        <title>redis搭建哨兵模式</title>
-        <pubTime>2017-08-15T03:28:06.000Z</pubTime>
+        <title>redis集群模式搭建</title>
+        <pubTime>2017-08-30T09:56:16.000Z</pubTime>
         
         <tag>redis</tag>
          
@@ -379,12 +399,12 @@
 
     
   <url>
-    <loc>http://139.199.0.245/2017/08/30/redis%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F%E6%90%AD%E5%BB%BA/</loc>
+    <loc>http://139.199.0.245/2017/08/15/redis%E6%90%AD%E5%BB%BA%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2017-08-30T10:35:54.384Z</lastmod>
     <data>
         <display>
-        <title>redis集群模式搭建</title>
-        <pubTime>2017-08-30T09:56:16.000Z</pubTime>
+        <title>redis搭建哨兵模式</title>
+        <pubTime>2017-08-15T03:28:06.000Z</pubTime>
         
         <tag>redis</tag>
          

@@ -222,12 +222,14 @@
 <li>尽量减少循环嵌套层数</li>
 <li>大多数情况下大循环放在更里层效率更高</li>
 </ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</div><div class="line">      <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">      <span class="keyword">pass</span></div><div class="line"></div><div class="line">timeit.timeit(func,number=1000) --&gt; 20.439412046114683</div><div class="line">timeit.timeit(func2,number=1000) --&gt; 38.57239906224004</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</div><div class="line">      <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">      <span class="keyword">pass</span></div><div class="line"></div><div class="line">timeit.timeit(func,number=1000) --&gt; 20.439412046114683</div><div class="line">timeit.timeit(func2,number=1000) --&gt; 38.57239906224004</div><div class="line"></div><div class="line">- 时间局部性: 如果一个信息项正在被访问，那么在近期它很可能还会被再次访问。</div><div class="line">- 空间局部性: 在最近的将来将用到的信息很可能与现在正在使用的信息在空间地址上是临近的。</div></pre></td></tr></table></figure>
 <h3 id="变量命名空间"><a href="#变量命名空间" class="headerlink" title="变量命名空间"></a>变量命名空间</h3><ul>
 <li>能使用局部变量就不要使用全局变量</li>
 <li>能放在循环更外层的就不要放到循环更里层</li>
 <li>最小权限原则</li>
 </ul>
+<blockquote>
+</blockquote>
 
 	
 	</div>
@@ -287,39 +289,39 @@
 		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/tags/decorator/">decorator</a></li>
-		
-			<li><a href="/tags/django/">django</a></li>
-		
-			<li><a href="/tags/python/">python</a></li>
-		
-			<li><a href="/tags/异步/">异步</a></li>
-		
-			<li><a href="/tags/jinja/">jinja</a></li>
-		
-			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
 		
 			<li><a href="/tags/gc/">gc</a></li>
 		
-			<li><a href="/tags/函数/">函数</a></li>
+			<li><a href="/tags/redis/">redis</a></li>
+		
+			<li><a href="/tags/python/">python</a></li>
 		
 			<li><a href="/tags/闭包/">闭包</a></li>
 		
-			<li><a href="/tags/ELK/">ELK</a></li>
+			<li><a href="/tags/jinja/">jinja</a></li>
 		
-			<li><a href="/tags/oop/">oop</a></li>
+			<li><a href="/tags/异步/">异步</a></li>
 		
 			<li><a href="/tags/uwsgi/">uwsgi</a></li>
 		
-			<li><a href="/tags/vim/">vim</a></li>
+			<li><a href="/tags/saltstack/">saltstack</a></li>
 		
 			<li><a href="/tags/代码优化/">代码优化</a></li>
 		
-			<li><a href="/tags/saltstack/">saltstack</a></li>
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
 		
-			<li><a href="/tags/redis/">redis</a></li>
+			<li><a href="/tags/oop/">oop</a></li>
 		
-			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
+			<li><a href="/tags/django/">django</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/vim/">vim</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/ELK/">ELK</a></li>
 		
 		 
 		</ul>
@@ -331,6 +333,10 @@
 <div class="widget">
   <h4>Posts recentes</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2018/03/12/new-style-class-and-classic-class/" ><i class="fa fa-file-o"></i>新式类与旧式类</a>
+      </li>
     
       <li>
         <a href="/2017/12/24/agile/" ><i class="fa fa-file-o"></i>初涉敏捷开发</a>
@@ -346,10 +352,6 @@
     
       <li>
         <a href="/2017/09/29/k-vim/" ><i class="fa fa-file-o"></i>k-vim安装配置</a>
-      </li>
-    
-      <li>
-        <a href="/2017/09/21/jinja2/" ><i class="fa fa-file-o"></i>django中使用jinja2模板</a>
       </li>
     
   </ul>
