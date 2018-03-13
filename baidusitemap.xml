@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://139.199.0.245/2018/03/12/new-style-class-and-classic-class/</loc>
-    <lastmod>2018-03-13T01:19:45.779Z</lastmod>
+    <lastmod>2018-03-13T01:23:49.733Z</lastmod>
     <data>
         <display>
         <title>新式类与旧式类</title>
@@ -319,12 +319,12 @@
 
     
   <url>
-    <loc>http://139.199.0.245/2017/08/30/saltstack-%E4%BA%8C-%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</loc>
+    <loc>http://139.199.0.245/2017/08/30/saltstack-%E4%B8%80-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/</loc>
     <lastmod>2017-08-30T10:35:54.385Z</lastmod>
     <data>
         <display>
-        <title>saltstack(二)简单使用</title>
-        <pubTime>2017-08-30T09:50:31.000Z</pubTime>
+        <title>saltstack(一)安装与配置</title>
+        <pubTime>2017-08-30T09:46:05.000Z</pubTime>
         
         <tag>saltstack</tag>
          
@@ -339,12 +339,12 @@
 
     
   <url>
-    <loc>http://139.199.0.245/2017/08/30/saltstack-%E4%B8%80-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/</loc>
+    <loc>http://139.199.0.245/2017/08/30/saltstack-%E4%BA%8C-%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2017-08-30T10:35:54.385Z</lastmod>
     <data>
         <display>
-        <title>saltstack(一)安装与配置</title>
-        <pubTime>2017-08-30T09:46:05.000Z</pubTime>
+        <title>saltstack(二)简单使用</title>
+        <pubTime>2017-08-30T09:50:31.000Z</pubTime>
         
         <tag>saltstack</tag>
          
