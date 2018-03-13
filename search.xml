@@ -3,7 +3,7 @@
   
     
     <entry>
-      <title><![CDATA[super]]></title>
+      <title><![CDATA[python之super]]></title>
       <url>/2018/03/13/super/</url>
       <content type="html"><![CDATA[<h3 id="为什么需要super"><a href="#为什么需要super" class="headerlink" title="为什么需要super"></a>为什么需要super</h3><p>在python没有引入super之前, 如果需要在子类中引用父类的方法, 一般写法如下:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Father</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">whoami</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"I am father"</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">whoami</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"I am child"</span>)</div><div class="line">    Father.whoami(self)</div></pre></td></tr></table></figure>
@@ -45,7 +45,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[新式类与旧式类]]></title>
+      <title><![CDATA[python之新式类与旧式类]]></title>
       <url>/2018/03/12/new-style-class-and-classic-class/</url>
       <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>本文中代码运行的python版本一律采取2.7.13</strong></p>
 <p>科普:</p>
