@@ -14,7 +14,7 @@
 
 python2.2 之前并没有新式类
 
-python2.2-2.7 新式类与经典类并存, 默认使用经典类, 除非显示继承object
+python2.2-2.7 新式类与经典类并存, 默认使用经典类, 除非显式继承object
 
 python3.X ">
   
@@ -164,15 +164,15 @@ python3.X ">
 <ol>
 <li><p>python2.2 之前并没有新式类</p>
 </li>
-<li><p>python2.2-2.7 新式类与经典类并存, 默认使用经典类, 除非显示继承object</p>
+<li><p>python2.2-2.7 新式类与经典类并存, 默认使用经典类, 除非显式继承object</p>
 </li>
 <li><p>python3.X 中去除了经典类, 用户定义的所有类都隐式继承自object</p>
 </li>
 </ol>
-<h3 id="如何使用新式类"><a href="#如何使用新式类" class="headerlink" title="如何使用新式类"></a>如何使用新式类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">New</span><span class="params">(object)</span>:</span> <span class="comment"># 显示继承object类</span></div><div class="line">  <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Old</span>:</span>  </div><div class="line">  <span class="keyword">pass</span></div><div class="line">  </div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Old2</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<h3 id="如何使用新式类"><a href="#如何使用新式类" class="headerlink" title="如何使用新式类"></a>如何使用新式类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">New</span><span class="params">(object)</span>:</span> <span class="comment"># 显式继承object类</span></div><div class="line">  <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Old</span>:</span>  </div><div class="line">  <span class="keyword">pass</span></div><div class="line">  </div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Old2</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">pass</span></div></pre></td></tr></table></figure>
 <p>上述代码中的3种定义类的方法, 只有第一种方法定义的是新式类.</p>
 <h3 id="新式类VS经典类"><a href="#新式类VS经典类" class="headerlink" title="新式类VS经典类"></a>新式类VS经典类</h3><blockquote>
-<p>新式类与经典类最主要的区别在于继承顺序, 事实上, 对于用户定义的每一个类, python 都会计算出一个<strong>方法解析顺序（Method Resolution Order, MRO）列表，它代表了类继承的顺序</strong>, 而由于经典类与新式类采用的算法不一致, 相同的继承顺序可能会出现不一样的MRO列表.</p>
+<p>新式类与经典类最主要的区别在于继承顺序, 事实上, 对于用户定义的每一个类, python 都会计算出一个<strong>方法解析顺序（Method Resolution Order, MRO）列表，它代表了类继承的顺序</strong>, 而由于经典类与新式类采用的算法不一致, 相同的继承关系可能会出现不一样的MRO列表.</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> inspect</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(D)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(D)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(B, C)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line">    </div><div class="line"></div><div class="line"><span class="keyword">print</span> inspect.getmro(A)</div><div class="line"></div><div class="line"><span class="comment"># (&lt;class __main__.A at 0x000000000322BB88&gt;, </span></div><div class="line"><span class="comment"># &lt;class __main__.B at 0x000000000322B9A8&gt;, </span></div><div class="line"><span class="comment"># &lt;class __main__.D at 0x000000000322BC48&gt;, </span></div><div class="line"><span class="comment"># &lt;class __main__.C at 0x000000000322B948&gt;)</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(D)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(D)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(B, C)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> inspect.getmro(A)</div><div class="line"></div><div class="line"><span class="comment"># (&lt;class '__main__.A'&gt;, </span></div><div class="line">&lt;class '__main__.B'&gt;, </div><div class="line">&lt;class '__main__.C'&gt;, </div><div class="line">&lt;class '__main__.D'&gt;, </div><div class="line">&lt;type <span class="string">'object'</span>&gt;)</div></pre></td></tr></table></figure>
 <p>可以看到, 经典类的MRO顺序A-B-D-C 与新式类的MRO顺序 A-B-C-D-object 是存在差异的, 这可能会是我们日常会遇到的坑. </p>
@@ -203,9 +203,9 @@ python3.X ">
 	<div class="pagination">
 <ul class="pagination">
 	 
-		
-          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
-        
+				
+    	<li class="prev"><a href="/2018/03/13/super/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
 
         <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
 
@@ -272,7 +272,7 @@ python3.X ">
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    <li><a href="/categories/python/">python<span>9</span></a></li>
+    <li><a href="/categories/python/">python<span>10</span></a></li>
   </li>
 
     </ul>
@@ -285,7 +285,7 @@ python3.X ">
 	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
     <ul id="tags" class="tag_box list-unstyled collapse in">	  
 	    
-  <li><a href="/tags/python/">python<span>8</span></a></li>
+  <li><a href="/tags/python/">python<span>9</span></a></li>
     </ul>
 	</div>
 	

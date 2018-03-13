@@ -145,6 +145,68 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2017-09-12 </div>
+			<div class="article-title"><a href="/2017/09/12/async/" >python之异步编程</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="线-进程池"><a href="#线-进程池" class="headerlink" title="线/进程池"></a>线/进程池</h1><p>python 3.2开始在标准库中新增了concurrent.futures模块,它主要提供了’ProcessPoolExecutor’, ‘ThreadPoolExecutor’ 两个类,提供了线/进程池的支持</p>
+<p>它们的使用方法相同:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">with</span> ProcessPoolExecutor(max_workers) <span class="keyword">as</span> pool:</div><div class="line">    pool.submit(task, args) <span class="comment"># 返回Future对象</span></div><div class="line">    pool.running() <span class="comment"># 判断task是否在运行</span></div><div class="line">    pool.done() <span class="comment"># 判断task是否执行完成</span></div><div class="line">    pool.result() <span class="comment"># 获取task的返回值 (阻塞)</span></div><div class="line">    pool.map(task, iterable) <span class="comment"># 迭代iterable,并当作参数传到task执行(有序)</span></div></pre></td></tr></table></figure></p>
+<ol>
+<li>pool.submit 会返回Future对象</li>
+<li>Future:可以简单理解为是未来将会完成的操作</li>
+<li>异步编程就是把需要等待的操作变成future,而释放CPU去执行其它代码</li>
+</ol>
+<h1 id="初涉异步"><a href="#初涉异步" class="headerlink" title="初涉异步"></a>初涉异步</h1><h1 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h1><ul>
+<li>阻塞:程序在等待某个操作完成期间，自身无法继续干别的事情，则称该程序在该操作上是阻塞的。</li>
+<li>非阻塞:程序在等待某操作过程中，自身不被阻塞，可以继续运行干别的事情，则称该程序在该操作上是非阻塞的。</li>
+<li>同步:不同程序单元为了完成某个任务，在执行过程中需靠某种通信方式以协调一致，称这些程序单元是同步执行的。</li>
+<li>异常:为完成某个任务，不同程序单元之间过程中无需通信协调，也能完成任务的方式。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">from</span> concurrent.futures <span class="keyword">import</span> ThreadPoolExecutor, ProcessPoolExecutor</div><div class="line"></div><div class="line"></div><div class="line">urls = [</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642780.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642781.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642782.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642783.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642784.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642785.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642786.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642787.html'</span>,</div><div class="line">    <span class="string">'https://www.duanwenxue.com/article/4642788.html'</span>,</div><div class="line">]</div><div class="line"></div><div class="line">domain = <span class="string">'duanwenxue.com'</span></div><div class="line"></div><div class="line"><span class="comment"># 同步阻塞</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">blocking_way</span><span class="params">(url)</span>:</span></div><div class="line">    sock = socket.socket()</div><div class="line">    sock.connect((domain, <span class="number">80</span>))</div><div class="line">    request = <span class="string">'GET &#123;0&#125; HTTP/1.0\r\nHost: &#123;1&#125;\r\n\r\n'</span>.format(url, domain)</div><div class="line">    sock.send(request.encode(<span class="string">'ascii'</span>))</div><div class="line">    response = <span class="string">b''</span></div><div class="line">    block = sock.recv(<span class="number">4096</span>)</div><div class="line">    <span class="keyword">while</span> block:</div><div class="line">        response += block</div><div class="line">        block = sock.recv(<span class="number">4096</span>)</div><div class="line">    <span class="keyword">return</span> response</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">asyn_way</span><span class="params">()</span>:</span></div><div class="line">    start = time.time()</div><div class="line">    response = []</div><div class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls:</div><div class="line">        response.append(blocking_way(url))</div><div class="line">    <span class="comment"># use 1.8566324710845947</span></div><div class="line">    print(time.time() - start)</div><div class="line">    <span class="keyword">return</span> response</div></pre></td></tr></table></figure>
+<p>因为socket需要3次握手成功才能建立起连接,而3次握手的过程中,需要通过网络来传递信息,这需要的时间是不确定的,socket连接是会一直阻塞进程,直至3次握手成功,才继续执行下面的代码.<br>但是,如果对方服务器出现网络问题,而无法握手成功,那么socket就会一直阻塞,直至timeout,即使网络通畅,socket连接仍然需要不短时间<br>这时程序处理请求需要很长时间,假如处理1个请求要1秒,那么处理10个请求就需要10秒</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 多进程</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">multiproc_way</span><span class="params">()</span>:</span></div><div class="line">    start = time.time()</div><div class="line">    <span class="keyword">with</span> ProcessPoolExecutor(<span class="number">10</span>) <span class="keyword">as</span> executor:</div><div class="line">        proc_pool = &#123;executor.submit(blocking_way, url) <span class="keyword">for</span> url <span class="keyword">in</span> urls&#125;</div><div class="line">    <span class="comment"># use 0.6353843212127686</span></div><div class="line">    result = [proc.result() <span class="keyword">for</span> proc <span class="keyword">in</span> proc_pool]</div><div class="line">    print(time.time() - start)</div><div class="line">    <span class="keyword">return</span> proc_pool</div></pre></td></tr></table></figure>
+<p>多进程的使用使用,使得处理时间大幅度降低,利用多核CPU的资源,使得多个进程并行,从而加快程序处理速度, 但是这样做的代价就是需要消耗更多的资源.<br>下面来看多线程:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 多线程</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">multithread_way</span><span class="params">()</span>:</span></div><div class="line">    start = time.time()</div><div class="line">    <span class="keyword">with</span> ThreadPoolExecutor(<span class="number">10</span>) <span class="keyword">as</span> executor:</div><div class="line">        thread_pool = &#123;executor.submit(blocking_way, url) <span class="keyword">for</span> url <span class="keyword">in</span> urls&#125;</div><div class="line">    <span class="comment"># use 0.5409300327301025</span></div><div class="line">    result = [proc.result() <span class="keyword">for</span> proc <span class="keyword">in</span> thread_pool]</div><div class="line">    print(time.time() - start)</div></pre></td></tr></table></figure></p>
+<p>多线程执行时,其实每个线程还是阻塞的,<br>python中,由于有GIL的存在,多个线程之间实际上是不能在同一个时间并行的<br>多个线程中,其实每个线程还是阻塞的,只不过每个线程执行指定的指令数或者指定的时间就会释放GIL锁,让其他线程继续执行<br>实际运行的只有获取到GIL锁的那个线程,而当线程中遇到需要等待的操作时,切换到其他线程中继续执行代码,无形中就会减少代码的运行时间</p>
+<hr>
+<p>下面来看看非阻塞方式<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 非阻塞方式</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">nonbroking_way</span><span class="params">()</span>:</span></div><div class="line">    sock = socket.socket()</div><div class="line">    sock.setblocking(<span class="keyword">False</span>)</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        sock.connect((<span class="string">"www.duanwenxue.com"</span>, <span class="number">80</span>))</div><div class="line">    <span class="keyword">except</span> BlockingIOError:</div><div class="line">        <span class="keyword">pass</span></div><div class="line">    request = <span class="string">'GET &#123;0&#125; HTTP/1.0\r\nHost: &#123;1&#125;\r\n\r\n'</span>.format(url, domain)</div><div class="line">    data = request.encode(<span class="string">'ascii'</span>)</div><div class="line">    While <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            sock.send(data)</div><div class="line">            <span class="keyword">break</span></div><div class="line">        <span class="keyword">except</span> OSError:</div><div class="line">            <span class="keyword">pass</span></div><div class="line"></div><div class="line">    response = <span class="string">b''</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            chunk = sock.recv(<span class="number">4096</span>)</div><div class="line">            <span class="keyword">while</span> chunk:</div><div class="line">                response += chunk</div><div class="line">                chunk = sock.recv(<span class="number">4096</span>)</div><div class="line">            <span class="keyword">break</span></div><div class="line">        <span class="keyword">except</span> OSError:</div><div class="line">            <span class="keyword">pass</span></div><div class="line">        <span class="keyword">return</span> response</div></pre></td></tr></table></figure></p>
+<p>sock.setblocking(False) 把socket设置为非阻塞模式,那么socket 执行connect, recv等操作时是不会阻塞程序的<br>但是问题随之而来socket 执行完connect后再执行send操作,send的时候如何才能知道socket的连接已经成功建立了呢？<br>这时就需要不断循环去尝试,直至连接建立,并发送请求后,才继续执行下面的代码,而recv时也是同理.</p>
+<p>这样看起来,程序更加复杂,而且效率也没有得到提升,因为socket虽然是非阻塞的,但是代码中在send,recv时还是需要等待上一步的操作完成时才能执行<br>那么如果有一个人可以在socket建立完成时来通知程序,可以执行send操作了,那样在等待socket建立的过程中,CPU就可以去干其他的事情了.<br>简单的例子:周末去吃饭,但是餐厅人很多,需要等位,这时候如果你一直在这里等,你就不能走开去干其他事情,直至吃完饭之后.<br>那么如果你把电话号码留给服务员,让他在轮到你的时候给你电话,让你过来吃饭,那么在等待电话到来之前,你可以去干你想干的事情.</p>
+<ul>
+<li>epoll:提供了专门的系统模块让应用程序可以接收事件通知(把电话号码留给服务员)</li>
+<li>callback:在知道I/O状态发生改变后所需要执行的操作(服务员打电话通知可以过去吃饭)<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">from</span> selectors <span class="keyword">import</span> DefaultSelector, EVENT_WRITE, EVENT_READ</div><div class="line"></div><div class="line">selector = DefaultSelector()</div><div class="line">stopped = <span class="keyword">False</span> </div><div class="line">urls_todo = [<span class="string">'/'</span>, <span class="string">'/1'</span>, <span class="string">'/2'</span>, <span class="string">'/3'</span>, <span class="string">'/4'</span>, <span class="string">'/5'</span>, <span class="string">'/6'</span>, <span class="string">'/7'</span>, <span class="string">'/8'</span>, <span class="string">'/9'</span>]</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Crawler</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, url)</span>:</span></div><div class="line">        self.url = url</div><div class="line">        self.sock = <span class="keyword">None</span></div><div class="line">        self.response = <span class="string">b''</span></div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">fetch</span><span class="params">(self)</span>:</span></div><div class="line">        self.sock = socket.socket()</div><div class="line">        self.sock.setblocking(<span class="keyword">False</span>)</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            self.sock.connect((<span class="string">'www.baidu.com'</span>, <span class="number">80</span>))</div><div class="line">        <span class="keyword">except</span> BlockingIOError:</div><div class="line">            <span class="keyword">pass</span></div><div class="line">        selector.register(self.sock.fileno(), EVENT_WRITE, self.connected)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">connected</span><span class="params">(self, key, mask)</span>:</span></div><div class="line">        selector.unregister(key.fd)</div><div class="line">        get = <span class="string">'GET &#123;0&#125; HTTP/1.0\r\nHost: www.baidu.com\r\n\r\n'</span>.format(self.url)</div><div class="line">        self.sock.send(get.encode(<span class="string">'ascii'</span>))</div><div class="line">        selector.register(key.fd, EVENT_READ, self.read_response)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">read_response</span><span class="params">(self, key, mask)</span>:</span></div><div class="line">        <span class="keyword">global</span> stopped</div><div class="line">        chunk = self.sock.recv(<span class="number">4096</span>)</div><div class="line">        <span class="keyword">if</span> chunk:</div><div class="line">            self.response += chunk</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            selector.unregister(key.fd)</div><div class="line">            urls_todo.remove(self.url)</div><div class="line">            <span class="keyword">if</span> <span class="keyword">not</span> urls_todo:</div><div class="line">                stopped = <span class="keyword">True</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">loop</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">not</span> stopped:</div><div class="line">        events = selector.select()</div><div class="line">        <span class="keyword">for</span> event_key, event_mask <span class="keyword">in</span> events:</div><div class="line">            callback = event_key.data</div><div class="line">            callback(event_key, event_mask)</div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    <span class="keyword">import</span> time</div><div class="line">    start = time.time()</div><div class="line">    <span class="keyword">for</span> url <span class="keyword">in</span> urls_todo:</div><div class="line">        crawl = Crawler(<span class="string">'url'</span>)</div><div class="line">        crawl.fetch()</div><div class="line">    loop()</div><div class="line">    print(time.time() - start)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>register(fileobj, events, data=None) </p>
+<ul>
+<li>fileobj:可以是文件描述符也可以是文件对象</li>
+<li>events:位掩码，指明发生的是什么事件</li>
+<li>data:与指定文件与指定事件绑定在一起的数据</li>
+</ul>
+<p>selector.register 在该socket的写事件上绑定了回调函数connected.在该socket上第一次发生的写事件意味着连接的建立后会调用connected函数</p>
+<p>而connected函数在连接建立成功后再解除了该socket上所有绑定的数据。</p>
+<p>在connect函数中同样也用selector.register 绑定了read_response函数,当socket发生可读事件(即服务器已经返回数据)时调用read_response函数.</p>
+<p>这些事件触发后,我们就要执行回调了,我们可以用selector.select()来获取所触发的事件,当没有事件被触发时selector.select()会阻塞,直至事件触发.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> socket</div><div class="line"><span class="keyword">from</span> selectors <span class="keyword">import</span> DefaultSelector, EVENT_READ</div><div class="line"></div><div class="line">selector = DefaultSelector()</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Chat</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, host, port, max_clients)</span>:</span></div><div class="line">        self.clients = []</div><div class="line">        self.host = host</div><div class="line">        self.port = port</div><div class="line">        self.stoped = <span class="keyword">False</span></div><div class="line">        self.max_clients = max_clients</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></div><div class="line">        self.sock = socket.socket()</div><div class="line">        self.sock.bind((self.host, self.port))</div><div class="line">        self.sock.listen(self.max_clients)</div><div class="line">        self.sock.setblocking(<span class="keyword">False</span>)</div><div class="line">        selector.register(self.sock, EVENT_READ, self.accept)</div><div class="line">        self.loop()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">accept</span><span class="params">(self, key, mask)</span>:</span></div><div class="line">        print(<span class="string">'accept'</span>)</div><div class="line">        conn, addr = self.sock.accept()</div><div class="line">        self.clients.append(addr)</div><div class="line">        conn.setblocking(<span class="keyword">False</span>)</div><div class="line">        selector.register(conn, EVENT_READ, self.handle)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">handle</span><span class="params">(self, key, mask)</span>:</span></div><div class="line">        selector.unregister(key.fd)</div><div class="line">        print(<span class="string">'send'</span>)</div><div class="line">        conn = key.fileobj</div><div class="line">        print(conn.getpeername())</div><div class="line">        <span class="keyword">try</span>:</div><div class="line">            data = conn.recv(<span class="number">4096</span>)</div><div class="line">        <span class="keyword">except</span> BlockingIOError:</div><div class="line">            <span class="keyword">pass</span></div><div class="line">        <span class="keyword">if</span> data:</div><div class="line">            <span class="keyword">for</span> client <span class="keyword">in</span> self.clients:</div><div class="line">                <span class="keyword">if</span> client != conn.getpeername():</div><div class="line">                    self.sock.sendto(data, client)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">loop</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">while</span> <span class="keyword">not</span> self.stoped:</div><div class="line">            events = selector.select()</div><div class="line">            <span class="keyword">for</span> event_key, event_mask <span class="keyword">in</span> events:</div><div class="line">                callback = event_key.data</div><div class="line">                callback(event_key, event_mask)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">stop</span><span class="params">(self)</span>:</span></div><div class="line">        self.stoped = <span class="keyword">True</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    chat = Chat(<span class="string">'localhost'</span>, <span class="number">8000</span>, <span class="number">10</span>)</div><div class="line">    chat.run()</div></pre></td></tr></table></figure>
+<p>原理与刚才一样,当Chat.run()时在该socket的写事件上绑定了回调函数accept函数.在该socket上第一次发生的读事件意味着有新客户端连接后会调用accept函数<br>执行accept时又会把socket绑定到handle函数上,当socket发生可读事件(即有数据可获取时),调用handle函数,获取clinet发过来的数据,并转发到其他的client</p>
+
+	
+	</div>
+  <a type="button" href="/2017/09/12/async/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-09-12 </div>
 			<div class="article-title"><a href="/2017/09/12/func/" >python之函数、闭包</a></div>
 		</h3>
 	
@@ -600,61 +662,6 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2017-08-15 </div>
-			<div class="article-title"><a href="/2017/08/15/redis搭建哨兵模式/" >redis搭建哨兵模式</a></div>
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><blockquote>
-<p>redis的集群模式是redis3以后新增的,对比传统哨兵模式,集群模式的数据是分片存储的,插入数据会插入到随机的1个redis master端并同步到对应的slave,由所有master共同组成1份完整的数据,而每个master会有对应的slave,当master宕掉时,对应的slave会自动升级成为master</p>
-</blockquote>
-<hr>
-<h1 id="环境："><a href="#环境：" class="headerlink" title="环境："></a>环境：</h1><p>centos6.7</p>
-<p>redis3.0.3</p>
-<p>3台虚拟机，IP分别是</p>
-<ul>
-<li>server1：192.168.1.1    </li>
-<li>server2：192.168.1.2     </li>
-<li>server3：   192.168.1.3</li>
-</ul>
-<p>（因redis机器最少要有3主3从，这里就用3台虚拟机来方便区分，实在没机器的可以在1台机上开6个节点）</p>
-<p>拿到机器后，首先把环境弄好<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">yum groupinstall "Development tools" -y</div><div class="line">yum install wget -y</div></pre></td></tr></table></figure></p>
-<hr>
-<h1 id="安装redis"><a href="#安装redis" class="headerlink" title="安装redis"></a>安装redis</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/src/</div><div class="line">wget http://download.redis.io/releases/redis-3.0.3.tar.gz</div><div class="line">tar -zxvf redis-3.0.3.tar.gz</div><div class="line">解压出来后要到目录里面编译安装</div><div class="line"></div><div class="line">cd redis-3.0.3</div><div class="line">make  &amp;&amp; make install</div><div class="line">在这里，可能会出现如下错误:(如没有，请略过)</div><div class="line"></div><div class="line">make[1]: Entering directory `/redis/src'</div><div class="line">CC adlist.o</div><div class="line">In file included from adlist.c:34:</div><div class="line">zmalloc.h:50:31: error: jemalloc/jemalloc.h: No such file or directory</div><div class="line">zmalloc.h:55:2: error: #error "Newer version of jemalloc required"</div><div class="line">make[1]: *** [adlist.o] Error 1</div><div class="line">make[1]: Leaving directory `/redis/src'</div><div class="line">make: *** [all] Error 2</div><div class="line"></div><div class="line">原因是没有安装jemalloc内存分配器，可以安装jemalloc 或 直接 输入make MALLOC=libc  &amp;&amp; make install</div></pre></td></tr></table></figure>
-<p>安装好redis后就是要创建节点了，3主3从总共6个</p>
-<p>以server1为例<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">首先创建redis集群的目录</div><div class="line"></div><div class="line">cd /usr/local</div><div class="line">mkdir redis</div><div class="line">cd ./redis</div><div class="line">然后把刚才已经编译好的redis包复制过来</div><div class="line"></div><div class="line">cp  -r  /usr/local/src/redis-3.0.3 /usr/local/redis/ &amp;&amp; mv /usr/local/redis/redis-3.0.3  7000   #这里以7000 7001 端口为例，为方便管理把文件夹以端口号命名</div><div class="line">cp  -r  /usr/local/src/redis-3.0.3 /usr/local/redis/ &amp;&amp; mv /usr/local/redis/redis-3.0.3  7001</div><div class="line">7001ª节点就算简历完毕。</div></pre></td></tr></table></figure></p>
-<p>接下来要做的就是修改各个节点的配置文件</p>
-<p>以7000节点为例：<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/redis/7000</div><div class="line">vi redis.conf     #主要修改一下这几个参数</div><div class="line">daemonize    yes                       #后台运行redis</div><div class="line">pidfile  /var/run/redis_7000.pid    #pidfile文件对应7000</div><div class="line">port  7000                            #监听的端口号</div><div class="line">cluster-enabled  yes         #开启集群，这个原本有的把注释#去掉就好了</div><div class="line">cluster-config-file  nodes.conf  #集群的配置  配置文件首次启动自动生成</div><div class="line">cluster-node-timeout  5000      #请求超时的时间</div><div class="line">appendonly  yes       #aof日志开启，按需开启，每次写操作都会记录成1条日志</div><div class="line">bind  192.168.1.1     #这里要改成server的IP，不改的话后续会报错</div><div class="line"> </div><div class="line"></div><div class="line">其他节点的配置只需把pidfile对应的文件和端口号改下就好了，一般建议7000 7001 7002 这样一直写上去</div></pre></td></tr></table></figure></p>
-<h1 id="启动redis"><a href="#启动redis" class="headerlink" title="启动redis"></a>启动redis</h1><p>当所有的节点都配置好后，就启动redis了<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/redis/7000</div><div class="line">redis-server ./redis.conf</div><div class="line"></div><div class="line"><span class="meta">#</span>这里是先进到7000节点的目录再开启，因为我发现如果直接输入 redis-server /usr/local/redis/7000/redis.conf的话，自动生成的appendonly.aof  nodes.conf文件会在当前目录下，而不是在对应节点的目录下。大家可以试验一下。</div></pre></td></tr></table></figure></p>
-<p>启动完成后，循例检查下。<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ps aux |grep redis      </div><div class="line">netstat -lanp |grep 7000/7001</div></pre></td></tr></table></figure></p>
-<p>正常情况下是可以看到7000  7001  17000 17001端口的</p>
-<p>7000，7001是用于客户端访问，17000,17001是用于集群内部节点之间的访问的</p>
-<hr>
-<h1 id="创建集群"><a href="#创建集群" class="headerlink" title="创建集群"></a>创建集群</h1><p>当所有的节点都配置并启动完之后，我们要做的就是利用这些节点来创建集群</p>
-<p>官方提供了一个专门的工具   redis-trib.rb  </p>
-<p>配合使用redis-trib.rb还要安装ruby</p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">yum -y install ruby ruby-devel rubygems rpm-build</div><div class="line"></div><div class="line">装好后再用gem命令来安装redis接口</div><div class="line"></div><div class="line">gem install redis</div><div class="line">在3台server上都安装好后，就可以开始创建集群了</div></pre></td></tr></table></figure>
-<h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line">/usr/local/redis/7000/src/redis-trib.rb  create  --replicas  1  192.168.1.1:7000  192.168.1.2:7000 192.168.1.3:7000  192.168.1.1:7001  192.168.1.2:7001  192.168.1.3:7001</div><div class="line"></div><div class="line"></div><div class="line">命令一定要以IP：端口形式来输入，千万别用域名。</div><div class="line"></div><div class="line">参数 --replicas 1   是自动为每台master配置1个slave   上面有6个节点 会按规则生成3个主节点（master）3个从节点（slave）</div><div class="line"></div><div class="line">注意：前面3个IP redis会默认他为主节点。</div><div class="line"></div><div class="line">输入完命令后会提示</div><div class="line"></div><div class="line">Can I set the above configuration? (type 'yes' to accept): </div><div class="line"></div><div class="line">这里输入yes 就可以了</div><div class="line"></div><div class="line">然后就会弹出如下信息：</div><div class="line"></div><div class="line"><span class="meta">&gt;</span>&gt;&gt; Performing Cluster Check (using node 127.0.0.1:7000)</div><div class="line">M: 5ca195e70a7d6d3b2756f06bfd5bb62f133ad236 127.0.0.1:7000</div><div class="line">   slots:10923-16383 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">M: a79ab5c1558f64d37efb6ad3e775bcd32bee70fc 192.168.20.186:7000</div><div class="line">   slots:0-5460 (5461 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">S: ebbc18dca8215930cf6430c39671b7660ca1de0f 192.168.20.187:7001</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 5ca195e70a7d6d3b2756f06bfd5bb62f133ad236</div><div class="line">S: c195573125f0d0a87b0f1076dd7de392aa90a5f3 192.168.20.186:7001</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates 0e590350177d69f337dc88188545dfe3c4c75742</div><div class="line">M: 0e590350177d69f337dc88188545dfe3c4c75742 192.168.20.184:7000</div><div class="line">   slots:5461-10922 (5462 slots) master</div><div class="line">   1 additional replica(s)</div><div class="line">S: b29210a818e15b1097422933163e92722c624ad8 192.168.20.184:7001</div><div class="line">   slots: (0 slots) slave</div><div class="line">   replicates a79ab5c1558f64d37efb6ad3e775bcd32bee70fc</div><div class="line">[OK] All nodes agree about slots configuration.</div><div class="line"><span class="meta">&gt;</span>&gt;&gt; Check for open slots...</div><div class="line"><span class="meta">&gt;</span>&gt;&gt; Check slots coverage...</div><div class="line">[OK] All 16384 slots covered.</div><div class="line">这样子就可以了。至于测试的话可以从其他文章里面找到</div></pre></td></tr></table></figure>
-<p>附：</p>
-<p><a href="http://www.ithao123.cn/content-3619322.html" target="_blank" rel="external">http://www.ithao123.cn/content-3619322.html</a>     #redis 常见集群报错处理</p>
-
-	
-	</div>
-  <a type="button" href="/2017/08/15/redis搭建哨兵模式/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-08-15 </div>
 			<div class="article-title"><a href="/2017/08/15/python-gc回收机制/" >python-gc回收机制</a></div>
 		</h3>
 	
@@ -700,7 +707,7 @@
         <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
 
 		
-          <li class="next disabled"><a>下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>
+		   <li class="next"> <a href="/page/3/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
         
 	
 </ul>
@@ -750,39 +757,39 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/tags/redis/">redis</a></li>
-		
-			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
-		
-			<li><a href="/tags/saltstack/">saltstack</a></li>
-		
-			<li><a href="/tags/python/">python</a></li>
-		
-			<li><a href="/tags/decorator/">decorator</a></li>
-		
-			<li><a href="/tags/异步/">异步</a></li>
-		
-			<li><a href="/tags/uwsgi/">uwsgi</a></li>
-		
-			<li><a href="/tags/django/">django</a></li>
-		
-			<li><a href="/tags/函数/">函数</a></li>
+			<li><a href="/tags/oop/">oop</a></li>
 		
 			<li><a href="/tags/代码优化/">代码优化</a></li>
 		
-			<li><a href="/tags/ELK/">ELK</a></li>
-		
-			<li><a href="/tags/闭包/">闭包</a></li>
-		
 			<li><a href="/tags/jinja/">jinja</a></li>
 		
-			<li><a href="/tags/gc/">gc</a></li>
+			<li><a href="/tags/函数/">函数</a></li>
 		
-			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+			<li><a href="/tags/django/">django</a></li>
 		
 			<li><a href="/tags/vim/">vim</a></li>
 		
-			<li><a href="/tags/oop/">oop</a></li>
+			<li><a href="/tags/redis/">redis</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/ELK/">ELK</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/python/">python</a></li>
 		
 		 
 		</ul>
@@ -794,6 +801,10 @@
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2018/03/13/super/" ><i class="fa fa-file-o"></i>super</a>
+      </li>
     
       <li>
         <a href="/2018/03/12/new-style-class-and-classic-class/" ><i class="fa fa-file-o"></i>新式类与旧式类</a>
@@ -809,10 +820,6 @@
     
       <li>
         <a href="/2017/10/24/salt-file-backup/" ><i class="fa fa-file-o"></i>salt分发文件时自动备份</a>
-      </li>
-    
-      <li>
-        <a href="/2017/09/29/k-vim/" ><i class="fa fa-file-o"></i>k-vim安装配置</a>
       </li>
     
   </ul>

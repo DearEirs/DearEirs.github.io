@@ -3,6 +3,48 @@
   
     
     <entry>
+      <title><![CDATA[super]]></title>
+      <url>/2018/03/13/super/</url>
+      <content type="html"><![CDATA[<h3 id="为什么需要super"><a href="#为什么需要super" class="headerlink" title="为什么需要super"></a>为什么需要super</h3><p>在python没有引入super之前, 如果需要在子类中引用父类的方法, 一般写法如下:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Father</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">whoami</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"I am father"</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Child</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">whoami</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"I am child"</span>)</div><div class="line">    Father.whoami(self)</div></pre></td></tr></table></figure>
+<p>self样一来我们就需要修改每个子类中引用父类的语句</p>
+<h3 id="怎么使用super"><a href="#怎么使用super" class="headerlink" title="怎么使用super"></a>怎么使用super</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">Help on <span class="class"><span class="keyword">class</span> <span class="title">super</span> <span class="title">in</span> <span class="title">module</span> <span class="title">builtins</span>:</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">super</span><span class="params">(object)</span></span></div><div class="line"><span class="class"> |  <span class="title">super</span><span class="params">()</span> -&gt; same as super(__class__, &lt;first argument&gt;)</span></div><div class="line"><span class="class"> |  super(type) -&gt; unbound super object</span></div><div class="line"><span class="class"> |  super(type, obj) -&gt; bound super object; requires isinstance(obj, type)</span></div><div class="line"><span class="class"> |  super(type, type2) -&gt; bound super object; requires issubclass(type2, type)</span></div><div class="line"><span class="class"> |  Typical use to call a cooperative superclass method:</span></div><div class="line"> |  <span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(B)</span>:</span></div><div class="line"> |      <span class="function"><span class="keyword">def</span> <span class="title">meth</span><span class="params">(self, arg)</span>:</span></div><div class="line"> |          super().meth(arg)</div><div class="line"> |  This works <span class="keyword">for</span> <span class="class"><span class="keyword">class</span> <span class="title">methods</span> <span class="title">too</span>:</span></div><div class="line"> |  <span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(B)</span>:</span></div><div class="line"> |      @classmethod</div><div class="line"> |      <span class="function"><span class="keyword">def</span> <span class="title">cmeth</span><span class="params">(cls, arg)</span>:</span></div><div class="line"> |          super().cmeth(arg)</div></pre></td></tr></table></figure>
+<p>我们来看看super的帮助文档, 首先super是一个类, 它的调用方法有如下几种:</p>
+<ol>
+<li>super()</li>
+<li>super(type)</li>
+<li>super(type, obj)</li>
+<li>super(type, type2)</li>
+</ol>
+<p>我们推荐用第一种方法来使用super, 因为它并不需要显式传递任何参数.但是要注意一点, super只能在新式类中使用.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"this is A"</span>)</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(A)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    super().__init__()</div><div class="line">    print(<span class="string">"this is B"</span>)</div><div class="line"></div><div class="line"></div><div class="line">b = B()</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line"><span class="string">this is A</span></div><div class="line"><span class="string">this is B</span></div><div class="line"><span class="string">"""</span></div></pre></td></tr></table></figure>
+<p>看起来super就像直接调用了B的父类A的__init__, 其实并不是这样的, 我们看看super在多继承下的使用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"this is A"</span>)</div><div class="line">    print(<span class="string">"leave A"</span>)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(A)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"this is B"</span>)</div><div class="line">    super().__init__()</div><div class="line">    print(<span class="string">"leave B"</span>)</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(A)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"this is C"</span>)</div><div class="line">    super().__init__()</div><div class="line">    print(<span class="string">"leave C"</span>)</div><div class="line">  </div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(B, C)</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></div><div class="line">    print(<span class="string">"this is D"</span>)</div><div class="line">    super().__init__()</div><div class="line">    print(<span class="string">"leave D"</span>)</div><div class="line">    </div><div class="line">    </div><div class="line">d = D()</div><div class="line"></div><div class="line"><span class="string">"""</span></div><div class="line"><span class="string">this is D</span></div><div class="line"><span class="string">this is B</span></div><div class="line"><span class="string">this is C</span></div><div class="line"><span class="string">this is A</span></div><div class="line"><span class="string">leave A</span></div><div class="line"><span class="string">leave C</span></div><div class="line"><span class="string">leave B</span></div><div class="line"><span class="string">leave D</span></div><div class="line"><span class="string">"""</span></div><div class="line"></div><div class="line">print(D.__mro__)</div><div class="line"><span class="string">"""</span></div><div class="line"><span class="string">(&lt;class '__main__.D'&gt;, </span></div><div class="line"><span class="string">&lt;class '__main__.B'&gt;, </span></div><div class="line"><span class="string">&lt;class '__main__.C'&gt;, </span></div><div class="line"><span class="string">&lt;class '__main__.A'&gt;, </span></div><div class="line"><span class="string">&lt;class 'object'&gt;)</span></div><div class="line"><span class="string">"""</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>这里可以看到, 如果super只是简单调用父类的方法的话, 那么调用了B的__init__ 方法之后, 应该调用A的__init__ 才对, 但是调用的却是C的__init__ 方法</p>
+</blockquote>
+<p>这是因为super调用的是当前类在MRO列表中的后一个类, 而并不是简单地调用当前类的父类</p>
+<blockquote>
+<p>python并没有强制性限制我们使用super调用父类, 我们还是可以使用原始的方法来调用父类中的方法, 但是需要注意的是调用父类的方法要统一, 即全用super或全不用super, 而用super 的话, 调用的方式也最好是统一的</p>
+</blockquote>
+]]></content>
+      
+        <categories>
+            
+            <category> python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> python </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[新式类与旧式类]]></title>
       <url>/2018/03/12/new-style-class-and-classic-class/</url>
       <content type="html"><![CDATA[<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>本文中代码运行的python版本一律采取2.7.13</strong></p>
@@ -12,15 +54,15 @@
 <ol>
 <li><p>python2.2 之前并没有新式类</p>
 </li>
-<li><p>python2.2-2.7 新式类与经典类并存, 默认使用经典类, 除非显示继承object</p>
+<li><p>python2.2-2.7 新式类与经典类并存, 默认使用经典类, 除非显式继承object</p>
 </li>
 <li><p>python3.X 中去除了经典类, 用户定义的所有类都隐式继承自object</p>
 </li>
 </ol>
-<h3 id="如何使用新式类"><a href="#如何使用新式类" class="headerlink" title="如何使用新式类"></a>如何使用新式类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">New</span><span class="params">(object)</span>:</span> <span class="comment"># 显示继承object类</span></div><div class="line">  <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Old</span>:</span>  </div><div class="line">  <span class="keyword">pass</span></div><div class="line">  </div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Old2</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">pass</span></div></pre></td></tr></table></figure>
+<h3 id="如何使用新式类"><a href="#如何使用新式类" class="headerlink" title="如何使用新式类"></a>如何使用新式类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">New</span><span class="params">(object)</span>:</span> <span class="comment"># 显式继承object类</span></div><div class="line">  <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Old</span>:</span>  </div><div class="line">  <span class="keyword">pass</span></div><div class="line">  </div><div class="line">  </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Old2</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">pass</span></div></pre></td></tr></table></figure>
 <p>上述代码中的3种定义类的方法, 只有第一种方法定义的是新式类.</p>
 <h3 id="新式类VS经典类"><a href="#新式类VS经典类" class="headerlink" title="新式类VS经典类"></a>新式类VS经典类</h3><blockquote>
-<p>新式类与经典类最主要的区别在于继承顺序, 事实上, 对于用户定义的每一个类, python 都会计算出一个<strong>方法解析顺序（Method Resolution Order, MRO）列表，它代表了类继承的顺序</strong>, 而由于经典类与新式类采用的算法不一致, 相同的继承顺序可能会出现不一样的MRO列表.</p>
+<p>新式类与经典类最主要的区别在于继承顺序, 事实上, 对于用户定义的每一个类, python 都会计算出一个<strong>方法解析顺序（Method Resolution Order, MRO）列表，它代表了类继承的顺序</strong>, 而由于经典类与新式类采用的算法不一致, 相同的继承关系可能会出现不一样的MRO列表.</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> inspect</div><div class="line"></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(D)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(D)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(B, C)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line">    </div><div class="line"></div><div class="line"><span class="keyword">print</span> inspect.getmro(A)</div><div class="line"></div><div class="line"><span class="comment"># (&lt;class __main__.A at 0x000000000322BB88&gt;, </span></div><div class="line"><span class="comment"># &lt;class __main__.B at 0x000000000322B9A8&gt;, </span></div><div class="line"><span class="comment"># &lt;class __main__.D at 0x000000000322BC48&gt;, </span></div><div class="line"><span class="comment"># &lt;class __main__.C at 0x000000000322B948&gt;)</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">D</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span><span class="params">(D)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span><span class="params">(D)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"> </div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span><span class="params">(B, C)</span>:</span></div><div class="line">    <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="keyword">print</span> inspect.getmro(A)</div><div class="line"></div><div class="line"><span class="comment"># (&lt;class '__main__.A'&gt;, </span></div><div class="line">&lt;class '__main__.B'&gt;, </div><div class="line">&lt;class '__main__.C'&gt;, </div><div class="line">&lt;class '__main__.D'&gt;, </div><div class="line">&lt;type <span class="string">'object'</span>&gt;)</div></pre></td></tr></table></figure>
 <p>可以看到, 经典类的MRO顺序A-B-D-C 与新式类的MRO顺序 A-B-C-D-object 是存在差异的, 这可能会是我们日常会遇到的坑. </p>
@@ -1038,6 +1080,40 @@
     </entry>
     
     <entry>
+      <title><![CDATA[python-gc回收机制]]></title>
+      <url>/2017/08/15/python-gc%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/</url>
+      <content type="html"><![CDATA[<h3 id="gc-回收机制"><a href="#gc-回收机制" class="headerlink" title="gc 回收机制"></a>gc 回收机制</h3><p>gc 主要由以下3个部分组成</p>
+<ol>
+<li>引用计数</li>
+<li>标记-删除</li>
+<li>分代回收</li>
+</ol>
+<h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p>对象的引用计数可以通过 sys.getrefcount(object)得到</p>
+<p>引用数指的是对象被引用的次数,一般通过创建变量,变量绑定来增加,<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">a = <span class="number">1000</span></div><div class="line">sys.getrefcount(a) -&gt; 2 </div><div class="line"><span class="comment">###注意:sys.getrefcount(a)得到的是对象的引用计数,即变量a所指向的内存地址的值1000被引用的次数,这里得到2是因为</span></div><div class="line">a=<span class="number">1000</span>时引用了<span class="number">1</span>次 而sys.getrefcont(a)时又引用了一次</div><div class="line"></div><div class="line">b = a</div><div class="line">sys.getrefcount(a) -&gt; 3</div><div class="line"></div><div class="line"><span class="keyword">del</span> a</div><div class="line">sys.getrefcount(a) -&gt; 2</div><div class="line"></div><div class="line">id(b) -&gt; 3097439675248</div><div class="line"><span class="keyword">del</span> b</div><div class="line"></div><div class="line">c = <span class="number">1001</span></div><div class="line">id(c) -&gt; 3097439675248</div><div class="line"></div><div class="line"><span class="comment">###这里大家可以发现c与b之前的所指向的内存地址是同一个,这是因为在大部分情况下当1个内存地址引用计数为0时,python</span></div><div class="line"><span class="comment">###内部就会马上把这个内存地址回收,标记为可用地址,在下次请求地址时分发出去</span></div></pre></td></tr></table></figure></p>
+<h3 id="标记-删除"><a href="#标记-删除" class="headerlink" title="标记-删除"></a>标记-删除</h3><p>引用计数不是万能的,在一些特定的情况下,即使对象指向为空,但是引用计数并不为0</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">list1 = []</div><div class="line">list2 = []</div><div class="line">list1.append(list2)</div><div class="line">list2.append(list1)</div><div class="line"></div><div class="line">sys.getrefcount(list1) -&gt; 3</div><div class="line">sys.getrefcount(list2) -&gt; 3</div><div class="line">###这时候 del list1,list2 只会使它们的引用计数减1</div><div class="line">del list1,list2</div></pre></td></tr></table></figure>
+<p>这时候list1,list2的内存并不会得到释放,直到python的回收计数达到阀值触发了回收机制,然后python内部会遍历所有对象,把被正确引用的对象作标记保留<br>而没有正确引用的对象则进行回收,释放内存<br>gc.get_count() 查看当前回收计数<br>gc.get_threshold() 查看回收阈值  默认为 (700,10,10) 分别对应一、二、三代回收阀值</p>
+<h3 id="分代回收"><a href="#分代回收" class="headerlink" title="分代回收"></a>分代回收</h3><p>而上述被标记的对象会被保存到二代对象当中,回收计数中的第二位会+1,<br>触发一代回收阀值时会检查新建对象,把被正确引用的对象作标记保留而没有正确引用的对象则进行回收,释放内存,存活对象保存到二代对象当中,二代回收计数+1<br>触发二代回收阀值时会检查新建对象与二代对象并回收,存活的对象被保存到三代对象中,三代回收计数+1<br>触发三代回收阀值时会检查新建对象与二代对象与三代对象,计数器清0<br>如此循环直至程序结束,所以Python程序占用的空间不会特别大,但是同时因为gc机制一直在后台运行各种操作,会在一定的程度上降低程序的效率.</p>
+]]></content>
+      
+        <categories>
+            
+            <category> python </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> python </tag>
+            
+            <tag> gc </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[redis搭建哨兵模式]]></title>
       <url>/2017/08/15/redis%E6%90%AD%E5%BB%BA%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/</url>
       <content type="html"><![CDATA[<h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><blockquote>
@@ -1084,40 +1160,6 @@
         <tags>
             
             <tag> redis </tag>
-            
-        </tags>
-        
-    </entry>
-    
-    <entry>
-      <title><![CDATA[python-gc回收机制]]></title>
-      <url>/2017/08/15/python-gc%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/</url>
-      <content type="html"><![CDATA[<h3 id="gc-回收机制"><a href="#gc-回收机制" class="headerlink" title="gc 回收机制"></a>gc 回收机制</h3><p>gc 主要由以下3个部分组成</p>
-<ol>
-<li>引用计数</li>
-<li>标记-删除</li>
-<li>分代回收</li>
-</ol>
-<h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p>对象的引用计数可以通过 sys.getrefcount(object)得到</p>
-<p>引用数指的是对象被引用的次数,一般通过创建变量,变量绑定来增加,<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">a = <span class="number">1000</span></div><div class="line">sys.getrefcount(a) -&gt; 2 </div><div class="line"><span class="comment">###注意:sys.getrefcount(a)得到的是对象的引用计数,即变量a所指向的内存地址的值1000被引用的次数,这里得到2是因为</span></div><div class="line">a=<span class="number">1000</span>时引用了<span class="number">1</span>次 而sys.getrefcont(a)时又引用了一次</div><div class="line"></div><div class="line">b = a</div><div class="line">sys.getrefcount(a) -&gt; 3</div><div class="line"></div><div class="line"><span class="keyword">del</span> a</div><div class="line">sys.getrefcount(a) -&gt; 2</div><div class="line"></div><div class="line">id(b) -&gt; 3097439675248</div><div class="line"><span class="keyword">del</span> b</div><div class="line"></div><div class="line">c = <span class="number">1001</span></div><div class="line">id(c) -&gt; 3097439675248</div><div class="line"></div><div class="line"><span class="comment">###这里大家可以发现c与b之前的所指向的内存地址是同一个,这是因为在大部分情况下当1个内存地址引用计数为0时,python</span></div><div class="line"><span class="comment">###内部就会马上把这个内存地址回收,标记为可用地址,在下次请求地址时分发出去</span></div></pre></td></tr></table></figure></p>
-<h3 id="标记-删除"><a href="#标记-删除" class="headerlink" title="标记-删除"></a>标记-删除</h3><p>引用计数不是万能的,在一些特定的情况下,即使对象指向为空,但是引用计数并不为0</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">list1 = []</div><div class="line">list2 = []</div><div class="line">list1.append(list2)</div><div class="line">list2.append(list1)</div><div class="line"></div><div class="line">sys.getrefcount(list1) -&gt; 3</div><div class="line">sys.getrefcount(list2) -&gt; 3</div><div class="line">###这时候 del list1,list2 只会使它们的引用计数减1</div><div class="line">del list1,list2</div></pre></td></tr></table></figure>
-<p>这时候list1,list2的内存并不会得到释放,直到python的回收计数达到阀值触发了回收机制,然后python内部会遍历所有对象,把被正确引用的对象作标记保留<br>而没有正确引用的对象则进行回收,释放内存<br>gc.get_count() 查看当前回收计数<br>gc.get_threshold() 查看回收阈值  默认为 (700,10,10) 分别对应一、二、三代回收阀值</p>
-<h3 id="分代回收"><a href="#分代回收" class="headerlink" title="分代回收"></a>分代回收</h3><p>而上述被标记的对象会被保存到二代对象当中,回收计数中的第二位会+1,<br>触发一代回收阀值时会检查新建对象,把被正确引用的对象作标记保留而没有正确引用的对象则进行回收,释放内存,存活对象保存到二代对象当中,二代回收计数+1<br>触发二代回收阀值时会检查新建对象与二代对象并回收,存活的对象被保存到三代对象中,三代回收计数+1<br>触发三代回收阀值时会检查新建对象与二代对象与三代对象,计数器清0<br>如此循环直至程序结束,所以Python程序占用的空间不会特别大,但是同时因为gc机制一直在后台运行各种操作,会在一定的程度上降低程序的效率.</p>
-]]></content>
-      
-        <categories>
-            
-            <category> python </category>
-            
-        </categories>
-        
-        
-        <tags>
-            
-            <tag> python </tag>
-            
-            <tag> gc </tag>
             
         </tags>
         
