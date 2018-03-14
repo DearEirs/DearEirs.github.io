@@ -3,7 +3,7 @@
   
     
     <entry>
-      <title><![CDATA[junior_sql]]></title>
+      <title><![CDATA[sql简单语法]]></title>
       <url>/2018/03/14/junior-sql/</url>
       <content type="html"><![CDATA[<h3 id="查看命令"><a href="#查看命令" class="headerlink" title="查看命令"></a>查看命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">show databases; # 查看数据库</div><div class="line">show tables;    # 查看表</div><div class="line">show columns from table; # 查看列</div><div class="line">desc table;     # 查看列</div><div class="line">show status;    # 查看mysql状态信息</div><div class="line">show create database/table; # 查看建库/表语句</div><div class="line">show grants;    # 查看授权用户</div><div class="line">show errors/warnings; # 查看error, warning信息</div></pre></td></tr></table></figure>
 <h3 id="查数据"><a href="#查数据" class="headerlink" title="查数据"></a>查数据</h3><ol>
