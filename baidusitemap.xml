@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://139.199.0.245/2018/03/14/junior-sql/</loc>
+    <lastmod>2018-03-14T08:42:27.608Z</lastmod>
+    <data>
+        <display>
+        <title>junior_sql</title>
+        <pubTime>2018-03-14T08:41:13.000Z</pubTime>
+        
+        <tag>sql</tag>
+         
+         
+           
+             
+              <breadCrumb title="sql" url="http://139.199.0.245/categories/sql/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://139.199.0.245/2018/03/12/new-style-class-and-classic-class/</loc>
     <lastmod>2018-03-13T06:18:13.272Z</lastmod>
     <data>
@@ -339,19 +359,19 @@
 
     
   <url>
-    <loc>http://139.199.0.245/2017/08/30/RocketMQ%E5%8F%8C%E4%B8%BB%E9%9B%86%E7%BE%A4/</loc>
+    <loc>http://139.199.0.245/2017/08/30/saltstack-%E4%BA%8C-%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2017-08-30T10:35:54.385Z</lastmod>
     <data>
         <display>
-        <title>RocketMQ双主集群</title>
-        <pubTime>2017-08-30T09:59:52.000Z</pubTime>
+        <title>saltstack(二)简单使用</title>
+        <pubTime>2017-08-30T09:50:31.000Z</pubTime>
         
-        <tag>rocketmq</tag>
+        <tag>saltstack</tag>
          
          
            
              
-              <breadCrumb title="linux" url="http://139.199.0.245/categories/linux/"/>
+              <breadCrumb title="saltstack" url="http://139.199.0.245/categories/saltstack/"/>
           
         </display>
     </data>
@@ -379,19 +399,19 @@
 
     
   <url>
-    <loc>http://139.199.0.245/2017/08/30/saltstack-%E4%BA%8C-%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</loc>
+    <loc>http://139.199.0.245/2017/08/30/RocketMQ%E5%8F%8C%E4%B8%BB%E9%9B%86%E7%BE%A4/</loc>
     <lastmod>2017-08-30T10:35:54.385Z</lastmod>
     <data>
         <display>
-        <title>saltstack(二)简单使用</title>
-        <pubTime>2017-08-30T09:50:31.000Z</pubTime>
+        <title>RocketMQ双主集群</title>
+        <pubTime>2017-08-30T09:59:52.000Z</pubTime>
         
-        <tag>saltstack</tag>
+        <tag>rocketmq</tag>
          
          
            
              
-              <breadCrumb title="saltstack" url="http://139.199.0.245/categories/saltstack/"/>
+              <breadCrumb title="linux" url="http://139.199.0.245/categories/linux/"/>
           
         </display>
     </data>

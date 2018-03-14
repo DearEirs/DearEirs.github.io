@@ -180,9 +180,41 @@
 		
             
 		
+            
+		
         
         <!-- render other articles -->
         
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-03-14 </div>
+			<div class="article-title"><a href="/2018/03/14/junior-sql/" >junior_sql</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h3 id="查看命令"><a href="#查看命令" class="headerlink" title="查看命令"></a>查看命令</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">show databases; # 查看数据库</div><div class="line">show tables;    # 查看表</div><div class="line">show columns from table; # 查看列</div><div class="line">desc table;     # 查看列</div><div class="line">show status;    # 查看mysql状态信息</div><div class="line">show create database/table; # 查看建库/表语句</div><div class="line">show grants;    # 查看授权用户</div><div class="line">show errors/warnings; # 查看error, warning信息</div></pre></td></tr></table></figure>
+<h3 id="查数据"><a href="#查数据" class="headerlink" title="查数据"></a>查数据</h3><ol>
+<li>同时使用order by 与where子句时, order by子句应放于where子句后</li>
+<li>AND 与 OR 同时使用时, 先计算AND, 若想先计算OR 可以()</li>
+<li>group by 必须出现在where子句之后, 在order by子句之前<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 简单查询</div><div class="line">select column1, column2 from table; # 查看多列数据</div><div class="line">select * from table; # 查看所有列数据</div><div class="line">select  distinct id from table; # 查询不同的ID</div><div class="line">select * from table limit 5; # 查询前5条数据</div><div class="line">select * from table limit 5, 10; # 查询从第5行开始的前10条数据</div><div class="line"></div><div class="line"><span class="meta">#</span> 排序</div><div class="line">select * from table order by column1; # 按column1升序排列</div><div class="line">select * from table order by column1 ASC; # 按column1升序排列</div><div class="line">select * from table order by column1 desc; # 按column1降序排列</div><div class="line">select * from table order by column1, column2 desc; # 按column1升序排列后再按column2降序排列</div><div class="line"></div><div class="line"><span class="meta">#</span> 数据过滤</div><div class="line"></div><div class="line"><span class="meta">#</span> 操作符</div><div class="line">= : 等于</div><div class="line">&lt;&gt; : 不等于</div><div class="line">!= : 不等于</div><div class="line">&lt; : 小于</div><div class="line">&lt;= : 小于等于</div><div class="line"><span class="meta">&gt;</span> : 大于</div><div class="line"><span class="meta">&gt;</span>= : 大于等于</div><div class="line">between : 在两个数值之间</div><div class="line"></div><div class="line"><span class="meta">#</span> 单条件</div><div class="line">select * from table where id=1; # 查找表中, id=1的数据</div><div class="line">select * from table where id between 10 and 20; 查找表中id为10-20之间的数据(包括10, 20)</div><div class="line">select * from table where column1 is null; # 查找表中column1为Null的数据</div><div class="line"></div><div class="line"><span class="meta">#</span> 使用操作符过滤</div><div class="line">select * from table where id&gt;10 and column1 is not null; # 查找表中id&gt;10且column不为Null的数据</div><div class="line">select * from table where id&gt;10 or column1 is not null; # 查找表中id&gt;10或column不为Null的数据</div><div class="line">select * from table where id in (1,2,3); # 查找表中id为1、2、3的数据</div><div class="line"></div><div class="line">3¤</div><div class="line"><span class="meta">%</span> 匹配任意字符出现任意次数</div><div class="line">_ 匹配单个任意的字符</div><div class="line">select * from table where column1 like 'Dear%'; # 查找表中column1是以Dear开头的数据</div><div class="line">select * from table where column1 like '%Dear%'; # 查找表中column1包含字符Dear的数据</div><div class="line">select * from table where column1 like 'D_ar'; # 查找表中column1字段是4个字符的,其中以D开头, ar结束</div><div class="line"></div><div class="line"><span class="meta">#</span> 使用正则表达式过滤</div><div class="line"><span class="meta">#</span> 详情参考正则表达式</div><div class="line">select * from table where id regexp '[0-9]'; # 查找表中id为0至9的数据</div><div class="line"></div><div class="line"><span class="meta">#</span> 拼接字段</div><div class="line">select (name, 'is in class ' ,class) from student_info; # 把查询出来的结果拼接起来形成新的字符串</div><div class="line"></div><div class="line"><span class="meta">#</span> 使用别名</div><div class="line">select (name, 'is in class ' ,class) as info from student_info;</div><div class="line"></div><div class="line"><span class="meta">#</span> 字段计算</div><div class="line">select  item, inventory, price, inventory*price as total from items_info;</div><div class="line"></div><div class="line"><span class="meta">#</span> 文本处理函数</div><div class="line">RTrim()  去掉右边的空格</div><div class="line">LTrim()  去掉左边的空格</div><div class="line">Trim()   去掉左右两边的空格</div><div class="line">Upper()  将文本转为大写字符</div><div class="line">Lower()  将文本转为小写字符</div><div class="line">Left()   返回文本最左边的字符</div><div class="line">Right()  返回文本最右边的字符</div><div class="line">Length() 返回文本长度</div><div class="line"></div><div class="line"><span class="meta">#</span> 日期处理函数</div><div class="line">AddDate() 增加一个日期(天、周等)</div><div class="line">AddTime() 增加一个时间(时、分等)</div><div class="line">CurDate() 返回当前日期</div><div class="line">CurTime() 返回当前时间</div><div class="line">Date()    返回日期时间和日期部分</div><div class="line">Datediff() 计算两个日期的差</div><div class="line">Date_Format() 返回一个格式化的日期或时间串</div><div class="line">DayOfWeek() 返回日期对应的是星期几</div><div class="line">Time()    返回一个日期时间的时间部分</div><div class="line">Year()    返回一个日期的年份部分</div><div class="line">Month()   返回日期的月数部分</div><div class="line">Day()     返回日期的天数部分</div><div class="line">Hour()    返回日期的小时部分</div><div class="line">Minute()  返回日期的分钟部分</div><div class="line">Second()  返回日期的秒数部分</div><div class="line">Now()     返回当前时间</div><div class="line"></div><div class="line"><span class="meta">#</span> 数值处理函数</div><div class="line">Abs()     返回一个数的绝对值</div><div class="line">Sqrt()    返回一个数的平方根</div><div class="line">Exp()     返回一个数的指数值</div><div class="line">Mod()     返回除操作的余数</div><div class="line">Pi()      返回圆周率</div><div class="line">Rand()    返回一个随机数</div><div class="line">Sin()     返回一个角度的正弦</div><div class="line">Cos()     返回一个角度的余弦</div><div class="line">Tan()     返回一个角度的正切</div><div class="line"></div><div class="line"><span class="meta">#</span> 汇聚函数</div><div class="line">AVG()     返回某列的平均值</div><div class="line">MAX()     返回某列的最大值</div><div class="line">MIN()     返回某列的最小值</div><div class="line">SUM()     返回某列的值的总和</div><div class="line">COUNT()   返回某列的行数</div><div class="line"></div><div class="line"><span class="meta">#</span> 数据分组</div><div class="line">select class, count(*) from student_info group by class # 查看每个班级有多少学生</div><div class="line">select class, count(*) from student_info group by class having count(*) &gt;40 # 查看班级人数大于40人的班级</div><div class="line"><span class="meta">#</span> where 过滤行数据, having 过滤分组数据</div></pre></td></tr></table></figure>
+</li>
+</ol>
+
+	
+	</div>
+  <a type="button" href="/2018/03/14/junior-sql/#more" class="btn btn-default more">Leia Mais</a>
+</div>
+
+           
+		
            
 			  
 	
@@ -223,7 +255,7 @@
 
 	
 	</div>
-  <a type="button" href="/2018/03/13/super/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2018/03/13/super/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -284,7 +316,7 @@
 
 	
 	</div>
-  <a type="button" href="/2018/03/12/new-style-class-and-classic-class/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2018/03/12/new-style-class-and-classic-class/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -404,7 +436,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/12/24/agile/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/12/24/agile/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -449,7 +481,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/11/15/ELK/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/11/15/ELK/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -485,7 +517,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/10/24/salt-file-backup/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/10/24/salt-file-backup/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -516,7 +548,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/09/29/k-vim/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/09/29/k-vim/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -551,7 +583,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/09/21/jinja2/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/09/21/jinja2/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -633,7 +665,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/09/14/salt-sls/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/09/14/salt-sls/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -686,106 +718,7 @@
 
 	
 	</div>
-  <a type="button" href="/2017/09/12/salt-ssh/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-09-12 </div>
-			<div class="article-title"><a href="/2017/09/12/optimization/" >python之代码优化</a></div>
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="代码的基本优化-调试"><a href="#代码的基本优化-调试" class="headerlink" title="代码的基本优化,调试"></a>代码的基本优化,调试</h1><h3 id="构造与初始化方法"><a href="#构造与初始化方法" class="headerlink" title="构造与初始化方法"></a>构造与初始化方法</h3><ul>
-<li><strong>init</strong>() 不是构造方法，它负责控制对象变量的初始化</li>
-<li><strong>new</strong>() 才是构造方法，它负责控制对象的创建</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__new__</span><span class="params">(cls)</span>:</span></div><div class="line">    print(<span class="string">'正在创建类'</span>)</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(cls)</span>:</span></div><div class="line">    print(<span class="string">'类已经被创建'</span>)</div><div class="line">    print(<span class="string">'正在初始化类变量'</span>)</div><div class="line"></div><div class="line">a = A()</div></pre></td></tr></table></figure>
-<h3 id="对象序列化"><a href="#对象序列化" class="headerlink" title="对象序列化"></a>对象序列化</h3><ul>
-<li>json：最常见，效率稍差，但跨平台、跨语言、结构好</li>
-<li>pickle：比json效率稍微高一点点，只支持Python</li>
-<li>cPickle：效率比上述两者都高很多</li>
-<li>protobuf：Google提供的第三方库，效率更高，跨平台，跨语言，结构紧凑体积小，内存节省和传输效率更好，<br>但需引入第三方库，提前设计好的数据结构不可随意改动</li>
-</ul>
-<p>在序列化还没成为程序的瓶颈时,一般来说使用json就可以满足大部分需求.</p>
-<p>序列化：是把对象转换成可以write到文件里边的数字、字符、字符串<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">dict1 = &#123;<span class="string">'key%i'</span> % i:<span class="string">'value%i'</span> % i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>)&#125;</div><div class="line">f = open(<span class="string">r'C:\Users\Dear\Desktop\test.txt'</span>,<span class="string">'ab'</span>)</div><div class="line"></div><div class="line">json.dump(d,f) <span class="comment">#直接写入文件</span></div><div class="line">j = json.dumps(dict1) <span class="comment">#把dict1 转换成json格式</span></div><div class="line">d = json.loads(j) <span class="comment"># 把j反序列化为dict格式</span></div><div class="line"></div><div class="line"></div><div class="line">pickle.dump(dict1,f) <span class="comment">#直接写入文件</span></div><div class="line">p = pickle.dumps(d)  <span class="comment">#输出序列化后的二进制字符串</span></div><div class="line">d = pickle.loads(p) <span class="comment"># 把p反序列化为dict格式</span></div><div class="line"></div><div class="line"></div><div class="line">f.close()</div></pre></td></tr></table></figure></p>
-<h3 id="配置文件解析"><a href="#配置文件解析" class="headerlink" title="配置文件解析"></a>配置文件解析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string">configparser INI风格</span></div><div class="line"><span class="string">文本形式类似 key value</span></div><div class="line"><span class="string">'''</span></div><div class="line"></div><div class="line">[db]</div><div class="line">db_host = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></div><div class="line">db_port = <span class="number">22</span></div><div class="line">db_user = root</div><div class="line">db_pass = rootroot</div><div class="line"></div><div class="line">[concurrent]</div><div class="line">thread = <span class="number">10</span></div><div class="line">processor = <span class="number">20</span></div><div class="line"><span class="string">'''</span></div><div class="line"><span class="string"></span></div><div class="line"><span class="string">conf = configparser.ConfigParser()</span></div><div class="line"><span class="string">conf.read(r'C:\Users\Dear\Desktop\default.conf')</span></div><div class="line"><span class="string">conf.sections() --&gt; ['db', 'concurrent']</span></div><div class="line"><span class="string">conf.options('db') --&gt; ['db_host', 'db_port', 'db_user', 'db_pass']</span></div></pre></td></tr></table></figure>
-<h3 id="多个分支条件"><a href="#多个分支条件" class="headerlink" title="多个分支条件"></a>多个分支条件</h3><ul>
-<li>if…elif…elif…</li>
-<li>借助字典消除这种风格</li>
-<li>实在消除不掉注意先后顺序安排(在可读性差不多的情况下,尽量把匹配率高的条件写在前面)</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 需求需要多重判断,实现类似与其他语言中switch case的效果</span></div><div class="line"></div><div class="line">ansers_dict = &#123;</div><div class="line">          <span class="string">'a'</span> : <span class="number">1</span>,</div><div class="line">          <span class="string">'b'</span> : <span class="number">2</span>,</div><div class="line">          <span class="string">'c'</span> : <span class="number">3</span>,</div><div class="line">          <span class="string">'d'</span> : <span class="number">4</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">question = (<span class="string">'人有多少个鼻子?'</span>)</div><div class="line">print(ansers_dict)</div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">  anser = read(<span class="string">'请选择 a,b,c,d中的一个'</span>)</div><div class="line">  <span class="keyword">if</span> anser <span class="keyword">in</span> ansers_dict:</div><div class="line">    print(<span class="string">'你选择的是%s,人有%s个鼻子'</span>, % (anser,ansers_dict[anser]))</div><div class="line">    <span class="keyword">break</span></div></pre></td></tr></table></figure>
-<h3 id="短路运算"><a href="#短路运算" class="headerlink" title="短路运算"></a>短路运算</h3><ul>
-<li>and：前一个表达式为假不再进行后一个表达式的计算</li>
-<li>or：前一个表达式为真不再进行后一个表达式的计算</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># and</span></div><div class="line">timeit.timeit('if 0 and 1 : pass',number=100000000) --&gt; 1.397503963655573</div><div class="line">timeit.timeit('if 1 and 0 : pass',number=100000000) --&gt; 2.149041756294938</div><div class="line"></div><div class="line"><span class="comment"># or</span></div><div class="line">timeit.timeit('if 1 or 0 : pass',number=100000000)  --&gt; 1.587524198216385</div><div class="line">timeit.timeit('if 0 or 1 : pass',number=100000000)  --&gt; 2.823067097259937</div></pre></td></tr></table></figure>
-<h3 id="成员测试"><a href="#成员测试" class="headerlink" title="成员测试"></a>成员测试</h3><p>判断一个元素是否在某个容器（列表、集合、字典、字符串序列）时，直接用 in 或 not in 操作符判断，无需用 find 、 index 等方法</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">timeit.timeit('list1 = [i for i in range(1000,1010)];list1.index(1005)',number=10000000) --&gt; 11.784954835659846</div><div class="line">timeit.timeit('list1 = [i for i in range(1000,1010)];1005 in list1 ',number=10000000) --&gt; 9.56750599126508</div></pre></td></tr></table></figure>
-<h3 id="内置排序"><a href="#内置排序" class="headerlink" title="内置排序"></a>内置排序</h3><ul>
-<li>sort(): 只是 list 的一个方法，直接修改原列表，返回值为None</li>
-<li>sorted(): 可排序所有可迭代对象，返回排序后的结果</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">list1 = [<span class="number">3</span>,<span class="number">41</span>,<span class="number">2</span>,<span class="number">5</span>,<span class="number">1</span>]</div><div class="line"></div><div class="line">new_list = sorted(list1)</div><div class="line">print(list1) --&gt; [3,41,2,5,1]</div><div class="line">print(new_list) --&gt; [1,2,3,5,41]</div><div class="line"></div><div class="line">list1.sort()</div><div class="line">print(list1) --&gt; [1,2,3,5,41]</div></pre></td></tr></table></figure>
-<h3 id="list、tuple、set选择"><a href="#list、tuple、set选择" class="headerlink" title="list、tuple、set选择"></a>list、tuple、set选择</h3><ul>
-<li>list：有序、可变长、元素可重复</li>
-<li>tuple：有序、不可变长、元素可重复</li>
-<li>set：无序、可变长、元素不可重复</li>
-</ul>
-<p>拒绝万年list,拒绝万年list,拒绝万年list,</p>
-<p>一般来说:<br>长度,元素不可变的情况下 选tuple<br>对顺序无要求,元素不可重复的情况下,选set<br>其他情况下才考虑list</p>
-<h3 id="避免命名空间污染"><a href="#避免命名空间污染" class="headerlink" title="避免命名空间污染"></a>避免命名空间污染</h3><p>尽量使用 import a.B 的形式，而不是使用 from a import B</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> a <span class="keyword">import</span> B</div><div class="line"><span class="keyword">import</span> a.b</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">b</span>:</span></div><div class="line">  <span class="keyword">pass</span></div><div class="line"></div><div class="line"></div><div class="line"></div><div class="line">b(1) --&gt; Error</div><div class="line">a.b(1) --&gt; Sucess</div></pre></td></tr></table></figure>
-<h3 id="True-amp-False"><a href="#True-amp-False" class="headerlink" title="True &amp; False"></a>True &amp; False</h3><p>python2.x 中 if True 会比 if 1 慢<br>python3.x 中 没有这个问题</p>
-<p>python2.x 中 True相当于一个指向1的变量,使用True时 需要先把内存中的1提取出来再做判断</p>
-<p>#python2.x<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; def func():</div><div class="line">...   if 1:</div><div class="line">...     pass</div><div class="line">...</div><div class="line">&gt;&gt;&gt; def func2():</div><div class="line">...   if True:</div><div class="line">...     pass</div><div class="line">...</div><div class="line">&gt;&gt;&gt; dis.dis(func)</div><div class="line">  3           0 LOAD_CONST               0 (None)</div><div class="line">              3 RETURN_VALUE</div><div class="line">&gt;&gt;&gt; dis.dis(func2)</div><div class="line">  2           0 LOAD_GLOBAL              0 (True)   </div><div class="line">              3 POP_JUMP_IF_FALSE        9</div><div class="line"></div><div class="line">  3           6 JUMP_FORWARD             0 (to 9)</div><div class="line">        &gt;&gt;    9 LOAD_CONST               0 (None)</div><div class="line">             12 RETURN_VALUE</div></pre></td></tr></table></figure></p>
-<p>#python3.x<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">&gt;&gt;&gt; import dis</div><div class="line">&gt;&gt;&gt; def func():</div><div class="line">...   if 1:</div><div class="line">...     pass</div><div class="line">...</div><div class="line">&gt;&gt;&gt; def func2():</div><div class="line">...   if True:</div><div class="line">...     pass</div><div class="line">...</div><div class="line">&gt;&gt;&gt; dis.dis(func)</div><div class="line">  3           0 LOAD_CONST               0 (None)</div><div class="line">              2 RETURN_VALUE</div><div class="line">&gt;&gt;&gt; dis.dis(func2)</div><div class="line">  3           0 LOAD_CONST               0 (None)</div><div class="line">              2 RETURN_VALUE</div></pre></td></tr></table></figure></p>
-<h3 id="变量值交换"><a href="#变量值交换" class="headerlink" title="变量值交换"></a>变量值交换</h3><p>推荐使用 x, y = y, x<br>性能更快且可读性高</p>
-<h3 id="上下文管理器"><a href="#上下文管理器" class="headerlink" title="上下文管理器"></a>上下文管理器</h3><p>尽量使用 with…as… 来实现对象的上下文管理，避免忘记显式地关闭资源<br>with 结束时 系统会自动关闭打开的对象<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"># 写一个可用于上下文管理的对象</div><div class="line"># __enter__()  open时触发</div><div class="line"># __exit__()  with 结束时触发</div><div class="line"></div><div class="line">class WithTest:</div><div class="line">  def __enter__(self):</div><div class="line">    print(&apos;start&apos;)</div><div class="line">    self.file = open(&apos;myfile&apos;)</div><div class="line">    return self.file</div><div class="line">  def __exit__(self, *args):</div><div class="line">    print(&apos;end&apos;)</div><div class="line">    return True</div><div class="line"></div><div class="line">wt = WithTest()</div><div class="line"></div><div class="line">with a as file:</div><div class="line">  file.readlines()</div></pre></td></tr></table></figure></p>
-<h3 id="字符串连接"><a href="#字符串连接" class="headerlink" title="字符串连接"></a>字符串连接</h3><ul>
-<li>join 与 + 两种方式</li>
-<li>前者更省内存</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">list1 = [<span class="string">'a'</span> <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>)]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line">  s = <span class="string">''</span>.join(list1)</div><div class="line">  </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span>:</span></div><div class="line">  s = <span class="string">''</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> list1:</div><div class="line">    s += i</div><div class="line"></div><div class="line">timeit.timeit(func,number=10000) --&gt; 4.525133861871087</div><div class="line">timeit.timeit(func2number=10000) --&gt;</div></pre></td></tr></table></figure>
-<h3 id="深浅拷贝"><a href="#深浅拷贝" class="headerlink" title="深浅拷贝"></a>深浅拷贝</h3><ul>
-<li>浅拷贝 copy.copy(obj) 只拷贝“第一层”对象</li>
-<li>深拷贝 copy.deepcopy(obj) 递归拷贝“每一层”对象</li>
-<li>不论深浅拷贝，不会为 全由不可变对象组成的对象 申请新内存空间</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#深、浅拷贝</span></div><div class="line">l = [<span class="string">'a'</span>,<span class="string">'b'</span>,<span class="string">'c'</span>,[<span class="string">'d'</span>]]</div><div class="line">l1 = copy.copy(l)</div><div class="line">l2 = copy.deepcopy(l)</div><div class="line"></div><div class="line">l is l1  --&gt; False</div><div class="line">l is l2  --&gt; False</div><div class="line"></div><div class="line">l[3] is l1[3] --&gt; True</div><div class="line">l[3] is l2[3] --&gt; False</div><div class="line"></div><div class="line"><span class="comment">#浅拷贝只会拷贝第一层对象,而对于深层的对象 引用的还是原来的内存地址的值</span></div><div class="line"><span class="comment">#深拷贝会进行递归拷贝,拷贝出来的对象与原对象除了值一样,没有其他关系</span></div><div class="line"></div><div class="line">l[<span class="number">-1</span>][<span class="number">0</span>] = <span class="string">'e'</span></div><div class="line">print(l)  --&gt; ['a', 'b', 'c', ['e']]</div><div class="line">print(l1) --&gt; ['a', 'b', 'c', ['e']]</div><div class="line">print(l2) --&gt; ['a', 'b', 'c', ['d']]</div><div class="line"></div><div class="line"><span class="comment">#不论深浅拷贝，不会为 全由不可变对象组成的对象 申请新内存空间</span></div><div class="line"></div><div class="line">t = (<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>)</div><div class="line">id(t) --&gt; 46640872</div><div class="line">t1 = copy.copy(t)</div><div class="line">id(t1) --&gt; 46640872</div><div class="line">t2 = copy.deepcopy(t)</div><div class="line">id(t2) --&gt; 46640872</div></pre></td></tr></table></figure>
-<h3 id="节省内存开销"><a href="#节省内存开销" class="headerlink" title="节省内存开销"></a>节省内存开销</h3><ul>
-<li>生成器惰性求值，只迭代一遍</li>
-<li>f = open(‘filename’); “for line in f”  vs for line in f.readlines()</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">list1 = [i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>)]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> list1:</div><div class="line">   <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func1</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> list1:</div><div class="line">    <span class="keyword">yield</span> i</div><div class="line"></div><div class="line">timeit.timeit(func,number=1000) --&gt; 0.9298560397275537</div><div class="line">timeit.timeit(func,number=1000) --&gt; 0.0002835632612345762</div></pre></td></tr></table></figure>
-<h3 id="循环优化"><a href="#循环优化" class="headerlink" title="循环优化"></a>循环优化</h3><ul>
-<li>尽量减少循环体内操作</li>
-<li>尽量减少循环嵌套层数</li>
-<li>大多数情况下大循环放在更里层效率更高</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</div><div class="line">      <span class="keyword">pass</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">func2</span><span class="params">()</span>:</span></div><div class="line">  <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">100000</span>):</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</div><div class="line">      <span class="keyword">pass</span></div><div class="line"></div><div class="line">timeit.timeit(func,number=1000) --&gt; 20.439412046114683</div><div class="line">timeit.timeit(func2,number=1000) --&gt; 38.57239906224004</div><div class="line"></div><div class="line">- 时间局部性: 如果一个信息项正在被访问，那么在近期它很可能还会被再次访问。</div><div class="line">- 空间局部性: 在最近的将来将用到的信息很可能与现在正在使用的信息在空间地址上是临近的。</div></pre></td></tr></table></figure>
-<h3 id="变量命名空间"><a href="#变量命名空间" class="headerlink" title="变量命名空间"></a>变量命名空间</h3><ul>
-<li>能使用局部变量就不要使用全局变量</li>
-<li>能放在循环更外层的就不要放到循环更里层</li>
-<li>最小权限原则</li>
-</ul>
-<blockquote>
-</blockquote>
-
-	
-	</div>
-  <a type="button" href="/2017/09/12/optimization/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2017/09/12/salt-ssh/#more" class="btn btn-default more">Leia Mais</a>
 </div>
 
            
@@ -800,13 +733,13 @@
 <ul class="pagination">
 	 
 		
-          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+          <li class="prev disabled"><a><i class="fa fa-arrow-circle-o-left"></i>Anterior</a></li>
         
 
         <li><a href="/"><i class="fa fa-home"></i>Home</a></li>
 
 		
-		   <li class="next"> <a href="/page/2/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
+		   <li class="next"> <a href="/page/2/" class="alignright next">Próximo<i class="fa fa-arrow-circle-o-right"></i></a> </li>          
         
 	
 </ul>
@@ -826,7 +759,7 @@
 			
   <div id="site_search">
    <div class="form-group">
-    <input type="text" id="local-search-input" name="q" results="0" placeholder="搜索" class="st-search-input st-default-search-input form-control"/>
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Busca" class="st-search-input st-default-search-input form-control"/>
    </div>  
   <div id="local-search-result"></div>
   </div>
@@ -835,7 +768,7 @@
 		
 			
 	<div class="widget">
-		<h4>分类</h4>
+		<h4>Categorias</h4>
 		<ul class="tag_box inline list-unstyled">
 		
 			<li><a href="/categories/django/">django</label></a></li>
@@ -846,6 +779,8 @@
 		
 			<li><a href="/categories/saltstack/">saltstack</label></a></li>
 		
+			<li><a href="/categories/sql/">sql</label></a></li>
+		
 		</ul>
 	</div>
 
@@ -853,42 +788,44 @@
 		
 			
 	<div class="widget">
-		<h4>标签云</h4>
+		<h4>Tag Cloud</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/tags/redis/">redis</a></li>
+			<li><a href="/tags/jinja/">jinja</a></li>
 		
-			<li><a href="/tags/saltstack/">saltstack</a></li>
-		
-			<li><a href="/tags/ELK/">ELK</a></li>
-		
-			<li><a href="/tags/django/">django</a></li>
-		
-			<li><a href="/tags/闭包/">闭包</a></li>
-		
-			<li><a href="/tags/vim/">vim</a></li>
-		
-			<li><a href="/tags/代码优化/">代码优化</a></li>
-		
-			<li><a href="/tags/rocketmq/">rocketmq</a></li>
-		
-			<li><a href="/tags/异步/">异步</a></li>
-		
-			<li><a href="/tags/oop/">oop</a></li>
+			<li><a href="/tags/sql/">sql</a></li>
 		
 			<li><a href="/tags/decorator/">decorator</a></li>
 		
-			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
+			<li><a href="/tags/python/">python</a></li>
 		
-			<li><a href="/tags/函数/">函数</a></li>
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+			<li><a href="/tags/oop/">oop</a></li>
 		
 			<li><a href="/tags/uwsgi/">uwsgi</a></li>
 		
 			<li><a href="/tags/gc/">gc</a></li>
 		
-			<li><a href="/tags/python/">python</a></li>
+			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
 		
-			<li><a href="/tags/jinja/">jinja</a></li>
+			<li><a href="/tags/redis/">redis</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/vim/">vim</a></li>
+		
+			<li><a href="/tags/django/">django</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/ELK/">ELK</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
 		
 		 
 		</ul>
@@ -898,8 +835,12 @@
 		
 			
 <div class="widget">
-  <h4>最新文章</h4>
+  <h4>Posts recentes</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2018/03/14/junior-sql/" ><i class="fa fa-file-o"></i>junior_sql</a>
+      </li>
     
       <li>
         <a href="/2018/03/13/super/" ><i class="fa fa-file-o"></i>python之super</a>
@@ -917,17 +858,13 @@
         <a href="/2017/11/15/ELK/" ><i class="fa fa-file-o"></i>ELK搭建</a>
       </li>
     
-      <li>
-        <a href="/2017/10/24/salt-file-backup/" ><i class="fa fa-file-o"></i>salt分发文件时自动备份</a>
-      </li>
-    
   </ul>
 </div>
 
 		
 			
 <div class="widget">
-	<h4>链接</h4>
+	<h4>Links</h4>
 	<ul class="blogroll list-unstyled">
 	
 		<li><i class="fa fa-github"></i><a href="http://www.github.com/DearEirs" title="My Github account." target="_blank"]);">My Github</a></li>
