@@ -3,7 +3,7 @@
   
     
     <entry>
-      <title><![CDATA[Hadoop+Hive+Presto]]></title>
+      <title><![CDATA[Hadoop+Hive+Presto环境搭建]]></title>
       <url>/2018/04/12/hadoop/</url>
       <content type="html"><![CDATA[<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>master: vertica1  172.16.1.234</p>
 <p>slave1: vertica2  172.16.1.235</p>
