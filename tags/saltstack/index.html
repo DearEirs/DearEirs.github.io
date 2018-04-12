@@ -144,8 +144,8 @@
 	
 	<!-- display as entry -->	
 		<h3 class="title">
-			<div class="date"> 2017-10-24 </div>
-			<div class="article-title"><a href="/2017/10/24/salt-file-backup/" >salt分发文件时自动备份</a></div>
+			<div class="date"> 2018-04-12 </div>
+			<div class="article-title"><a href="/2018/04/12/salt-returner/" >saltstack获取minion执行返回信息</a></div>
 		</h3>
 	
 
@@ -154,23 +154,53 @@
   <div class="row">
 	
 	
-		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
-<p>在日常工作中,我们经常会用saltstack来分发文件,但是如果稍有不慎就会不小心覆盖掉之前不想修改的文件,这样我们就需要回滚,但是又不知道具体被修改了那些地方,那么我们就需要一个备份的功能,每次分发文件时,如果有文件被修改,那么就将文件备份到指定目录,这样就算出错,我们也可以把原文件替换回去.</p>
+		<h1 id="saltstack-returner"><a href="#saltstack-returner" class="headerlink" title="saltstack returner"></a>saltstack returner</h1><blockquote>
+<p>在默认情况下master远程操作minion执行的命令, 执行的结果会返回到master终端显示出来, 但是saltstack 提供了接口可以输出到其他的系统, 如mysql, redis, postgresql等</p>
 </blockquote>
-<hr>
-<p>那么我们有2种方法:</p>
+<p>收集minion命令执行结果有2种方式:</p>
 <ol>
-<li>在minion的配置文件中添加backup_mode: minion</li>
-<li>在执行分发文件的states时,添加参数backup: minion</li>
+<li>由minion执行完后直接return</li>
+<li>由master端获取</li>
 </ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 借用官网的例子</div><div class="line">/etc/ssh/sshd_config:</div><div class="line">  file.managed:</div><div class="line">    - source: salt://ssh/sshd_config</div><div class="line">    - backup: minion</div></pre></td></tr></table></figure>
-<p>当sls 执行时发现sshd_config,被修改了的话,那么salt就会自动帮你备份sshd_config到/var/cache/salt/minion/file_backup(默认路径),并在文件名后面加上具体的日期方便查看.</p>
-<p>这样就算我们误操作把原文件覆盖掉,我们也有备份文件可以还原.</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://note.youdao.com/" target="_blank" rel="external">https://docs.saltstack.com/en/latest/ref/states/backup_mode.html#file-state-backups</a></p>
+<p>第一种方式是由master下发命令, 当命令执行完毕后, minion就直接把返回的信息给传到mysql即returner<br><img src="https://images2015.cnblogs.com/blog/1076878/201612/1076878-20161225140500261-440247952.png" alt="image"></p>
+<p>第二种方式是master下发命令, 当minion执行命令完毕时, 还是照样把信息返回给master, 然后master再集中把返回信息存到数据库当中<br><img src="https://images2015.cnblogs.com/blog/1076878/201612/1076878-20161225151956792-325594804.png" alt="image"></p>
+<h3 id="返回的信息究竟是怎样的"><a href="#返回的信息究竟是怎样的" class="headerlink" title="返回的信息究竟是怎样的"></a>返回的信息究竟是怎样的</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 在执行saltstack命令时, 我们可以通过--return 参数来指定returner</div><div class="line"></div><div class="line">salt &apos;*&apos; test.ping --return syslog</div><div class="line"></div><div class="line"># 查看系统/var/log/message看到日志如下</div><div class="line">Apr 12 18:00:04 zsad1 salt-minion: &#123;&quot;fun_args&quot;: [], &quot;jid&quot;: &quot;20180412180004363873&quot;, &quot;return&quot;: true, &quot;retcode&quot;: 0, &quot;success&quot;: true, &quot;fun&quot;: &quot;test.ping&quot;, &quot;id&quot;: &quot;zsad1&quot;&#125;</div><div class="line"></div><div class="line"># 还可以同时使用多个returner, 以,分割即可</div><div class="line">salt &apos;*&apos; test.ping --return syslog,postgres</div></pre></td></tr></table></figure>
+<ul>
+<li>fun_args: 执行方法时传入的参数</li>
+<li>jid: job_id 任务id</li>
+<li>return: </li>
+<li>retcode: 执行命令返回码</li>
+<li>success: 是否成功</li>
+<li>fun: 执行的方法</li>
+<li>id: minion的id</li>
+</ul>
+<p>更多自带的returner可以查阅官网: <a href="https://docs.saltstack.com/en/latest/ref/returners/all/index.html" target="_blank" rel="external">点我打开</a></p>
+<h1 id="使用returner"><a href="#使用returner" class="headerlink" title="使用returner"></a>使用returner</h1><h3 id="把信息存放到postgresql"><a href="#把信息存放到postgresql" class="headerlink" title="把信息存放到postgresql"></a>把信息存放到postgresql</h3><p>需要先安装psycopg2模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install psycopg2</div></pre></td></tr></table></figure></p>
+<p>minion配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">returner.postgres.host: &apos;172.16.1.80&apos;</div><div class="line">returner.postgres.user: &apos;salt&apos;</div><div class="line">returner.postgres.passwd: &apos;salt&apos;</div><div class="line">returner.postgres.db: &apos;salt&apos;</div><div class="line">returner.postgres.port: 5432</div></pre></td></tr></table></figure></p>
+<p>postgres创建数据库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div></pre></td><td class="code"><pre><div class="line"># 在官网复制的</div><div class="line">psql &lt;&lt; EOF</div><div class="line">CREATE ROLE salt WITH PASSWORD &apos;salt&apos;;</div><div class="line">CREATE DATABASE salt WITH OWNER salt;</div><div class="line">EOF</div><div class="line"></div><div class="line">psql -h localhost -U salt &lt;&lt; EOF</div><div class="line">--</div><div class="line">-- Table structure for table &apos;jids&apos;</div><div class="line">--</div><div class="line"></div><div class="line">DROP TABLE IF EXISTS jids;</div><div class="line">CREATE TABLE jids (</div><div class="line">  jid   varchar(20) PRIMARY KEY,</div><div class="line">  load  text NOT NULL</div><div class="line">);</div><div class="line"></div><div class="line">--</div><div class="line">-- Table structure for table &apos;salt_returns&apos;</div><div class="line">--</div><div class="line"></div><div class="line">DROP TABLE IF EXISTS salt_returns;</div><div class="line">CREATE TABLE salt_returns (</div><div class="line">  fun       varchar(50) NOT NULL,</div><div class="line">  jid       varchar(255) NOT NULL,</div><div class="line">  return    text NOT NULL,</div><div class="line">  full_ret  text,</div><div class="line">  id        varchar(255) NOT NULL,</div><div class="line">  success   varchar(10) NOT NULL,</div><div class="line">  alter_time   TIMESTAMP WITH TIME ZONE DEFAULT now()</div><div class="line">);</div><div class="line"></div><div class="line">CREATE INDEX idx_salt_returns_id ON salt_returns (id);</div><div class="line">CREATE INDEX idx_salt_returns_jid ON salt_returns (jid);</div><div class="line">CREATE INDEX idx_salt_returns_fun ON salt_returns (fun);</div><div class="line">CREATE INDEX idx_salt_returns_updated ON salt_returns (alter_time);</div><div class="line"></div><div class="line">--</div><div class="line">-- Table structure for table `salt_events`</div><div class="line">--</div><div class="line"></div><div class="line">DROP TABLE IF EXISTS salt_events;</div><div class="line">DROP SEQUENCE IF EXISTS seq_salt_events_id;</div><div class="line">CREATE SEQUENCE seq_salt_events_id;</div><div class="line">CREATE TABLE salt_events (</div><div class="line">    id BIGINT NOT NULL UNIQUE DEFAULT nextval(&apos;seq_salt_events_id&apos;),</div><div class="line">    tag varchar(255) NOT NULL,</div><div class="line">    data text NOT NULL,</div><div class="line">    alter_time TIMESTAMP WITH TIME ZONE DEFAULT NOW(),</div><div class="line">    master_id varchar(255) NOT NULL</div><div class="line">);</div><div class="line"></div><div class="line">CREATE INDEX idx_salt_events_tag on salt_events (tag);</div><div class="line"></div><div class="line">EOF</div></pre></td></tr></table></figure></p>
+<p>测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># minion修改完配置后需要先重启</div><div class="line">salt &apos;*&apos; test.ping --return postgres</div></pre></td></tr></table></figure></p>
+<p>然后我们就可以看到返回的信息已经存到postgresql</p>
+<blockquote>
+<p>如果不想每次都在命令里指定returner, 可在master的配置文件上添加 return:mysql</p>
+</blockquote>
+<h3 id="自定义-returner"><a href="#自定义-returner" class="headerlink" title="自定义 returner"></a>自定义 returner</h3><p>saltstack 虽然自带了很多的returner, 但是还是不能满足我们所有的需求, 我们总想拿着数据干点事情, 比如存到本地文件, es上, 下面我们来看看如何自定义一个returner</p>
+<blockquote>
+<p>自定义的returner模块文件应存放在/srv/salt/_returners 目录下</p>
+</blockquote>
+<p>local_file.py<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">#!/usr/bin/env python           </span></div><div class="line"><span class="comment"># -*- coding:utf-8 -*-          </span></div><div class="line"><span class="comment"># arthur:Dear                   </span></div><div class="line"><span class="comment"># 2018-04-12 18:22:59           </span></div><div class="line">       </div><div class="line">       </div><div class="line"><span class="keyword">import</span> salt.config              </div><div class="line">       </div><div class="line">       </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">__virtual__</span><span class="params">()</span>:</span>              </div><div class="line">    <span class="string">''' </span></div><div class="line"><span class="string">    返回命令行调用时指定的returner名称</span></div><div class="line"><span class="string">    '''</span></div><div class="line">    <span class="keyword">return</span> <span class="string">'local_file'</span></div><div class="line">       </div><div class="line">       </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_log_file</span><span class="params">(path_to_master_config)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line"><span class="string">    需要在minion的配置文件里配置RETURN_FILE为结果日志文件路径</span></div><div class="line"><span class="string">    '''</span></div><div class="line">    config = salt.config.client_config(path_to_master_config)</div><div class="line">    log_file = config[<span class="string">'RETURN_FILE'</span>]</div><div class="line">    <span class="keyword">return</span> log_file</div><div class="line">       </div><div class="line">       </div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">returner</span><span class="params">(ret)</span>:</span></div><div class="line">    <span class="string">'''</span></div><div class="line"><span class="string">    salt 默认调用的方法, 方法名必须为returner</span></div><div class="line"><span class="string">    '''</span></div><div class="line">    log_file = get_log_file(<span class="string">'/etc/salt/minion'</span>)</div><div class="line">    <span class="keyword">with</span> open(log_file, <span class="string">'a+'</span>) <span class="keyword">as</span> f:</div><div class="line">        f.write(str(ret))</div></pre></td></tr></table></figure></p>
+<p>把文件同步到minion上然后重启就可以使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">salt &apos;*&apos; test.ping --return local_file</div></pre></td></tr></table></figure>
+<h1 id="由master端收集返回信息"><a href="#由master端收集返回信息" class="headerlink" title="由master端收集返回信息"></a>由master端收集返回信息</h1><blockquote>
+<p>第二种方法是通过event来获取minion执行的返回信息</p>
+</blockquote>
+<p>脚本如下:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="keyword">import</span> salt.config</div><div class="line"><span class="keyword">import</span> salt.utils.event</div><div class="line"></div><div class="line">__opts__ = salt.config.client_config(<span class="string">'/etc/salt/master'</span>)</div><div class="line">events = salt.utils.event.MasterEvent(__opts__[<span class="string">'sock_dir'</span>])</div><div class="line"></div><div class="line"><span class="keyword">for</span> event <span class="keyword">in</span> events.iter_events(full=<span class="keyword">True</span>):</div><div class="line">    print(<span class="string">'-'</span> * <span class="number">100</span>)</div><div class="line">    print(event)</div></pre></td></tr></table></figure></p>
+<p>通过脚本, salt执行的操作(包括命令, key认证等) 都可以通过event获取到, 我们可以通过event的信息来入库, 甚至是监控salt的命令的执行情况.</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>通过returner方式来获取minion执行结果需要在所有minion上都进行配置, 如果数据需要入库的话, 还要保证所有minion与数据库的网络能够正常连接</p>
+<p>通过event方式获取minion执行结果则没那么麻烦, 只需在master上执行脚本即可, 即便需要入库, 也只需master与数据库的连接, minion无需进行任何额外的配置, 但是需要注意的是event获取到的数据都是实时的, 如果不慎脚本出现错误或者挂掉了, 那么数据将会丢失, 直至脚本再次正常启动.</p>
 
 	
 	</div>
-  <a type="button" href="/2017/10/24/salt-file-backup/#more" class="btn btn-default more">阅读此文</a>
+  <a type="button" href="/2018/04/12/salt-returner/#more" class="btn btn-default more">阅读此文</a>
 </div>
 
 	       
@@ -240,43 +270,43 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/tags/oop/">oop</a></li>
-		
-			<li><a href="/tags/ELK/">ELK</a></li>
-		
-			<li><a href="/tags/异步/">异步</a></li>
-		
-			<li><a href="/tags/大数据/">大数据</a></li>
-		
-			<li><a href="/tags/rocketmq/">rocketmq</a></li>
-		
-			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
-		
-			<li><a href="/tags/python/">python</a></li>
-		
 			<li><a href="/tags/代码优化/">代码优化</a></li>
-		
-			<li><a href="/tags/gc/">gc</a></li>
 		
 			<li><a href="/tags/函数/">函数</a></li>
 		
-			<li><a href="/tags/jinja/">jinja</a></li>
+			<li><a href="/tags/oop/">oop</a></li>
 		
 			<li><a href="/tags/闭包/">闭包</a></li>
 		
-			<li><a href="/tags/redis/">redis</a></li>
+			<li><a href="/tags/sql/">sql</a></li>
 		
-			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+			<li><a href="/tags/ELK/">ELK</a></li>
+		
+			<li><a href="/tags/大数据/">大数据</a></li>
+		
+			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
 		
 			<li><a href="/tags/saltstack/">saltstack</a></li>
 		
-			<li><a href="/tags/decorator/">decorator</a></li>
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/django/">django</a></li>
 		
 			<li><a href="/tags/vim/">vim</a></li>
 		
-			<li><a href="/tags/sql/">sql</a></li>
+			<li><a href="/tags/decorator/">decorator</a></li>
 		
-			<li><a href="/tags/django/">django</a></li>
+			<li><a href="/tags/redis/">redis</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/jinja/">jinja</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
 		
 		 
 		</ul>
@@ -288,6 +318,10 @@
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2018/04/12/salt-returner/" ><i class="fa fa-file-o"></i>saltstack获取minion执行返回信息</a>
+      </li>
     
       <li>
         <a href="/2018/04/12/hadoop/" ><i class="fa fa-file-o"></i>Hadoop+Hive+Presto环境搭建</a>
@@ -303,10 +337,6 @@
     
       <li>
         <a href="/2018/03/12/new-style-class-and-classic-class/" ><i class="fa fa-file-o"></i>python之新式类与旧式类</a>
-      </li>
-    
-      <li>
-        <a href="/2017/12/24/agile/" ><i class="fa fa-file-o"></i>初涉敏捷开发</a>
       </li>
     
   </ul>

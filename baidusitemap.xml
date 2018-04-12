@@ -4,6 +4,26 @@
 
     
   <url>
+    <loc>http://139.199.0.245/2018/04/12/salt-returner/</loc>
+    <lastmod>2018-04-12T14:36:27.508Z</lastmod>
+    <data>
+        <display>
+        <title>saltstack获取minion执行返回信息</title>
+        <pubTime>2018-04-12T14:35:11.000Z</pubTime>
+        
+        <tag>saltstack</tag>
+         
+         
+           
+             
+              <breadCrumb title="saltstack" url="http://139.199.0.245/categories/saltstack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://139.199.0.245/2018/04/12/hadoop/</loc>
     <lastmod>2018-04-12T09:14:39.470Z</lastmod>
     <data>

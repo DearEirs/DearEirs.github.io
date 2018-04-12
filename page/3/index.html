@@ -145,6 +145,69 @@
 	<!-- display as entry -->	
 		<h3 class="title">
 			<div class="date"> 2017-08-30 </div>
+			<div class="article-title"><a href="/2017/08/30/saltstack-二-简单使用/" >saltstack(二)简单使用</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<p>命令格式：<br>salt [options] ‘<target>‘ <function> [arguments]</function></target></p>
+<p>salt –help</p>
+<p>[option] 可自行看说明</p>
+<h3 id="target-匹配模式"><a href="#target-匹配模式" class="headerlink" title="target 匹配模式"></a>target 匹配模式</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">-E 正则匹配 通过正则表达式进行匹配</div><div class="line">salt -E &apos;^minion[1-9]&apos; test.ping</div><div class="line">-L 列表匹配 以列表形式进行匹配,多个ID之间用,进行分割</div><div class="line">salt -L &apos;minion1,minion2&apos; test.ping</div><div class="line">-G Grain匹配</div><div class="line">salt -G &apos;os:CentOS&apos; test.ping</div><div class="line">-P Pillar匹配</div><div class="line">salt -P &apos;os:CentOS&apos; test.ping</div><div class="line">-S IP匹配 可以用掩码来自行调整ip范围</div><div class="line">salt -S &apos;192.168.0.0/24&apos; test.ping</div><div class="line"></div><div class="line">其他更详细的请参考帮助文档</div></pre></td></tr></table></figure>
+<h3 id="模块方法"><a href="#模块方法" class="headerlink" title="模块方法"></a>模块方法</h3><p>如需更详细的了解,请参考<a href="https://docs.saltstack.com/en/latest/contents.html" target="_blank" rel="external">官方文档</a> (自行翻墙)</p>
+<ul>
+<li>sys.doc  查看模块的文档</li>
+<li>sys.list_modules 列出有哪些可用模块</li>
+<li>sys.list_functions 列出模块有哪些可用方法</li>
+</ul>
+<p>常用模块</p>
+<p>cmd.run</p>
+<ul>
+<li>salt ‘*’ cmd.run ‘ls /‘ # 控制target 执行命令</li>
+</ul>
+<p>test</p>
+<ul>
+<li>salt ‘*’ test.ping #查看target通讯是否正常</li>
+<li>salt ‘*’ test.version #查看target salt版本</li>
+</ul>
+<p>cp</p>
+<ul>
+<li>salt ‘minion1’ cp.get_file salt://path/to/file /minion/dest # 分发文件到target</li>
+<li>salt ‘minion1’ cp.get_dir salt://path/to/file /minion/dest # 分发目录到target</li>
+<li>salt ‘minion1’ cp.push /minion/filename # 从minion上传文件到master</li>
+</ul>
+<p>grains</p>
+<ul>
+<li>salt ‘minion1’ grains.items #查看所有grains信息</li>
+</ul>
+<p>pillar</p>
+<ul>
+<li>salt ‘minion1’ pillar.items #查看所有pillar信息</li>
+</ul>
+<p>fileserver</p>
+<ul>
+<li>salt-run fileserver.file_list #返回给定环境中的文件列表</li>
+<li>salt-run fileserver.dir_list #返回给定环境中的目录列表</li>
+<li>salt-run fileserver.update #更新文件</li>
+</ul>
+
+	
+	</div>
+  <a type="button" href="/2017/08/30/saltstack-二-简单使用/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2017-08-30 </div>
 			<div class="article-title"><a href="/2017/08/30/saltstack-一-安装与配置/" >saltstack(一)安装与配置</a></div>
 		</h3>
 	
@@ -346,35 +409,11 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/tags/vim/">vim</a></li>
-		
-			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
-		
-			<li><a href="/tags/python/">python</a></li>
-		
-			<li><a href="/tags/大数据/">大数据</a></li>
-		
-			<li><a href="/tags/sql/">sql</a></li>
-		
-			<li><a href="/tags/异步/">异步</a></li>
-		
 			<li><a href="/tags/rocketmq/">rocketmq</a></li>
 		
-			<li><a href="/tags/uwsgi/">uwsgi</a></li>
-		
-			<li><a href="/tags/saltstack/">saltstack</a></li>
-		
-			<li><a href="/tags/闭包/">闭包</a></li>
-		
-			<li><a href="/tags/jinja/">jinja</a></li>
-		
-			<li><a href="/tags/decorator/">decorator</a></li>
-		
-			<li><a href="/tags/redis/">redis</a></li>
-		
-			<li><a href="/tags/函数/">函数</a></li>
-		
 			<li><a href="/tags/django/">django</a></li>
+		
+			<li><a href="/tags/大数据/">大数据</a></li>
 		
 			<li><a href="/tags/oop/">oop</a></li>
 		
@@ -382,7 +421,31 @@
 		
 			<li><a href="/tags/代码优化/">代码优化</a></li>
 		
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/jinja/">jinja</a></li>
+		
+			<li><a href="/tags/vim/">vim</a></li>
+		
 			<li><a href="/tags/ELK/">ELK</a></li>
+		
+			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
+		
+			<li><a href="/tags/sql/">sql</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/redis/">redis</a></li>
 		
 		 
 		</ul>
@@ -394,6 +457,10 @@
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2018/04/12/salt-returner/" ><i class="fa fa-file-o"></i>saltstack获取minion执行返回信息</a>
+      </li>
     
       <li>
         <a href="/2018/04/12/hadoop/" ><i class="fa fa-file-o"></i>Hadoop+Hive+Presto环境搭建</a>
@@ -409,10 +476,6 @@
     
       <li>
         <a href="/2018/03/12/new-style-class-and-classic-class/" ><i class="fa fa-file-o"></i>python之新式类与旧式类</a>
-      </li>
-    
-      <li>
-        <a href="/2017/12/24/agile/" ><i class="fa fa-file-o"></i>初涉敏捷开发</a>
       </li>
     
   </ul>
