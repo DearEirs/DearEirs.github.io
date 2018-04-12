@@ -182,9 +182,77 @@
 		
             
 		
+            
+		
         
         <!-- render other articles -->
         
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-04-12 </div>
+			<div class="article-title"><a href="/2018/04/12/hadoop/" >Hadoop+Hive+Presto</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h3 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h3><p>master: vertica1  172.16.1.234</p>
+<p>slave1: vertica2  172.16.1.235</p>
+<p>slave2: vertica3  172.16.1.236</p>
+<p>postgresql: 172.16.0.80</p>
+<p>版本:<br>jdk: 1.8</p>
+<p>Hadoop: 2.8.3 <a href="http://mirrors.hust.edu.cn/apache/hadoop/common/hadoop-2.8.3/hadoop-2.8.3.tar.gz" target="_blank" rel="external">下载链接</a></p>
+<p>Hive: 2.3.2<a href="http://mirrors.hust.edu.cn/apache/hive/hive-2.3.3/apache-hive-2.3.3-bin.tar.gz" target="_blank" rel="external">下载链接</a></p>
+<p>Presto: 0.197<a href="https://repo1.maven.org/maven2/com/facebook/presto/presto-server/0.198/presto-server-0.198.tar.gz" target="_blank" rel="external">下载链接</a></p>
+<p>sqoop: 1.4.7<a href="https://mirrors.tuna.tsinghua.edu.cn/apache/sqoop/1.4.7/sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz" target="_blank" rel="external">下载链接</a></p>
+<hr>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><ol>
+<li>用户创建</li>
+<li>jdk安装</li>
+<li>ssh免密钥登录</li>
+<li>目录创建</li>
+<li>配置hosts</li>
+</ol>
+<h3 id="用户创建"><a href="#用户创建" class="headerlink" title="用户创建"></a>用户创建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">useradd hadoop</div><div class="line">echo  &apos;hadoop&apos;|passwd --stdin hadoop</div></pre></td></tr></table></figure>
+<h3 id="jdk安装"><a href="#jdk安装" class="headerlink" title="jdk安装"></a>jdk安装</h3><p>略</p>
+<h3 id="ssh免密钥登录"><a href="#ssh免密钥登录" class="headerlink" title="ssh免密钥登录"></a>ssh免密钥登录</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"># 生成密钥</div><div class="line">ssh-keygen -t rsa</div><div class="line"></div><div class="line"># 配置信任主机</div><div class="line">cd .ssh</div><div class="line">touch authorized_keys</div><div class="line">cat id_rsa.pub &gt;&gt; authorized_keys</div><div class="line"># 全部主机的公钥都要添加到authorized_keys上</div><div class="line"></div><div class="line"># 设置文件权限</div><div class="line">chmod 700 ../.ssh/</div><div class="line">chmod 600 ./authorized_keys </div><div class="line"></div><div class="line"># 测试</div><div class="line">ssh hadoop@172.16.1.235</div></pre></td></tr></table></figure>
+<h3 id="目录创建"><a href="#目录创建" class="headerlink" title="目录创建"></a>目录创建</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># /data/hadoop 作为hadoop的安装路径</div><div class="line">mkdir -p /data/hadoop</div><div class="line">chown -R hadoop.hadoop /data/hadoop</div></pre></td></tr></table></figure>
+<h3 id="hosts文件配置"><a href="#hosts文件配置" class="headerlink" title="hosts文件配置"></a>hosts文件配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">cat /etc/hosts</div><div class="line"></div><div class="line">127.0.0.1   localhost</div><div class="line">::1         localhost</div><div class="line">172.16.1.234   vertica1</div><div class="line">172.16.1.235   vertica2</div><div class="line">172.16.1.236   vertica3</div></pre></td></tr></table></figure>
+<p><strong>配置操作均在hadoop用户下执行</strong></p>
+<h1 id="Hadoop安装配置"><a href="#Hadoop安装配置" class="headerlink" title="Hadoop安装配置"></a>Hadoop安装配置</h1><p>core-site.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"># core-site.xml 是hdfs的配置</div><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;fs.defaultFS&lt;/name&gt;</div><div class="line">    &lt;value&gt;hdfs://vertica1:8020&lt;/value&gt;</div><div class="line">    &lt;description&gt; 设定namenode的主机名及端口 </div><div class="line">    &lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">       </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;io.file.buffer.size&lt;/name&gt;</div><div class="line">    &lt;value&gt;131072&lt;/value&gt;</div><div class="line">    &lt;description&gt;设置缓存大小 &lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;hadoop.tmp.dir&lt;/name&gt;</div><div class="line">    &lt;value&gt;file://data/hadoop/tmp&lt;/value&gt;</div><div class="line">    &lt;description&gt;临时文件的目录 &lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure></p>
+<p>hdfs-site.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;dfs.namenode.name.dir&lt;/name&gt;</div><div class="line">    &lt;value&gt;file:/data/hadoop/hdfs/name&lt;/value&gt;</div><div class="line">    &lt;description&gt;namenode存放命名空间与交换日志</div><div class="line">    &lt;/description&gt; </div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;dfs.datanode.data.dir&lt;/name&gt;</div><div class="line">    &lt;value&gt;file:/data/hadoop/hdfs/data&lt;/value&gt;</div><div class="line">    &lt;description&gt; DataNode 在本地存放块文件的目录</div><div class="line">    &lt;/description&gt; </div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;dfs.replication&lt;/name&gt;</div><div class="line">    &lt;value&gt;3&lt;/value&gt;</div><div class="line">    &lt;description&gt; HDFS 存储文件的副本个数,默认为3</div><div class="line">    &lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;dfs.webhdfs.enabled&lt;/name&gt;</div><div class="line">    &lt;value&gt;true&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure></p>
+<p>yarn-site.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;yarn.nodemanager.aux-services&lt;/name&gt;</div><div class="line">    &lt;value&gt;mapreduce_shuffle&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;yarn.nodemanager.aux-services.mapreduce.shuffle.class&lt;/name&gt;</div><div class="line">    &lt;value&gt;org.apache.hadoop.mapred.ShuffleHandler&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;yarn.resourcemanager.address&lt;/name&gt;</div><div class="line">    &lt;value&gt;vertica1:8032&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;yarn.resourcemanager.scheduler.address&lt;/name&gt;</div><div class="line">    &lt;value&gt;vertica1:8030&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">       </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;yarn.resourcemanager.resource-tracker.address&lt;/name&gt;</div><div class="line">    &lt;value&gt;vertica1:8031&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;yarn.resourcemanager.admin.address&lt;/name&gt;</div><div class="line">    &lt;value&gt;vertica1:8033&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;yarn.resourcemanager.webapp.address&lt;/name&gt;</div><div class="line">    &lt;value&gt;vertica1:8088&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure></p>
+<p>mapred-site.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;mapreduce.framework.name&lt;/name&gt;</div><div class="line">    &lt;value&gt;yarn&lt;/value&gt;</div><div class="line">    &lt;final&gt;true&lt;/final&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;mapreduce.jobtracker.http.address&lt;/name&gt;</div><div class="line">    &lt;value&gt;vertica1:50030&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;mapreduce.jobhistory.address&lt;/name&gt;</div><div class="line">    &lt;value&gt;vertica1:10020&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;mapreduce.jobhistory.webapp.address&lt;/name&gt;</div><div class="line">    &lt;value&gt;vertica1:19888&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;mapred.job.tracker&lt;/name&gt;</div><div class="line">    &lt;value&gt;http://vertica1:9001&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure></p>
+<p>slaves<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cat ./slaves </div><div class="line"># slave配置的为datanode节点</div><div class="line">vertica1</div><div class="line">vertica2</div><div class="line">vertica3</div></pre></td></tr></table></figure></p>
+<h3 id="环境变量配置"><a href="#环境变量配置" class="headerlink" title="环境变量配置"></a>环境变量配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 把下面内容加入到/etc/profile</div><div class="line"># 然后source /etc/profile</div><div class="line"></div><div class="line">JAVA_HOME=/usr/java/jdk1.8.0_112</div><div class="line">JRE_HOME=$JAVA_HOME/jre</div><div class="line">CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib</div><div class="line"></div><div class="line">export HADOOP_INSTALL=/data/hadoop/hadoop</div><div class="line">export HADOOP_HOME=$HADOOP_INSTALL</div><div class="line">export HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop</div><div class="line">export PATH=$PATH:$HADOOP_INSTALL/bin</div></pre></td></tr></table></figure>
+<h3 id="启动hadoop"><a href="#启动hadoop" class="headerlink" title="启动hadoop"></a>启动hadoop</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># 初始化hdfs</div><div class="line">$HADOOP/bin/hdfs namenode -format</div><div class="line"># 启动hadoop各个组件</div><div class="line">$HADOOP/sbin/start-all.sh</div><div class="line"># 查看组件启动情况</div><div class="line">jps</div><div class="line"></div><div class="line">ResourceManager</div><div class="line">NodeManager</div><div class="line">NameNode</div><div class="line">DataNode</div><div class="line">SecondaryNameNode</div><div class="line"></div><div class="line"># master上应该有以上5个进程</div><div class="line"># slave上应该只有1个进程</div><div class="line"># 如果有个别进程没启动成功, 可查看具体日志</div></pre></td></tr></table></figure>
+<h1 id="Hive安装配置"><a href="#Hive安装配置" class="headerlink" title="Hive安装配置"></a>Hive安装配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div></pre></td><td class="code"><pre><div class="line">&lt;configuration&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;</div><div class="line">    &lt;value&gt;jdbc:postgresql://172.16.1.80:5432/hive?create=true&amp;amp;useUnicode=true&amp;amp;characterEncoding=utf8&amp;amp;allowEncodingChanges=true&amp;amp;loglevel=1;useSSL=false&lt;/value&gt;</div><div class="line">    &lt;description&gt;metastore数据库连接&lt;/description&gt;</div><div class="line">  &lt;/property&gt; </div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;</div><div class="line">    &lt;value&gt;org.postgresql.Driver&lt;/value&gt;</div><div class="line">    &lt;description&gt;Driver class name for a JDBCmetastore&lt;/description&gt;</div><div class="line">  &lt;/property&gt; </div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;</div><div class="line">    &lt;value&gt;hadoop&lt;/value&gt;</div><div class="line">    &lt;description&gt;连接metastore的数据库用户&lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;</div><div class="line">    &lt;value&gt;hadoop&lt;/value&gt;</div><div class="line">    &lt;description&gt;连接metastore的数据库用户的密码&lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;hive.server2.thrift.port&lt;/name&gt;</div><div class="line">    &lt;value&gt;10000&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;hive.server2.thrift.bind.host&lt;/name&gt;</div><div class="line">    &lt;value&gt;vertica1&lt;/value&gt;</div><div class="line">    &lt;description&gt;主机名称&lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line"></div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;hive.server2.authentication&lt;/name&gt;</div><div class="line">    &lt;value&gt;NONE&lt;/value&gt;</div><div class="line">    &lt;description&gt;&lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line"></div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;hive.server2.enable.doAs&lt;/name&gt;</div><div class="line">    &lt;value&gt;true&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line"></div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;datanucleus.schema.autoCreateAll&lt;/name&gt;</div><div class="line">    &lt;value&gt;false&lt;/value&gt;</div><div class="line">    &lt;description&gt;自动创建metastore&lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;hive.server2.logging.operation.log.location&lt;/name&gt;</div><div class="line">    &lt;value&gt;/data/hadoop/hive/tmp/$&#123;user.name&#125;/operation_logs&lt;/value&gt;</div><div class="line">    &lt;description&gt;操作日志路径&lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line"></div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;hive.metastore.warehouse.dir&lt;/name&gt;</div><div class="line">    &lt;value&gt;/warehouse&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  </div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;hive.exec.scratchdir&lt;/name&gt;</div><div class="line">    &lt;value&gt;/tmp/hive&lt;/value&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;hive.querylog.location&lt;/name&gt;</div><div class="line">    &lt;value&gt;/log&lt;/value&gt;</div><div class="line">    &lt;description&gt;&lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line"></div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;hive.metastore.uris&lt;/name&gt;</div><div class="line">    &lt;value&gt;thrift://172.16.1.234:9083&lt;/value&gt;</div><div class="line">    &lt;description&gt;Thrift URI for the remote metastore. Used by metastore client to connect to remote metastore.&lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line"></div><div class="line">  &lt;property&gt;</div><div class="line">    &lt;name&gt;hive.server2.transport.mode&lt;/name&gt;</div><div class="line">    &lt;value&gt;binary&lt;/value&gt;</div><div class="line">    &lt;description&gt;</div><div class="line">       当为binary的时候,只是启动10000端口,反之启用10001端口.    </div><div class="line">    &lt;/description&gt;</div><div class="line">  &lt;/property&gt;</div><div class="line">&lt;/configuration&gt;</div></pre></td></tr></table></figure>
+<p>使用postgresql作为元数据库需要额外的配置, 可参考</p>
+<p><a href="https://my.oschina.net/sucre/blog/365351" target="_blank" rel="external">https://my.oschina.net/sucre/blog/365351</a></p>
+<h3 id="启动Hive"><a href="#启动Hive" class="headerlink" title="启动Hive"></a>启动Hive</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 初始化元数据库前需要先在postgresql创建数据库</div><div class="line"># 初始化成功后可以在数据库看到生成了很多的表</div><div class="line"># 初始化元数据</div><div class="line">schematool -dbType postgres -initSchema</div><div class="line"></div><div class="line"># 启动Hive</div><div class="line">nohup hive --service metastore &amp;</div></pre></td></tr></table></figure>
+<h1 id="presto安装配置"><a href="#presto安装配置" class="headerlink" title="presto安装配置"></a>presto安装配置</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"># 解压presto后需要手动创建配置目录与文件</div><div class="line">cd /data/hadoop/presto</div><div class="line">mkdir -p ./etc/catalog</div><div class="line">touch ./etc/config.properties</div><div class="line">touch ./etc/jmx.properties</div><div class="line">touch ./etc/jvm.config</div><div class="line">touch ./etc/log.properties</div><div class="line">touch ./etc/node.properties</div></pre></td></tr></table></figure>
+<p>config.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">node.environment=presto # 集群名字</div><div class="line">node.id=node1 # 节点名字</div><div class="line">node.data-dir=/data/hadoop/presto/data # 数据路径</div></pre></td></tr></table></figure></p>
+<p>jvm.config<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">-server</div><div class="line">-Xmx4G</div><div class="line">-XX:+UseG1GC</div><div class="line">-XX:G1HeapRegionSize=32M</div><div class="line">-XX:+UseGCOverheadLimit</div><div class="line">-XX:+ExplicitGCInvokesConcurrent</div><div class="line">-XX:+HeapDumpOnOutOfMemoryError</div><div class="line">-XX:+ExitOnOutOfMemoryError</div></pre></td></tr></table></figure></p>
+<p>config.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"># master</div><div class="line">coordinator=true # 是否作为协调员即master</div><div class="line"># 是否运行scheduler在coordinator的节点上运行, 从节点必须为True, 主节点可选</div><div class="line">node-scheduler.include-coordinator=true </div><div class="line">http-server.http.port=8080</div><div class="line">query.max-memory=4GB</div><div class="line">query.max-memory-per-node=1GB</div><div class="line">discovery-server.enabled=true</div><div class="line">discovery.uri=http://172.16.1.234:8080</div><div class="line"></div><div class="line"># slave</div><div class="line">coordinator=false</div><div class="line">http-server.http.port=8080</div><div class="line">query.max-memory=4GB</div><div class="line">query.max-memory-per-node=1GB</div><div class="line">discovery.uri=http://172.16.1.234:8080</div></pre></td></tr></table></figure></p>
+<p>log.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">com.facebook.presto=INFO # 日志等级</div></pre></td></tr></table></figure></p>
+<p>jmx.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">connector.name=jmx</div></pre></td></tr></table></figure></p>
+<p>配置好启动presto测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">/data/hadoop/presto/bin/launcher run # 前台启动</div><div class="line">/data/hadoop/presto/bin/launcher start # 后台启动</div></pre></td></tr></table></figure></p>
+<hr>
+<p>附sqoop数据导入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 把数据从postgresql导入hive</div><div class="line"># 先在hive创建数据库</div><div class="line">hive&gt; create database testdata</div><div class="line"># 导入数据, 数据会先从postgresql导入hdfs, 再由hdfs导入hive</div><div class="line">sqoop import-all-tables  --connect &quot;jdbc:postgresql://172.16.0.80/testdata&quot; --username username --password password --hive-database testdata -m 3 --direct  --hive-import   --create-hive-table</div></pre></td></tr></table></figure></p>
+
+	
+	</div>
+  <a type="button" href="/2018/04/12/hadoop/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+           
+		
            
 			  
 	
@@ -670,59 +738,6 @@
 
            
 		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-09-12 </div>
-			<div class="article-title"><a href="/2017/09/12/salt-ssh/" >slatstack(三)salt-ssh批量安装minion</a></div>
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p><strong>saltstack 对比 ansible</strong> </p>
-<blockquote>
-<p>最大的不同就是saltstack使用的是c/s架构,即要安装minion才能访问客户端,而ansible则是使用ssh协议访问.不得不说,有一部分人就是因为觉得saltstack需要安装客户端,感觉很麻烦而选用了ansible.那么下面来说说salt如何通过salt-ssh来安装minion</p>
-</blockquote>
-<h1 id="salt-ssh"><a href="#salt-ssh" class="headerlink" title="salt-ssh"></a>salt-ssh</h1><p>salt-ssh 并没有包含在salt-master中,所以需要单独安装<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yum install salt-ssh</div></pre></td></tr></table></figure></p>
-<h3 id="前提条件"><a href="#前提条件" class="headerlink" title="前提条件"></a>前提条件</h3><p>salt-ssh 使用的前提条件就是roster,只有配置了roster文件后才能使用salt-ssh对机器进行操作</p>
-<p>下面来看一个roster文件的配置<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">test1:</div><div class="line"> host: 192.168.1.101</div><div class="line"> user: salt</div><div class="line"> passwd: redhat</div><div class="line"> minion_opts:</div><div class="line">   - id: test1</div></pre></td></tr></table></figure></p>
-<p>第1行test1: 表示该机器被salt-ssh识别到的id<br>第2-4行host: 指定机器的IP地址,用户,密码,用于ssh连接<br>第5行minion_opts: 表示执行命令时传递的参数</p>
-<p><strong>如果客户端IP没有在master的known_hosts文件中,需要先添加上去</strong></p>
-<p>测试连接是否成功<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">salt-ssh -i 'test1' test.ping</div></pre></td></tr></table></figure></p>
-<h3 id="编写安装minion的sls"><a href="#编写安装minion的sls" class="headerlink" title="编写安装minion的sls"></a>编写安装minion的sls</h3><p>既然已经连接上客户端,那么只需要在客户端上装上minion并启动就好了</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span>同步yum的repo</div><div class="line">minion_yum:</div><div class="line">  file.recurse:</div><div class="line">    - name: /etc/yum.repos.d</div><div class="line">    - source: salt://minions/yum.repos.d ##提前准备的yum文件路径</div><div class="line">    - user: root</div><div class="line">    - group: root</div><div class="line">    - file_mode: 644</div><div class="line">    - dir_mode: 755</div><div class="line">    - include_empty: True</div><div class="line">    - unless: test -e /etc/yum.repos.d/epel_aliyun.repo</div><div class="line"></div><div class="line"><span class="meta">#</span>安装minion</div><div class="line">minion_install:</div><div class="line">  pkg.installed:</div><div class="line">    - pkgs:</div><div class="line">      - salt-minion</div><div class="line">    - skip_verify: True</div><div class="line">    - require:</div><div class="line">      - file: minion_yum</div><div class="line">    - unless: rpm -qa | grep salt-minion</div><div class="line"></div><div class="line"><span class="meta">#</span>同步minion的配置文件</div><div class="line">minion_conf:</div><div class="line">  file.managed:</div><div class="line">    - name: /etc/salt/minion</div><div class="line">    - source: salt://minions/minion.conf  ##minion端需要配置的minion主配置文件</div><div class="line">    - user: root</div><div class="line">    - group: root</div><div class="line">    - mode: 640</div><div class="line">    - template: jinja</div><div class="line">    - defaults:</div><div class="line">       minion_id: &#123;&#123; grains['id'] &#125;&#125;</div><div class="line">    - require:</div><div class="line">      - pkg: minion_install</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">#</span>启动minion</div><div class="line">minion_service:</div><div class="line">  service.running:</div><div class="line">    - name: salt-minion</div><div class="line">    - enable: True</div><div class="line">    - require:</div><div class="line">      - file: minion_conf</div></pre></td></tr></table></figure>
-<p><strong>文件需要自行准备,并放到salt root目录下</strong></p>
-<p>minion的主要配置,其他可以自行修改<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">id: &#123;&#123; minion_id &#125;&#125; </div><div class="line">master: 192.168.1.100</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>执行完sls后,就可以到master上通过salt-key 直接添加minion进行管理</p>
-</blockquote>
-<h1 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h1><ol>
-<li>通过kickstart批量安装centos</li>
-<li>通过Python脚本批量修改服务器IP</li>
-<li>master批量插入主机信息到roster</li>
-<li>salt-ssh 安装minion 进行管理</li>
-</ol>
-<h3 id="kickstart批量安装centos"><a href="#kickstart批量安装centos" class="headerlink" title="kickstart批量安装centos"></a>kickstart批量安装centos</h3><ol>
-<li><a href="http://www.cnblogs.com/mchina/p/centos-pxe-kickstart-auto-install-os.html" target="_blank" rel="external">安装</a></li>
-<li><a href="http://www.cnphp.info/quick-install-centos-6-0-with-kickstart.html" target="_blank" rel="external">配置脚本</a></li>
-</ol>
-<h3 id="批量插入主机信息到roster"><a href="#批量插入主机信息到roster" class="headerlink" title="批量插入主机信息到roster"></a>批量插入主机信息到roster</h3><p>为了更加方便,所以配置kickstart时,网络可以选择是dhcp模式,这样安装完系统之后就可以上网</p>
-<p>master端<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> json</div><div class="line"><span class="keyword">from</span> http.server <span class="keyword">import</span> BaseHTTPRequestHandler, HTTPServer</div><div class="line"></div><div class="line">template = <span class="string">'''</span></div><div class="line"><span class="string">&#123;id&#125;:</span></div><div class="line"><span class="string">  host: &#123;ip&#125;</span></div><div class="line"><span class="string">  user: root</span></div><div class="line"><span class="string">  passwd: password</span></div><div class="line"><span class="string">  minion_opts:</span></div><div class="line"><span class="string">    - id: &#123;id&#125;</span></div><div class="line"><span class="string">'''</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RequestHandler</span><span class="params">(BaseHTTPRequestHandler)</span>:</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_POST</span><span class="params">(self)</span>:</span></div><div class="line">        response = self.rfile.read(int(self.headers[<span class="string">'content-length'</span>]))</div><div class="line">        self.send_response(<span class="number">200</span>)</div><div class="line">        self.send_header(<span class="string">'Content-Type'</span>, <span class="string">'application/json'</span>)</div><div class="line">        self.end_headers()</div><div class="line">        self.data_parse(response)</div><div class="line">        self.do_insert(self.data)</div><div class="line">        result = (<span class="string">'data: %s, send OK\n'</span> % response).encode(<span class="string">'ascii'</span>)</div><div class="line">        self.wfile.write(result)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">do_insert</span><span class="params">(self, data)</span>:</span></div><div class="line">        <span class="keyword">with</span> open(<span class="string">r'/etc/salt/roster'</span>, <span class="string">'a'</span>) <span class="keyword">as</span> f:</div><div class="line">            f.write(data + <span class="string">'\n'</span>)</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">data_parse</span><span class="params">(self, data)</span>:</span></div><div class="line">        print(data)</div><div class="line">        data = json.loads(data.decode(<span class="string">'utf-8'</span>))</div><div class="line">        print(data)</div><div class="line">        self.data = template.format(id=data[<span class="string">'id'</span>], ip=data[<span class="string">'ip'</span>])</div><div class="line">        print(self.data)</div><div class="line">        <span class="keyword">return</span> self.data</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    server_address = (<span class="string">''</span>, <span class="number">8099</span>)</div><div class="line">    httpd = HTTPServer(server_address, RequestHandler)</div><div class="line">    httpd.serve_forever()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    main()</div></pre></td></tr></table></figure></p>
-<p>minion端<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ip=`ifconfig | grep <span class="string">'inet'</span> |grep -v <span class="string">'127.0.0.1'</span>|grep -v inet6 | sed <span class="string">'s/^[ \t]*//g'</span>|cut -d<span class="string">" "</span> -f2`</div><div class="line">hostname=`hostname`</div><div class="line">data=&#123;<span class="string">"id"</span>:<span class="string">"$hostname"</span>, <span class="string">"ip"</span>:$ip&#125;</div><div class="line">curl -X POST -d <span class="string">'&#123;"id":"'</span>$hostname<span class="string">'", "ip":"'</span>$ip<span class="string">'"&#125;'</span> <span class="string">"http://127.0.0.1:8099"</span></div></pre></td></tr></table></figure></p>
-
-	
-	</div>
-  <a type="button" href="/2017/09/12/salt-ssh/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-           
-		
 
 		</div>
 
@@ -781,6 +796,8 @@
 		
 			<li><a href="/categories/sql/">sql</label></a></li>
 		
+			<li><a href="/categories/大数据/">大数据</label></a></li>
+		
 		</ul>
 	</div>
 
@@ -791,41 +808,43 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/tags/sql/">sql</a></li>
+			<li><a href="/tags/oop/">oop</a></li>
 		
 			<li><a href="/tags/闭包/">闭包</a></li>
 		
-			<li><a href="/tags/saltstack/">saltstack</a></li>
+			<li><a href="/tags/redis/">redis</a></li>
 		
 			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
 		
-			<li><a href="/tags/异步/">异步</a></li>
-		
-			<li><a href="/tags/redis/">redis</a></li>
-		
-			<li><a href="/tags/python/">python</a></li>
-		
-			<li><a href="/tags/oop/">oop</a></li>
-		
-			<li><a href="/tags/函数/">函数</a></li>
-		
-			<li><a href="/tags/vim/">vim</a></li>
-		
-			<li><a href="/tags/代码优化/">代码优化</a></li>
-		
-			<li><a href="/tags/gc/">gc</a></li>
-		
-			<li><a href="/tags/ELK/">ELK</a></li>
+			<li><a href="/tags/jinja/">jinja</a></li>
 		
 			<li><a href="/tags/decorator/">decorator</a></li>
 		
+			<li><a href="/tags/sql/">sql</a></li>
+		
 			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/vim/">vim</a></li>
+		
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/ELK/">ELK</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
 		
 			<li><a href="/tags/django/">django</a></li>
 		
+			<li><a href="/tags/大数据/">大数据</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
 			<li><a href="/tags/uwsgi/">uwsgi</a></li>
 		
-			<li><a href="/tags/jinja/">jinja</a></li>
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
 		
 		 
 		</ul>
@@ -837,6 +856,10 @@
 <div class="widget">
   <h4>最新文章</h4>
   <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/2018/04/12/hadoop/" ><i class="fa fa-file-o"></i>Hadoop+Hive+Presto</a>
+      </li>
     
       <li>
         <a href="/2018/03/14/junior-sql/" ><i class="fa fa-file-o"></i>sql简单语法</a>
@@ -852,10 +875,6 @@
     
       <li>
         <a href="/2017/12/24/agile/" ><i class="fa fa-file-o"></i>初涉敏捷开发</a>
-      </li>
-    
-      <li>
-        <a href="/2017/11/15/ELK/" ><i class="fa fa-file-o"></i>ELK搭建</a>
       </li>
     
   </ul>
