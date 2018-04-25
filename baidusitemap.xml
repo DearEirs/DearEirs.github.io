@@ -4,6 +4,86 @@
 
     
   <url>
+    <loc>http://139.199.0.245/2018/04/25/redis-use/</loc>
+    <lastmod>2018-04-25T02:31:09.986Z</lastmod>
+    <data>
+        <display>
+        <title>redis-use</title>
+        <pubTime>2018-04-25T02:24:52.000Z</pubTime>
+        
+        <tag>redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="database" url="http://139.199.0.245/categories/database/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2018/03/14/junior-sql/</loc>
+    <lastmod>2018-04-25T02:30:43.803Z</lastmod>
+    <data>
+        <display>
+        <title>sql简单语法</title>
+        <pubTime>2018-03-14T08:41:13.000Z</pubTime>
+        
+        <tag>mysql</tag>
+         
+         
+           
+             
+              <breadCrumb title="database" url="http://139.199.0.245/categories/database/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/08/30/redis%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F%E6%90%AD%E5%BB%BA/</loc>
+    <lastmod>2018-04-25T02:29:28.898Z</lastmod>
+    <data>
+        <display>
+        <title>redis集群模式搭建</title>
+        <pubTime>2017-08-30T09:56:16.000Z</pubTime>
+        
+        <tag>redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="database" url="http://139.199.0.245/categories/database/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/08/15/redis%E6%90%AD%E5%BB%BA%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/</loc>
+    <lastmod>2018-04-25T02:29:08.484Z</lastmod>
+    <data>
+        <display>
+        <title>redis搭建哨兵模式</title>
+        <pubTime>2017-08-15T03:28:06.000Z</pubTime>
+        
+        <tag>redis</tag>
+         
+         
+           
+             
+              <breadCrumb title="database" url="http://139.199.0.245/categories/database/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://139.199.0.245/2018/04/12/salt-returner/</loc>
     <lastmod>2018-04-12T14:36:27.508Z</lastmod>
     <data>
@@ -37,26 +117,6 @@
            
              
               <breadCrumb title="大数据" url="http://139.199.0.245/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://139.199.0.245/2018/03/14/junior-sql/</loc>
-    <lastmod>2018-03-14T08:46:56.470Z</lastmod>
-    <data>
-        <display>
-        <title>sql简单语法</title>
-        <pubTime>2018-03-14T08:41:13.000Z</pubTime>
-        
-        <tag>sql</tag>
-         
-         
-           
-             
-              <breadCrumb title="sql" url="http://139.199.0.245/categories/sql/"/>
           
         </display>
     </data>
@@ -447,46 +507,6 @@
         <pubTime>2017-08-30T09:59:52.000Z</pubTime>
         
         <tag>rocketmq</tag>
-         
-         
-           
-             
-              <breadCrumb title="linux" url="http://139.199.0.245/categories/linux/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://139.199.0.245/2017/08/30/redis%E9%9B%86%E7%BE%A4%E6%A8%A1%E5%BC%8F%E6%90%AD%E5%BB%BA/</loc>
-    <lastmod>2017-08-30T10:35:54.384Z</lastmod>
-    <data>
-        <display>
-        <title>redis集群模式搭建</title>
-        <pubTime>2017-08-30T09:56:16.000Z</pubTime>
-        
-        <tag>redis</tag>
-         
-         
-           
-             
-              <breadCrumb title="linux" url="http://139.199.0.245/categories/linux/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://139.199.0.245/2017/08/15/redis%E6%90%AD%E5%BB%BA%E5%93%A8%E5%85%B5%E6%A8%A1%E5%BC%8F/</loc>
-    <lastmod>2017-08-30T10:35:54.384Z</lastmod>
-    <data>
-        <display>
-        <title>redis搭建哨兵模式</title>
-        <pubTime>2017-08-15T03:28:06.000Z</pubTime>
-        
-        <tag>redis</tag>
          
          
            
