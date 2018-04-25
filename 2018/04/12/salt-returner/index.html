@@ -131,8 +131,8 @@
 <li>由minion执行完后直接return</li>
 <li>由master端获取</li>
 </ol>
-<p>第一种方式是由master下发命令, 当命令执行完毕后, minion就直接把返回的信息给传到mysql即returner<br><img src="https://images2015.cnblogs.com/blog/1076878/201612/1076878-20161225140500261-440247952.png" alt="image"></p>
-<p>第二种方式是master下发命令, 当minion执行命令完毕时, 还是照样把信息返回给master, 然后master再集中把返回信息存到数据库当中<br><img src="https://images2015.cnblogs.com/blog/1076878/201612/1076878-20161225151956792-325594804.png" alt="image"></p>
+<p>第一种方式是由master下发命令, 当命令执行完毕后, minion就直接把返回的信息给传到mysql即returner<br><img src="https://raw.githubusercontent.com/DearEirs/static/master/images/minion.png" alt="image"></p>
+<p>第二种方式是master下发命令, 当minion执行命令完毕时, 还是照样把信息返回给master, 然后master再集中把返回信息存到数据库当中<br><img src="https://raw.githubusercontent.com/DearEirs/static/master/images/master.png" alt="image"></p>
 <h3 id="返回的信息究竟是怎样的"><a href="#返回的信息究竟是怎样的" class="headerlink" title="返回的信息究竟是怎样的"></a>返回的信息究竟是怎样的</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"># 在执行saltstack命令时, 我们可以通过--return 参数来指定returner</div><div class="line"></div><div class="line">salt &apos;*&apos; test.ping --return syslog</div><div class="line"></div><div class="line"># 查看系统/var/log/message看到日志如下</div><div class="line">Apr 12 18:00:04 zsad1 salt-minion: &#123;&quot;fun_args&quot;: [], &quot;jid&quot;: &quot;20180412180004363873&quot;, &quot;return&quot;: true, &quot;retcode&quot;: 0, &quot;success&quot;: true, &quot;fun&quot;: &quot;test.ping&quot;, &quot;id&quot;: &quot;zsad1&quot;&#125;</div><div class="line"></div><div class="line"># 还可以同时使用多个returner, 以,分割即可</div><div class="line">salt &apos;*&apos; test.ping --return syslog,postgres</div></pre></td></tr></table></figure>
 <ul>
 <li>fun_args: 执行方法时传入的参数</li>
@@ -172,7 +172,7 @@
     <div>
     <center>
       <p>如果你觉得我的文章对你有所帮助, 请多多支持.</p>
-      <img src="https://raw.githubusercontent.com/DearEirs/DearEirs.github.io/master/img/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%B6%E6%AC%BE%E7%A0%81.png">
+      <img src="https://raw.githubusercontent.com/DearEirs/static/master/images/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%B6%E6%AC%BE%E7%A0%81.png">
     </center>
     </div>
 	<div>

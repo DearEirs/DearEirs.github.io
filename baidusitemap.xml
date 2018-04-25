@@ -4,11 +4,31 @@
 
     
   <url>
-    <loc>http://139.199.0.245/2018/04/25/redis-use/</loc>
-    <lastmod>2018-04-25T02:31:09.986Z</lastmod>
+    <loc>http://139.199.0.245/2018/04/12/salt-returner/</loc>
+    <lastmod>2018-04-25T02:53:42.372Z</lastmod>
     <data>
         <display>
-        <title>redis-use</title>
+        <title>saltstack获取minion执行返回信息</title>
+        <pubTime>2018-04-12T14:35:11.000Z</pubTime>
+        
+        <tag>saltstack</tag>
+         
+         
+           
+             
+              <breadCrumb title="saltstack" url="http://139.199.0.245/categories/saltstack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2018/04/25/redis-use/</loc>
+    <lastmod>2018-04-25T02:39:26.180Z</lastmod>
+    <data>
+        <display>
+        <title>redis常用命令</title>
         <pubTime>2018-04-25T02:24:52.000Z</pubTime>
         
         <tag>redis</tag>
@@ -77,26 +97,6 @@
            
              
               <breadCrumb title="database" url="http://139.199.0.245/categories/database/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://139.199.0.245/2018/04/12/salt-returner/</loc>
-    <lastmod>2018-04-12T14:36:27.508Z</lastmod>
-    <data>
-        <display>
-        <title>saltstack获取minion执行返回信息</title>
-        <pubTime>2018-04-12T14:35:11.000Z</pubTime>
-        
-        <tag>saltstack</tag>
-         
-         
-           
-             
-              <breadCrumb title="saltstack" url="http://139.199.0.245/categories/saltstack/"/>
           
         </display>
     </data>
