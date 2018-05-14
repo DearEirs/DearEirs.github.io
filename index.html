@@ -268,7 +268,7 @@
 <li>AppContext: 生命周期最长, 只要当前应用还在运行, 就一直存在. (应用未运行前并不存在)</li>
 </ul>
 <p>那么上下文是在什么时候创建的呢？我们又要如何创建上下文: 刚才我们提到, 在wsgi_app处理请求的时候就会先创建上下文, 那个上下文其实是请求上下文, 那应用上下文呢？ </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"># 摘自Flask源码 ctx.py</div><div class="line">class RequestContext(object):</div><div class="line">    # 中间省略</div><div class="line">    def push(self):</div><div class="line">        top = _request_ctx_stack.top</div><div class="line">        if top is not None and top.preserved:</div><div class="line">            top.pop(top._preserved_exc)</div><div class="line">        # 获取应用上下文</div><div class="line">        app_ctx = _app_ctx_stack.top</div><div class="line">        # 判断应用上下文是否存在并与当前应用一致</div><div class="line">        if app_ctx is None or app_ctx.app != self.app:</div><div class="line">            # 创建应用上下文并入栈</div><div class="line">            app_ctx = self.app.app_context()</div><div class="line">            app_ctx.push()</div><div class="line">            self._implicit_app_ctx_stack.append(app_ctx)</div><div class="line">        else:</div><div class="line">            self._implicit_app_ctx_stack.append(None)</div><div class="line"></div><div class="line">        if hasattr(sys, &apos;exc_clear&apos;):</div><div class="line">            sys.exc_clear()</div><div class="line">        # 把请求上下文入栈</div><div class="line">        _request_ctx_stack.push(self)</div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 摘自Flask源码 ctx.py</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">RequestContext</span><span class="params">(object)</span>:</span></div><div class="line">    <span class="comment"># 中间省略</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">push</span><span class="params">(self)</span>:</span></div><div class="line">        top = _request_ctx_stack.top</div><div class="line">        <span class="keyword">if</span> top <span class="keyword">is</span> <span class="keyword">not</span> <span class="keyword">None</span> <span class="keyword">and</span> top.preserved:</div><div class="line">            top.pop(top._preserved_exc)</div><div class="line">        <span class="comment"># 获取应用上下文</span></div><div class="line">        app_ctx = _app_ctx_stack.top</div><div class="line">        <span class="comment"># 判断应用上下文是否存在并与当前应用一致</span></div><div class="line">        <span class="keyword">if</span> app_ctx <span class="keyword">is</span> <span class="keyword">None</span> <span class="keyword">or</span> app_ctx.app != self.app:</div><div class="line">            <span class="comment"># 创建应用上下文并入栈</span></div><div class="line">            app_ctx = self.app.app_context()</div><div class="line">            app_ctx.push()</div><div class="line">            self._implicit_app_ctx_stack.append(app_ctx)</div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            self._implicit_app_ctx_stack.append(<span class="keyword">None</span>)</div><div class="line"></div><div class="line">        <span class="keyword">if</span> hasattr(sys, <span class="string">'exc_clear'</span>):</div><div class="line">            sys.exc_clear()</div><div class="line">        <span class="comment"># 把请求上下文入栈</span></div><div class="line">        _request_ctx_stack.push(self)</div></pre></td></tr></table></figure>
 <p>我们知道当有请求进入时, Flask会自动帮我们来创建请求上下文. 而通过上述代码我们可以看到,在创建请求上下文时会有一个判断操作, 如果应用上下文为空或与当前应用不匹配, 那么会重新创建一个应用上下文.  所以说一般情况下并不需要我们手动去创建, 当然如果需要, 你也可以显式调用app_context与request_context来创建应用上下文与请求上下文.</p>
 <p>那么我们应该如何使用上下文呢？</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, g, current_app</div><div class="line"></div><div class="line"></div><div class="line">app = Flask(__name__)</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@app.before_request</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">before_request</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">'before_request run'</span></div><div class="line">    g.name=<span class="string">"Tom"</span></div><div class="line">    </div><div class="line">    </div><div class="line"><span class="meta">@app.after_request</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">after_request</span><span class="params">(response)</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">'after_request run'</span></div><div class="line">    print(g.name)</div><div class="line">    <span class="keyword">return</span> response</div><div class="line"></div><div class="line"></div><div class="line"><span class="meta">@app.route('/')</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">()</span>:</span></div><div class="line">    print(request.url)</div><div class="line">    g.name = <span class="string">'Cat'</span></div><div class="line">    print(current_app.name)</div><div class="line">    </div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    app.run()</div></pre></td></tr></table></figure>
@@ -282,7 +282,7 @@
 </ul>
 <p>那么随之而来的问题是: 这些上下文的作用域是什么?</p>
 <p>线程有个叫做ThreadLocal的类，也就是通常实现线程隔离的类. 而werkzeug自己实现了它的线程隔离类: werkzeug.local.Local. 而LocalStack就是用Local实现的.</p>
-<p>这个我们可以通过globals.py可以看到<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"># 摘自Flask源码 globals.py</div><div class="line">from functools import partial</div><div class="line">from werkzeug.local import LocalStack, LocalProxy</div><div class="line"></div><div class="line"></div><div class="line">_request_ctx_stack = LocalStack()</div><div class="line">_app_ctx_stack = LocalStack()</div><div class="line">current_app = LocalProxy(_find_app)</div><div class="line">request = LocalProxy(partial(_lookup_req_object, &apos;request&apos;))</div><div class="line">session = LocalProxy(partial(_lookup_req_object, &apos;session&apos;))</div><div class="line">g = LocalProxy(partial(_lookup_app_object, &apos;g&apos;))</div></pre></td></tr></table></figure></p>
+<p>这个我们可以通过globals.py可以看到<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 摘自Flask源码 globals.py</span></div><div class="line"><span class="keyword">from</span> functools <span class="keyword">import</span> partial</div><div class="line"><span class="keyword">from</span> werkzeug.local <span class="keyword">import</span> LocalStack, LocalProxy</div><div class="line"></div><div class="line"></div><div class="line">_request_ctx_stack = LocalStack()</div><div class="line">_app_ctx_stack = LocalStack()</div><div class="line">current_app = LocalProxy(_find_app)</div><div class="line">request = LocalProxy(partial(_lookup_req_object, <span class="string">'request'</span>))</div><div class="line">session = LocalProxy(partial(_lookup_req_object, <span class="string">'session'</span>))</div><div class="line">g = LocalProxy(partial(_lookup_app_object, <span class="string">'g'</span>))</div></pre></td></tr></table></figure></p>
 <p>_lookup_app_object思就是说, 对于不同的线程, 它们访问这两个对象看到的结果是不一样的、完全隔离的. Flask通过这样的方式来隔离每个请求.</p>
 
 	
@@ -882,45 +882,45 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/tags/gc/">gc</a></li>
-		
-			<li><a href="/tags/python/">python</a></li>
-		
-			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
-		
-			<li><a href="/tags/大数据/">大数据</a></li>
-		
-			<li><a href="/tags/oop/">oop</a></li>
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
 		
 			<li><a href="/tags/函数/">函数</a></li>
 		
-			<li><a href="/tags/decorator/">decorator</a></li>
-		
-			<li><a href="/tags/ELK/">ELK</a></li>
-		
-			<li><a href="/tags/闭包/">闭包</a></li>
-		
-			<li><a href="/tags/代码优化/">代码优化</a></li>
-		
-			<li><a href="/tags/saltstack/">saltstack</a></li>
-		
-			<li><a href="/tags/flask/">flask</a></li>
-		
-			<li><a href="/tags/异步/">异步</a></li>
-		
-			<li><a href="/tags/django/">django</a></li>
-		
-			<li><a href="/tags/mysql/">mysql</a></li>
-		
-			<li><a href="/tags/vim/">vim</a></li>
+			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
 		
 			<li><a href="/tags/jinja/">jinja</a></li>
 		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+			<li><a href="/tags/vim/">vim</a></li>
+		
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/大数据/">大数据</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/oop/">oop</a></li>
+		
 			<li><a href="/tags/redis/">redis</a></li>
 		
-			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+			<li><a href="/tags/flask/">flask</a></li>
+		
+			<li><a href="/tags/mysql/">mysql</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/ELK/">ELK</a></li>
 		
 			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/django/">django</a></li>
 		
 		 
 		</ul>
