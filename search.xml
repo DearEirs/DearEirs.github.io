@@ -3,7 +3,7 @@
   
     
     <entry>
-      <title><![CDATA[flask入门教程]]></title>
+      <title><![CDATA[flask源码--处理过程]]></title>
       <url>/2018/05/10/flask/</url>
       <content type="html"><![CDATA[<h1 id="Flask"><a href="#Flask" class="headerlink" title="Flask"></a>Flask</h1><h3 id="Flask是什么"><a href="#Flask是什么" class="headerlink" title="Flask是什么?"></a>Flask是什么?</h3><p>Flask是一个使用 Python 编写的轻量级 Web 应用框架, 让我们可以使用Python语言快速搭建Web服务, Flask也被称为 “microframework” ，因为它使用简单的核心, 用 extension 增加其他功能</p>
 <h3 id="为什么选择Flask"><a href="#为什么选择Flask" class="headerlink" title="为什么选择Flask?"></a>为什么选择Flask?</h3><p>我们先来看看python现在比较流行的web框架</p>
