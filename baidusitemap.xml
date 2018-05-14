@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://139.199.0.245/2018/05/10/flask/</loc>
-    <lastmod>2018-05-14T07:16:52.994Z</lastmod>
+    <lastmod>2018-05-14T07:20:56.950Z</lastmod>
     <data>
         <display>
         <title>flask入门教程</title>
@@ -479,26 +479,6 @@
 
     
   <url>
-    <loc>http://139.199.0.245/2017/08/30/RocketMQ%E5%8F%8C%E4%B8%BB%E9%9B%86%E7%BE%A4/</loc>
-    <lastmod>2017-08-30T10:35:54.385Z</lastmod>
-    <data>
-        <display>
-        <title>RocketMQ双主集群</title>
-        <pubTime>2017-08-30T09:59:52.000Z</pubTime>
-        
-        <tag>rocketmq</tag>
-         
-         
-           
-             
-              <breadCrumb title="linux" url="http://139.199.0.245/categories/linux/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://139.199.0.245/2017/08/30/saltstack-%E4%BA%8C-%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8/</loc>
     <lastmod>2017-08-30T10:35:54.385Z</lastmod>
     <data>
@@ -532,6 +512,26 @@
            
              
               <breadCrumb title="saltstack" url="http://139.199.0.245/categories/saltstack/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://139.199.0.245/2017/08/30/RocketMQ%E5%8F%8C%E4%B8%BB%E9%9B%86%E7%BE%A4/</loc>
+    <lastmod>2017-08-30T10:35:54.385Z</lastmod>
+    <data>
+        <display>
+        <title>RocketMQ双主集群</title>
+        <pubTime>2017-08-30T09:59:52.000Z</pubTime>
+        
+        <tag>rocketmq</tag>
+         
+         
+           
+             
+              <breadCrumb title="linux" url="http://139.199.0.245/categories/linux/"/>
           
         </display>
     </data>
