@@ -3,7 +3,7 @@
   
     
     <entry>
-      <title><![CDATA[cgi]]></title>
+      <title><![CDATA[cgi的应用]]></title>
       <url>/2018/06/21/cgi/</url>
       <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/DearEirs/static/master/images/web.png" alt="image"></p>
 <p>在处理一个页面请求时我们一般会需要用到一下信息:</p>
@@ -40,7 +40,7 @@
     </entry>
     
     <entry>
-      <title><![CDATA[cache]]></title>
+      <title><![CDATA[缓存常见问题]]></title>
       <url>/2018/06/21/cache/</url>
       <content type="html"><![CDATA[<h1 id="缓存常见问题"><a href="#缓存常见问题" class="headerlink" title="缓存常见问题"></a>缓存常见问题</h1><ul>
 <li>缓存雪崩</li>
@@ -72,14 +72,14 @@
     </entry>
     
     <entry>
-      <title><![CDATA[http]]></title>
+      <title><![CDATA[http协议理解]]></title>
       <url>/2018/06/21/http/</url>
       <content type="html"><![CDATA[<h1 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h1><p>HTTP是一个应用层协议, 由请求和响应构成, 是一个标准的客户端服务器模型. 基于HTTP协议的CS模式的信息交换过程, 它分四个过程: 建立连接、发送请求信息、发送响应信息、关闭连接. 如图</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sequenceDiagram</div><div class="line">A-&gt;&gt;B: 建立TCP连接</div><div class="line">A-&gt;&gt;B: 发起请求</div><div class="line">B-&gt;&gt;A: 响应请求</div><div class="line">B-&gt;&gt;A: 断开TCP连接</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/DearEirs/static/master/images/短连接.png" alt="image"></p>
 <p>我们可以看到, 每处理一个请求都需要建立与断开TCP连接, 我们称这样的连接为非持久连接.</p>
 <p>http1.0里就是使用这样的方式来处理连接 在并发量不大的情况下这并不会影响到我们的使用, 但是如果并发量大, 那么服务器将需要消耗一部分的资源来专门干这事. </p>
 <p>所以为了解决这个问题, http1.1里引用了持久连接, 而且默认使用的就是持久连接, 与非持久连接不同的是持久连接允许个连接中可以传输多个对象.<br>当然在http1.1里还是可以通过设置来使用非持久连接的.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">sequenceDiagram</div><div class="line">A-&gt;&gt;B: 建立TCP连接</div><div class="line">A-&gt;&gt;B: 发起请求1</div><div class="line">B-&gt;&gt;A: 响应请求1</div><div class="line">A-&gt;&gt;B: 发起请求2</div><div class="line">B-&gt;&gt;A: 响应请求2</div><div class="line">A-&gt;&gt;B: 发起请求n</div><div class="line">B-&gt;&gt;A: 响应请求n</div><div class="line">B-&gt;&gt;A: 断开TCP连接</div></pre></td></tr></table></figure>
+<p><img src="https://raw.githubusercontent.com/DearEirs/static/master/images/长连接.png" alt="image"></p>
 <p>我们可以通过设置keep-alive参数来设置持久连接的相关参数, 如timeout</p>
 <p>而在这个请求模式中还有一个问题就是只有当客户端发起请求时, 服务端才能向客户端发送/返回数据. 且当请求1被阻塞的时候, 必须等待服务器处理完成请求后才能发起后续请求, 这也是http的缺点之一. </p>
 <p>目前服务器所使用的都是占比比较大的是http1.1版本, 它有如下缺点:</p>
@@ -107,10 +107,10 @@
 <p>/s 代表了资源所在服务器的路径. </p>
 <p>?wd=http 相当于请求附带的query.</p>
 <p>我们只需要把请求报文发送到指定的URL, 服务器就应该会把我们所需要的资源响应回来. </p>
-<h3 id="http请求报文格式"><a href="#http请求报文格式" class="headerlink" title="http请求报文格式"></a>http请求报文格式</h3><p><img src="https://images2018.cnblogs.com/blog/1361655/201804/1361655-20180413120416720-1194570336.png" alt="image"><br>可以看到请求报文由请求行、请求头部、空行和请求数据4部分组成.<br>其中请求行包括请求方法, 所请求的资源的地址与使用的http版本. </p>
+<h3 id="http请求报文格式"><a href="#http请求报文格式" class="headerlink" title="http请求报文格式"></a>http请求报文格式</h3><p><img src="https://raw.githubusercontent.com/DearEirs/static/master/images/请求报文.png" alt="image"><br>可以看到请求报文由请求行、请求头部、空行和请求数据4部分组成.<br>其中请求行包括请求方法, 所请求的资源的地址与使用的http版本. </p>
 <p>请求头部中的内容一般用来描述客户端能兼容的类型.</p>
 <p>请求数据则是需要提供给服务端处理的数据</p>
-<h3 id="http响应报文格式"><a href="#http响应报文格式" class="headerlink" title="http响应报文格式"></a>http响应报文格式</h3><p><img src="https://camo.githubusercontent.com/7b4bafaefaa8241c599f1a0166dbd003cb8539a2/68747470733a2f2f692e696d6775722e636f6d2f723156723962412e706e67" alt="image"></p>
+<h3 id="http响应报文格式"><a href="#http响应报文格式" class="headerlink" title="http响应报文格式"></a>http响应报文格式</h3><p><img src="https://raw.githubusercontent.com/DearEirs/static/master/images/响应报文.png" alt="image"></p>
 <p>这是一个响应报文示例, 可以看到响应报文也分为4个组成部分, 分别为状态行, 响应头部, 空行, 响应的消息</p>
 <p>其中状态行包含了http的版本与一个状态码,<br>状态码由一个三位数组成，状态码大体有5种含义：</p>
 <ul>
