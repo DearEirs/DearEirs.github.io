@@ -160,9 +160,173 @@
 		
             
 		
+            
+		
+            
+		
+            
+		
         
         <!-- render other articles -->
         
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-06-21 </div>
+			<div class="article-title"><a href="/2018/06/21/cgi/" >cgi</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<p><img src="https://raw.githubusercontent.com/DearEirs/static/master/images/web.png" alt="image"></p>
+<p>在处理一个页面请求时我们一般会需要用到一下信息:</p>
+<ol>
+<li>请求头, 请求头里边包含了很多的信息如COOKIE、URI等. 可以协助我们处理请求</li>
+<li>提交的参数, 用户通过GET/POST请求提交上来的参数.</li>
+<li>根据1-2的输入, 进行自定义的处理过程</li>
+<li>输出html页面, 或json数据(API接口)</li>
+</ol>
+<p>如何获取请求头的信息<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> os</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 这是返回给客户端的请求头</span></div><div class="line">print(<span class="string">"Content-type: textml\n\n"</span>)</div><div class="line">print(os.environ)</div></pre></td></tr></table></figure></p>
+<p>在输出界面我们就可以看到我们所提交过去的各种信息.</p>
+<p>GET/POST的请求参数, GET的请求参数我们可以通过os.environ里的QUERY_STRING看到. 而事实上我们还可以通过CGI模块来获取</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> cgi</div><div class="line"></div><div class="line"></div><div class="line"><span class="comment"># 创建 FieldStorage 的实例化</span></div><div class="line">form = cgi.FieldStorage()</div><div class="line">username = form.getvalue(<span class="string">'username'</span>, default=<span class="keyword">None</span>)</div><div class="line">password = form.getvalue(<span class="string">'password'</span>, default=<span class="keyword">None</span>)</div><div class="line"></div><div class="line">print(<span class="string">"Content-type: textml\n\n"</span>)</div><div class="line">print(<span class="string">"Your username is %s, password is %s"</span>% (username, password))</div></pre></td></tr></table></figure>
+<blockquote>
+<p>无论是通过GET还是POST提交的参数, 都可以通过getvalue获取.</p>
+</blockquote>
+<p>cgi是通过stdin, stdout来传递数据的.要让可执行文件的输出不止于helloworld, 那么就需要把特定的信息输出到stdout从而输出至客户端. 对于REST风格的API而言, 可以使用json.dumps来生成返回数据. 而如果是作为网页形式, 需要返回整个html, 那么我们将需要输出html的dom、css、javascript, 要我们一行一行把这些东西给输出到stdout是非常麻烦的.  这时我们就可以通过模板语言来构建html.</p>
+<p>因为CGI会直接启动一个进程来执行脚本, 那么我们就需要注意一个安全性的问题. 执行脚本的用户应该尽量少拥有无关的权限. 以防被恶意用户利用.</p>
+
+	
+	</div>
+  <a type="button" href="/2018/06/21/cgi/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-06-21 </div>
+			<div class="article-title"><a href="/2018/06/21/cache/" >cache</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="缓存常见问题"><a href="#缓存常见问题" class="headerlink" title="缓存常见问题"></a>缓存常见问题</h1><ul>
+<li>缓存雪崩</li>
+<li>缓存穿透</li>
+<li>缓存占用过多内存</li>
+</ul>
+<h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><p>缓存雪崩指的是在某一个时间点里边, 有大量的Key过期, 然后引起大量请求同时访问到数据库<br>针对这个问题, 我们可以把Key的过期时间随机化或等差划分, 反正就是要消除掉大量缓存同时失效的情况.</p>
+<h3 id="缓存穿透"><a href="#缓存穿透" class="headerlink" title="缓存穿透"></a>缓存穿透</h3><p>缓存穿透指的是访问到了缓存当中不存在的数据, 在缓存里边拿不到数据就会从数据库里边取, 如果并发数量大, 也会造成大量请求直接访问到数据库的现象</p>
+<ol>
+<li>如果请求访问的都是同一条缓存数据, 可以设置访问互斥锁, 只允许第一个请求访问数据库, 其他请求则添加到队列, 等第一个请求从数据库里拿到数据并更新缓存后, 队列里的请求直接访问缓存数据</li>
+<li>如果请求访问的都是不同的数据, 且当数据库里查询不到数据后并不会更新缓存, 那么可以往缓存里边设置空对象, 简单直接, 碰到查询结果为空的键, 放一个空值在缓存中, 次再访问就立刻知道这个键无效, 而不会再次访问数据库</li>
+</ol>
+<h3 id="缓存占用过多内存"><a href="#缓存占用过多内存" class="headerlink" title="缓存占用过多内存"></a>缓存占用过多内存</h3><p>查看redis里各Key占用内存</p>
+
+	
+	</div>
+  <a type="button" href="/2018/06/21/cache/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+           
+		
+           
+			  
+	
+	<!-- display as entry -->	
+		<h3 class="title">
+			<div class="date"> 2018-06-21 </div>
+			<div class="article-title"><a href="/2018/06/21/http/" >http</a></div>
+		</h3>
+	
+
+
+			  <div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h1><p>HTTP是一个应用层协议, 由请求和响应构成, 是一个标准的客户端服务器模型. 基于HTTP协议的CS模式的信息交换过程, 它分四个过程: 建立连接、发送请求信息、发送响应信息、关闭连接. 如图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sequenceDiagram</div><div class="line">A-&gt;&gt;B: 建立TCP连接</div><div class="line">A-&gt;&gt;B: 发起请求</div><div class="line">B-&gt;&gt;A: 响应请求</div><div class="line">B-&gt;&gt;A: 断开TCP连接</div></pre></td></tr></table></figure>
+<p>我们可以看到, 每处理一个请求都需要建立与断开TCP连接, 我们称这样的连接为非持久连接.</p>
+<p>http1.0里就是使用这样的方式来处理连接 在并发量不大的情况下这并不会影响到我们的使用, 但是如果并发量大, 那么服务器将需要消耗一部分的资源来专门干这事. </p>
+<p>所以为了解决这个问题, http1.1里引用了持久连接, 而且默认使用的就是持久连接, 与非持久连接不同的是持久连接允许个连接中可以传输多个对象.<br>当然在http1.1里还是可以通过设置来使用非持久连接的.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">sequenceDiagram</div><div class="line">A-&gt;&gt;B: 建立TCP连接</div><div class="line">A-&gt;&gt;B: 发起请求1</div><div class="line">B-&gt;&gt;A: 响应请求1</div><div class="line">A-&gt;&gt;B: 发起请求2</div><div class="line">B-&gt;&gt;A: 响应请求2</div><div class="line">A-&gt;&gt;B: 发起请求n</div><div class="line">B-&gt;&gt;A: 响应请求n</div><div class="line">B-&gt;&gt;A: 断开TCP连接</div></pre></td></tr></table></figure>
+<p>我们可以通过设置keep-alive参数来设置持久连接的相关参数, 如timeout</p>
+<p>而在这个请求模式中还有一个问题就是只有当客户端发起请求时, 服务端才能向客户端发送/返回数据. 且当请求1被阻塞的时候, 必须等待服务器处理完成请求后才能发起后续请求, 这也是http的缺点之一. </p>
+<p>目前服务器所使用的都是占比比较大的是http1.1版本, 它有如下缺点:</p>
+<p>安全性问题:</p>
+<ul>
+<li>基于明文文本的通信内容可能被窃听</li>
+<li>不验证通信双方的身份可能遭伪装</li>
+<li>无法证明报文完整性可能遭篡改</li>
+</ul>
+<p>性能问题:</p>
+<ul>
+<li>一条连接上只可发一个请求(非持久连接)</li>
+<li>队头阻塞</li>
+<li>请求只能由客户端发起，客户端不可接受响应之外的指令</li>
+<li>请求和响应的首部未经压缩就发送，首部信息越多延迟越大</li>
+<li>发送冗长的首部，多次来回之间首部大部分字段都未改变，浪费资源</li>
+<li>可选择任意压缩格式，不强制压缩后发送</li>
+</ul>
+<p>针对这些问题, 新版本的http(HTTP2.0)引入了</p>
+<h3 id="http的请求"><a href="#http的请求" class="headerlink" title="http的请求"></a>http的请求</h3><p>我们想要对一个网络上的资源发起访问, 首先要知道它所在的位置. 对此我们用一个URL来指定所需要访问的资源路径. </p>
+<p><a href="http://www.baidu.com:80/s?wd=http" target="_blank" rel="external">http://www.baidu.com:80/s?wd=http</a></p>
+<p>这是一个普通的URL, http指定了所使用的协议, 除http外还有https、ftp等协议. </p>
+<p>而www.baidu.com 这指定了我们所需要访问的服务器, 当然需要得到服务器的IP我们还需要通过DNS来解析.</p>
+<p>80 代表了我们需要访问这台服务器的80端口, 当需要指定端口时前边要加”:”.而当我们没指定任何端口时会自动访问80端口, 而采用https协议的话则默认访问443端口  </p>
+<p>/s 代表了资源所在服务器的路径. </p>
+<p>?wd=http 相当于请求附带的query.</p>
+<p>我们只需要把请求报文发送到指定的URL, 服务器就应该会把我们所需要的资源响应回来. </p>
+<h3 id="http请求报文格式"><a href="#http请求报文格式" class="headerlink" title="http请求报文格式"></a>http请求报文格式</h3><p><img src="https://images2018.cnblogs.com/blog/1361655/201804/1361655-20180413120416720-1194570336.png" alt="image"><br>可以看到请求报文由请求行、请求头部、空行和请求数据4部分组成.<br>其中请求行包括请求方法, 所请求的资源的地址与使用的http版本. </p>
+<p>请求头部中的内容一般用来描述客户端能兼容的类型.</p>
+<p>请求数据则是需要提供给服务端处理的数据</p>
+<h3 id="http响应报文格式"><a href="#http响应报文格式" class="headerlink" title="http响应报文格式"></a>http响应报文格式</h3><p><img src="https://camo.githubusercontent.com/7b4bafaefaa8241c599f1a0166dbd003cb8539a2/68747470733a2f2f692e696d6775722e636f6d2f723156723962412e706e67" alt="image"></p>
+<p>这是一个响应报文示例, 可以看到响应报文也分为4个组成部分, 分别为状态行, 响应头部, 空行, 响应的消息</p>
+<p>其中状态行包含了http的版本与一个状态码,<br>状态码由一个三位数组成，状态码大体有5种含义：</p>
+<ul>
+<li>1xx 信息, 请求已被服务端收到, 请继续.</li>
+<li>2xx 成功. 请求已被服务端接收, 并处理完毕</li>
+<li>3xx 重定向. 需要进一步的操作才能完成此请求</li>
+<li>4xx 客户端错误. 请求含有词法错误, 或者无法被执行</li>
+<li>5xx 服务器错误. 服务端在处理请求的过程中出现错误</li>
+</ul>
+<p>其中1xx 是在http1.1版本才加进去的, http1.0并没有. </p>
+<p>而处理http已经规定好的状态码外, 我们还可以自行规定自己所需要的状态码. 只需使用双方都明确知道此状态码的含义即可. </p>
+<h3 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h3><p>请求方法, 一般称为method, 每个method都表示对url所指定的资源执行一种不同的操作. 客户端通过指定method来告知服务端如何处理该资源.</p>
+<ul>
+<li>GET: 服务端只检索既有资源返回给客户端, 不应有其他副作用.</li>
+<li>POST: 客户端将新建资源所需的数据携带在请求中, 使服务端创建一个新资源.</li>
+<li>PUT: 客户端提供完整的资源信息给服务端, 服务端据此更新既有资源或创建新资源.</li>
+<li>DELETE: 服务端删除指定的资源.</li>
+<li>PATCH: 客户端提供指定资源的部分信息, 服务端据此对既有资源做局部更新.</li>
+<li>HEAD: 服务端构造与GET方法一模一样的响应头部返回给客户端, 便于客户端获取该资源的元信息, 而非整体传输。常用于检查资源是否已改动.</li>
+<li>TRACE: 返回客户端请求经由哪些跃点到达了服务端, 中间代理或网关在转发该请求时应将自己的IP或DNS名称添加到头部的Via字段中. 常用于诊断.</li>
+<li>OPTIONS: 服务端返回该URL支持的请求方法. 通常请求’*’, 而非具体资源.</li>
+</ul>
+<p>而我们平时用的比较多的就是GET、POST、PUT、DELETE、HEAD. </p>
+
+	
+	</div>
+  <a type="button" href="/2018/06/21/http/#more" class="btn btn-default more">阅读此文</a>
+</div>
+
+           
+		
            
 			  
 	
@@ -611,207 +775,6 @@
 
            
 		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-12-24 </div>
-			<div class="article-title"><a href="/2017/12/24/agile/" >初涉敏捷开发</a></div>
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="传统开发"><a href="#传统开发" class="headerlink" title="传统开发"></a>传统开发</h1><h3 id="瀑布模型"><a href="#瀑布模型" class="headerlink" title="瀑布模型"></a>瀑布模型</h3><p><img src="https://raw.githubusercontent.com/DearEirs/learn_python/master/AgileDevelopment/%E7%80%91%E5%B8%83%E6%A8%A1%E5%9E%8B.png" alt=""></p>
-<p>优点：</p>
-<pre><code>瀑布模型中把开发过程细分成多个步骤, 每个人各司其职,
-开发人员只需按照文档完成需求即可
-</code></pre><p>缺点：</p>
-<pre><code>- 需要编写过多的文档
-- 开发周期长,每个步骤都需要等待上一个步骤完成后才可
-以开展工作
-- 需求响应慢,每有一个新需求,都需要完整地走一遍流程
-- 用户没有参与开发过程,不能很好地知道开发出来的产品
-有没有符合客户的要求
-</code></pre><h1 id="敏捷开发"><a href="#敏捷开发" class="headerlink" title="敏捷开发"></a>敏捷开发</h1><h3 id="敏捷开发是什么"><a href="#敏捷开发是什么" class="headerlink" title="敏捷开发是什么"></a>敏捷开发是什么</h3><p>敏捷开发不是一套明确的流程,也不是一种方法或者工具,敏捷开发是遵循着敏捷宣言的一种思想, 所有遵循这种思想的实践都可以称为敏捷开发.</p>
-<p>敏捷开发的核心思想：<strong>以人为本，专注交付对客户有价值的软件。在高度协作的环境中，使用迭代式的方式进行增量开发，经常根据反馈进行思考、反省和总结，不停地自我调整和完善，让软件开发与交付轻量而敏捷。</strong></p>
-<h5 id="敏捷宣言"><a href="#敏捷宣言" class="headerlink" title="敏捷宣言"></a>敏捷宣言</h5><ul>
-<li>个体和互动 高于 流程和工具</li>
-<li>工作的文件 高于 详尽的文档</li>
-<li>客户合作 高于 合同谈判</li>
-<li>响应变化 高于 遵循计划</li>
-</ul>
-<h3 id="敏捷开发怎么做"><a href="#敏捷开发怎么做" class="headerlink" title="敏捷开发怎么做"></a>敏捷开发怎么做</h3><p>敏捷开发是一种思想, 那么XP(极限编程), Scrum, DSDM等就是这种思想具体的实践</p>
-<h4 id="XP"><a href="#XP" class="headerlink" title="XP"></a>XP</h4><p>XP是一种使用于在需求不明,或快速多变的情况下进行软件开发的轻量级方法学,其核心价值观为：</p>
-<ul>
-<li>简单：只做必做的、最小设计、持续重构</li>
-<li>沟通：及时有效，目的是一起创造最好的解决方案</li>
-<li>反馈：严重承诺，尽快交付，认真听取反馈并及时改进</li>
-<li>尊重：互相尊重，通过努力工作获得认同</li>
-<li>勇气：如实反馈进展和预估，不为没完成的计划找借口，<br>勇于根据根据情况随时调整工作方式</li>
-</ul>
-<p><img src="https://raw.githubusercontent.com/DearEirs/learn_python/master/AgileDevelopment/XP.png" alt=""></p>
-<p>XP的核心实践：</p>
-<ul>
-<li>Whole Team: 用户参与到开发团队, 协作开发更好地开发出用户所需要的功能</li>
-<li>Planning Game：用户通过用户故事提出需求,开发人员作出发布计划和迭代计划并作出承诺如期完成任务</li>
-<li>Customer Test：验收测试, 由客户来检验系统是否完成了既定的功能</li>
-<li>Small Releases：最小发布, 即每开发出一个可正常工作的功能就可以发布</li>
-<li>Collective Code Ownership： 集体代码所有权, 项目中的每个人都可以看到项目完整的代码</li>
-<li>Coding Standards：编码风格统一</li>
-<li>Sustainable Pace: 可持续的开发速度</li>
-<li>Metaphor：全项目命名风格统一</li>
-<li>Continuous Integration：持续集成</li>
-<li>Test-driven development：测试驱动开发,编写覆盖率高的测试用例</li>
-<li>Simple Design：用最简单的设计来完成工作</li>
-<li>Refactoring：重构,去掉冗余代码,提高代码质量</li>
-<li>Pair Programming：结对编程, 由两个程序员完成同一个需求, 可以再实现功能的同时review代码</li>
-</ul>
-<p>XP的过程：从用户根据用户故事提起需求后, 进行架构刺探, 功能刺探, 然后指定发布计划, 每次迭代发布周期为1-2周, 开发出完整功能后进行验收测试, 通过方可发布.</p>
-<hr>
-<h4 id="Scrum"><a href="#Scrum" class="headerlink" title="Scrum"></a>Scrum</h4><p><img src="https://raw.githubusercontent.com/DearEirs/learn_python/master/AgileDevelopment/Scrum.png" alt=""></p>
-<p>由用户提起需求, 产品经理分析用户需求做出产品订单后, 进行冲刺计划会议, 制定每次冲刺需要完成的需求, 而一次冲刺的周期为3-4周,在冲刺过程中,成员自由领取冲刺订单,冲刺订单中包含着细化后的需求信息.冲刺期间每日都要召开站立会议,成员们各自讲述自己昨天你完成了哪些工作?今天你打算做什么?完成你的目标是否存在什么障碍?而在冲刺结束后, 同样会有冲刺回顾会议,会议上所有成员对这次会议进行反思</p>
-<h4 id="XP-VS-Scrum"><a href="#XP-VS-Scrum" class="headerlink" title="XP VS Scrum"></a>XP VS Scrum</h4><p>XP相对于Scrum：</p>
-<ul>
-<li>迭代周期: XP迭代周期为1-2周, Scrum迭代周期为3-4周(现在多为1-2周)</li>
-<li>应付新需求: 在XP中, 有限制地允许用户更改需求, 而Scrum中则不允许这样做, 一旦需求确定, 不可更改</li>
-<li>开发过程: 在开发过程中, XP严格按照需求的优先级来开发, 而Scrum可以不按照需求优先级开发</li>
-<li>实施规范: Scrum实施的过程中, 并没有规定采用XP中要求的结对编程、TDD、简单设计等行为</li>
-</ul>
-<h4 id="精益"><a href="#精益" class="headerlink" title="精益"></a>精益</h4><p>拉动式生产, 即当有需求的时候才开始生产, 这样做可以避免资源浪费,<br>自动化生产, 提高生产的效率</p>
-<h3 id="为什么要使用敏捷开发"><a href="#为什么要使用敏捷开发" class="headerlink" title="为什么要使用敏捷开发"></a>为什么要使用敏捷开发</h3><p>在传统瀑布式开发的过程中存在的问题：</p>
-<ul>
-<li>项目文档繁重, 在编写文档上花费了过多的时间</li>
-<li>用户对开发进度一无所知</li>
-</ul>
-<p>而在XP和Scrum中我们可以发现其共同点, 这也是敏捷开发的优势：</p>
-<ul>
-<li>持续集成, 产品一直处于可运行状态, 而开发人员只进行增量开发</li>
-<li>开发前, 不需要编写太多的文档</li>
-</ul>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>并不是说敏捷开发就一定要比传统的瀑布式开发要好, 只能说各有所长, 而敏捷开发更适用于当前的软件开发当中.</p>
-<hr>
-<p>敏捷开发结合到自身工作中：</p>
-<p>项目：ELK日志收集</p>
-<p>需求：</p>
-<ul>
-<li>开发：可以看到系统日志, 用于发现,修复问题</li>
-<li>老板：可以看到系统的访问量, 查询的响应时间的信息</li>
-</ul>
-<p>计划：</p>
-<ul>
-<li>搭建环境, 耗时0.5天</li>
-<li>收集系统日志, 耗时0.5天</li>
-<li>分析系统日志, 耗时0.5天</li>
-</ul>
-<blockquote>
-<p>搭建环境时, 需要开发参与, 日志具体是在那台机器上, 并到对应的机器上安装所需软件.</p>
-</blockquote>
-<p>完成搭建环境时就可以向老板和开发展示,环境已经搭建完, 下一步是收集日志</p>
-<blockquote>
-<p>这时又需要开发提供日志的目录, 以供收集, 并编写相应的使用文档, 给开发和老板使用</p>
-</blockquote>
-<p>当收集完成后, 这时开发的需求已经完成, 可以让开发进行测试, 看看对日志收集功能是否满意, 是否有其他需求, 如果没有其他需求, 那么可以进行到下一步,分析日志</p>
-<blockquote>
-<p>分析日志期间需要老板和开发的共同参与, 老板提供具体想要看到的信息, 开发方面可能需要修改日志格式,然后进行分析得出报表</p>
-</blockquote>
-<p>这时整个搭建完成, 只完成了开发和老板所需要的功能, 每完成1个步骤都向老板和开发反馈, 用户参与到了搭建过程中, 有新需求或者需求做的不对时, 能够很快的得到反馈并作出调整</p>
-<hr>
-<p>瀑布式开发模式结合到公司管理：</p>
-<p>相对于一个创业公司,很多工作有时候并没有规范到位, 这就需要有一套完整流程规范来让别人遵守, 花费一段时间来制定一套规范标准, 比每次遇到问题各成员间不知如何合作, 不知道自己应该负责什么部分要好</p>
-
-	
-	</div>
-  <a type="button" href="/2017/12/24/agile/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-11-15 </div>
-			<div class="article-title"><a href="/2017/11/15/ELK/" >ELK搭建</a></div>
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><ul>
-<li>系统：centos7.2 </li>
-<li>redis：3.2.6 </li>
-<li>filebeat：5.6.3</li>
-<li>elasticsearch：5.6.3</li>
-<li>kibana：5.6.3</li>
-<li>x-pack：5.6.3</li>
-<li>jdk：1.8</li>
-</ul>
-<p><strong>ELK的版本尽量统一</strong></p>
-<h1 id="下载"><a href="#下载" class="headerlink" title="下载"></a>下载</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">elasticsearch</div><div class="line">https://artifacts.elastic.co/downloads/elasticsearch/elasticsearch-5.6.3.tar.gz</div><div class="line"></div><div class="line">filebeat</div><div class="line">https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.6.3-linux-x86_64.tar.gz</div><div class="line"></div><div class="line">kibana</div><div class="line">https://artifacts.elastic.co/downloads/kibana/kibana-5.6.3-linux-x86_64.tar.gz</div><div class="line"></div><div class="line">logstash</div><div class="line">https://artifacts.elastic.co/downloads/logstash/logstash-5.6.3.tar.gz</div><div class="line"></div><div class="line">redis</div><div class="line">http://download.redis.io/releases/redis-3.2.6.tar.gz</div></pre></td></tr></table></figure>
-<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><blockquote>
-<p>安装的话只需要把下载回来的tar包解压即可,项目运行需要jdk支持, jdk自行安装</p>
-</blockquote>
-<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><h3 id="redis"><a href="#redis" class="headerlink" title="redis"></a>redis</h3><blockquote>
-<p>redis不是本文重点, 所以配置就不展开细说.</p>
-</blockquote>
-<h3 id="filebeat"><a href="#filebeat" class="headerlink" title="filebeat"></a>filebeat</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div></pre></td><td class="code"><pre><div class="line"># 输入</div><div class="line">filebeat:</div><div class="line">  prospectors: # 可加多个, 用-分割, 每个prospectors可以有不同的配置</div><div class="line">    -</div><div class="line">      input_type: log</div><div class="line">      paths: # 可加多个, 每行一个用-分割</div><div class="line">        - /data/logs/portal/logs/info.log</div><div class="line">      fields: # 需要添加的字段</div><div class="line">        app: portal</div><div class="line">        host: zsmd2</div><div class="line">      include_lines: [&quot;ERROR&quot;] # 匹配包含&quot;INFO&quot;的消息</div><div class="line">      # 开启多行匹配</div><div class="line">      # pattern 消息按指定内容划分, </div><div class="line">      multiline.pattern: &apos;^\[&apos;</div><div class="line">      multiline.negate: true</div><div class="line">      multiline.match: after</div><div class="line">    -</div><div class="line">      input_type: log</div><div class="line">      paths: # 路径匹配也可以用正则</div><div class="line">        - /data/apps/ops/demo-service-provider*/bin/api.log</div><div class="line">      fields:</div><div class="line">        app: dubbo</div><div class="line">        host: zsmd2</div><div class="line">      multiline.pattern: &apos;^\d&#123;2&#125;:\d&#123;4&#125;:\d&#123;2&#125;&apos;</div><div class="line">      multiline.negate: true</div><div class="line">      multiline.match: after</div><div class="line">    -</div><div class="line">      input_type: log</div><div class="line">      paths:</div><div class="line">        - /data/apps/ops/smart-schedule/schedule/logs/error.log</div><div class="line">      fields:</div><div class="line">        app: schedule</div><div class="line">        host: zsmd2</div><div class="line">      multiline.pattern: &apos;^\[&apos;</div><div class="line">      multiline.negate: true</div><div class="line">      multiline.match: after</div><div class="line"></div><div class="line"># 输出</div><div class="line"># 输出到redis</div><div class="line">output.redis:</div><div class="line">   enabled: true</div><div class="line">   hosts: [&quot;172.16.0.237:6379&quot;] # 有多个的话用逗号分隔, 写在列表里边</div><div class="line">   key: &quot;zsdata&quot;</div><div class="line">   datatype: list</div><div class="line">   input_type: logs</div><div class="line">   password: &apos;redis&apos;</div><div class="line"></div><div class="line"># 输出到控制台, 可以省略, 搭建时主要为了方便看到数据</div><div class="line">output.console:</div><div class="line">  enabled: true</div><div class="line"></div><div class="line">参考：http://blog.csdn.net/chengxuyuanyonghu/article/details/54378778</div></pre></td></tr></table></figure>
-<h3 id="elasticsearch"><a href="#elasticsearch" class="headerlink" title="elasticsearch"></a>elasticsearch</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">cluster.name: elasticsearch-cluster # 集群名</div><div class="line">node.name: zsad1 # 节点名</div><div class="line">node.master: true </div><div class="line">network.host: 0.0.0.0</div><div class="line">http.port: 9200</div><div class="line">discovery.zen.minimum_master_nodes: 1 # </div><div class="line"># xpack参数 不用的话可略, 下面再细讲xpack破解</div><div class="line">xpack.security.enabled: true</div></pre></td></tr></table></figure>
-<h3 id="logstash"><a href="#logstash" class="headerlink" title="logstash"></a>logstash</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"># 输入</div><div class="line">input&#123;</div><div class="line">    redis &#123;</div><div class="line">        host =&gt; &quot;172.16.0.237&quot;</div><div class="line">        port =&gt; 6379</div><div class="line">        threads =&gt; 5 </div><div class="line">        data_type =&gt; &quot;list&quot;</div><div class="line">        type =&gt; &apos;redis-input&apos;</div><div class="line">        key =&gt; &quot;zsdata&quot;</div><div class="line">        password =&gt; &apos;password&apos;</div><div class="line">    &#125;</div><div class="line"># 过滤</div><div class="line">    # 移除不需要的字段</div><div class="line">    mutate&#123;</div><div class="line">        remove_field =&gt; [&quot;type&quot;, &quot;input_type&quot;, &quot;offset&quot;, &quot;beat&quot;, &quot;\@version&quot;, &apos;@version&apos;, &quot;@version&quot;]</div><div class="line">    &#125;</div><div class="line"></div><div class="line"># 输出</div><div class="line">output&#123;</div><div class="line">    # 输出数据到elasticsearch</div><div class="line">    elasticsearch&#123;</div><div class="line">      hosts =&gt; [&quot;172.16.0.80:9200&quot;]</div><div class="line">      user =&gt; &apos;username&apos;</div><div class="line">      password =&gt; &apos;password&apos;</div><div class="line">      index =&gt; &quot;zsdata-%&#123;+dd-MM-YYYY&#125;&quot; # 索引</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    # 判断是否有错误日志, 有的话就调用脚本发送邮件,  127.0.0.1:5000是自己写的发送邮件脚本</div><div class="line">    if &quot;ERROR&quot; in [message] &#123;</div><div class="line">      exec &#123;</div><div class="line">         command =&gt; &quot;curl  -XPOST -H  &apos;Content-Type: application/json&apos; 127.0.0.1:5000/email -d &apos;&#123;\&quot;message\&quot;: \&quot;%&#123;message&#125;\nsource at %&#123;source&#125;\&quot;, \&quot;from\&quot;:\&quot;xxxxxxxx@qq.com\&quot;, \&quot;to\&quot;:\&quot;xxxxxxxx@qq.com\&quot;, \&quot;subject\&quot;: \&quot;%&#123;fields[app]&#125; Get Error log in  %&#123;fields[host]&#125;\&quot;&#125;&apos; &quot;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    # 输出到控制台, 方便调试</div><div class="line">    stdout&#123; codec=&gt; &quot;rubydebug&quot; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="kibana"><a href="#kibana" class="headerlink" title="kibana"></a>kibana</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">server.host: 0.0.0.0</div><div class="line"># elasticsearch 的地址</div><div class="line">elasticsearch.url: &quot;http://172.16.0.80:9200&quot;</div><div class="line"># 使用xpack后需要登录 以下为默认账号</div><div class="line">elasticsearch.username: &quot;elastic&quot;</div><div class="line">elasticsearch.password: &quot;changeme&quot;</div><div class="line">xpack.monitoring.enabled: true</div><div class="line">i18n.defaultLocale: &quot;cn&quot;</div></pre></td></tr></table></figure>
-<h3 id="xpack破解"><a href="#xpack破解" class="headerlink" title="xpack破解"></a>xpack破解</h3><p><a href="http://blog.csdn.net/mvpboss1004/article/details/65445023" target="_blank" rel="external">参考地址：http://blog.csdn.net/mvpboss1004/article/details/65445023</a></p>
-
-	
-	</div>
-  <a type="button" href="/2017/11/15/ELK/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-           
-		
-           
-			  
-	
-	<!-- display as entry -->	
-		<h3 class="title">
-			<div class="date"> 2017-10-24 </div>
-			<div class="article-title"><a href="/2017/10/24/salt-file-backup/" >salt分发文件时自动备份</a></div>
-		</h3>
-	
-
-
-			  <div class="entry">
-  <div class="row">
-	
-	
-		<h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
-<p>在日常工作中,我们经常会用saltstack来分发文件,但是如果稍有不慎就会不小心覆盖掉之前不想修改的文件,这样我们就需要回滚,但是又不知道具体被修改了那些地方,那么我们就需要一个备份的功能,每次分发文件时,如果有文件被修改,那么就将文件备份到指定目录,这样就算出错,我们也可以把原文件替换回去.</p>
-</blockquote>
-<hr>
-<p>那么我们有2种方法:</p>
-<ol>
-<li>在minion的配置文件中添加backup_mode: minion</li>
-<li>在执行分发文件的states时,添加参数backup: minion</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"># 借用官网的例子</div><div class="line">/etc/ssh/sshd_config:</div><div class="line">  file.managed:</div><div class="line">    - source: salt://ssh/sshd_config</div><div class="line">    - backup: minion</div></pre></td></tr></table></figure>
-<p>当sls 执行时发现sshd_config,被修改了的话,那么salt就会自动帮你备份sshd_config到/var/cache/salt/minion/file_backup(默认路径),并在文件名后面加上具体的日期方便查看.</p>
-<p>这样就算我们误操作把原文件覆盖掉,我们也有备份文件可以还原.</p>
-<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="http://note.youdao.com/" target="_blank" rel="external">https://docs.saltstack.com/en/latest/ref/states/backup_mode.html#file-state-backups</a></p>
-
-	
-	</div>
-  <a type="button" href="/2017/10/24/salt-file-backup/#more" class="btn btn-default more">阅读此文</a>
-</div>
-
-           
-		
 
 		</div>
 
@@ -870,6 +833,10 @@
 		
 			<li><a href="/categories/saltstack/">saltstack</label></a></li>
 		
+			<li><a href="/categories/web/">web</label></a></li>
+		
+			<li><a href="/categories/协议/">协议</label></a></li>
+		
 			<li><a href="/categories/大数据/">大数据</label></a></li>
 		
 		</ul>
@@ -882,46 +849,48 @@
 		<h4>标签云</h4>
 		<ul class="tag_box inline list-unstyled">
 		
-			<li><a href="/tags/django/">django</a></li>
-		
-			<li><a href="/tags/异步/">异步</a></li>
-		
-			<li><a href="/tags/flask/">flask</a></li>
-		
-			<li><a href="/tags/vim/">vim</a></li>
-		
-			<li><a href="/tags/敏捷开发/">敏捷开发</a></li>
-		
-			<li><a href="/tags/rocketmq/">rocketmq</a></li>
-		
-			<li><a href="/tags/大数据/">大数据</a></li>
-		
-			<li><a href="/tags/函数/">函数</a></li>
-		
-			<li><a href="/tags/decorator/">decorator</a></li>
-		
-			<li><a href="/tags/saltstack/">saltstack</a></li>
-		
-			<li><a href="/tags/gc/">gc</a></li>
-		
-			<li><a href="/tags/闭包/">闭包</a></li>
-		
-			<li><a href="/tags/redis/">redis</a></li>
-		
-			<li><a href="/tags/python/">python</a></li>
-		
-			<li><a href="/tags/代码优化/">代码优化</a></li>
-		
-			<li><a href="/tags/jinja/">jinja</a></li>
-		
-			<li><a href="/tags/uwsgi/">uwsgi</a></li>
-		
 			<li><a href="/tags/mysql/">mysql</a></li>
-		
-			<li><a href="/tags/ELK/">ELK</a></li>
 		
 			<li><a href="/tags/oop/">oop</a></li>
 		
+			<li><a href="/tags/django/">django</a></li>
+		
+			<li><a href="/tags/python/">python</a></li>
+		
+			<li><a href="/tags/函数/">函数</a></li>
+		
+			<li><a href="/tags/saltstack/">saltstack</a></li>
+		
+			<li><a href="/tags/代码优化/">代码优化</a></li>
+		
+			<li><a href="/tags/cgi/">cgi</a></li>
+		
+			<li><a href="/tags/rocketmq/">rocketmq</a></li>
+		
+			<li><a href="/tags/flask/">flask</a></li>
+		
+			<li><a href="/tags/异步/">异步</a></li>
+		
+			<li><a href="/tags/uwsgi/">uwsgi</a></li>
+		
+			<li><a href="/tags/jinja/">jinja</a></li>
+		
+			<li><a href="/tags/gc/">gc</a></li>
+		
+			<li><a href="/tags/vim/">vim</a></li>
+		
+			<li><a href="/tags/大数据/">大数据</a></li>
+		
+			<li><a href="/tags/http/">http</a></li>
+		
+			<li><a href="/tags/decorator/">decorator</a></li>
+		
+			<li><a href="/tags/闭包/">闭包</a></li>
+		
+			<li><a href="/tags/ELK/">ELK</a></li>
+		
+		
+		   <li><a href="/tags">...<span>23</span></a></li>
 		 
 		</ul>
 	</div>
@@ -934,23 +903,23 @@
   <ul class="entry list-unstyled">
     
       <li>
+        <a href="/2018/06/21/cgi/" ><i class="fa fa-file-o"></i>cgi</a>
+      </li>
+    
+      <li>
+        <a href="/2018/06/21/cache/" ><i class="fa fa-file-o"></i>cache</a>
+      </li>
+    
+      <li>
+        <a href="/2018/06/21/http/" ><i class="fa fa-file-o"></i>http</a>
+      </li>
+    
+      <li>
         <a href="/2018/05/10/flask/" ><i class="fa fa-file-o"></i>flask源码--处理过程</a>
       </li>
     
       <li>
         <a href="/2018/04/25/redis-use/" ><i class="fa fa-file-o"></i>redis常用命令</a>
-      </li>
-    
-      <li>
-        <a href="/2018/04/12/salt-returner/" ><i class="fa fa-file-o"></i>saltstack获取minion执行返回信息</a>
-      </li>
-    
-      <li>
-        <a href="/2018/04/12/hadoop/" ><i class="fa fa-file-o"></i>Hadoop+Hive+Presto环境搭建</a>
-      </li>
-    
-      <li>
-        <a href="/2018/03/14/junior-sql/" ><i class="fa fa-file-o"></i>sql简单语法</a>
       </li>
     
   </ul>

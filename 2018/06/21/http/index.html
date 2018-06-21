@@ -1,0 +1,322 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>http | Dear&#39;s Blog</title>
+
+  <meta name="author" content="Dear">
+  
+  <meta name="description" content="HTTP协议HTTP是一个应用层协议, 由请求和响应构成, 是一个标准的客户端服务器模型. 基于HTTP协议的CS模式的信息交换过程, 它分四个过程: 建立连接、发送请求信息、发送响应信息、关闭连接. 如图
+12345sequenceDiagramA-&amp;gt;&amp;gt;B: 建立TCP连接A-&amp;gt;">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta name="renderer" content="webkit">
+
+  <meta property="og:title" content="http"/>
+  <meta property="og:site_name" content="Dear&#39;s Blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+  
+
+  <!-- CSS -->
+  <!-- link rel="stylesheet" href="/css/themes/bootstrap.css" media="screen" type="text/css" -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight-default.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/comment.css" media="screen" type="text/css">
+  <!--[if lt IE 9]>
+  <![endif]-->
+
+</script>
+  <script src="https://cdn.bootcss.com/jquery/2.0.3/jquery.min.js"></script>
+  
+  <!-- analytics -->
+  
+
+
+
+  <meta name="baidu-site-verification" content="RXfcpfczu8" />
+</head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+	<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+       <a class="navbar-brand" href="/">Dear&#39;s Blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class="fa fa-archive"></i>目录
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class="fa fa-folder"></i>分类
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class="fa fa-tags"></i>标签
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class="fa fa-user"></i>关于个人
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header page-header-inverse ">		
+			<h1 class="title title-inverse "> http</h1>
+		</div>		
+	
+
+
+
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h1 id="HTTP协议"><a href="#HTTP协议" class="headerlink" title="HTTP协议"></a>HTTP协议</h1><p>HTTP是一个应用层协议, 由请求和响应构成, 是一个标准的客户端服务器模型. 基于HTTP协议的CS模式的信息交换过程, 它分四个过程: 建立连接、发送请求信息、发送响应信息、关闭连接. 如图</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">sequenceDiagram</div><div class="line">A-&gt;&gt;B: 建立TCP连接</div><div class="line">A-&gt;&gt;B: 发起请求</div><div class="line">B-&gt;&gt;A: 响应请求</div><div class="line">B-&gt;&gt;A: 断开TCP连接</div></pre></td></tr></table></figure>
+<p>我们可以看到, 每处理一个请求都需要建立与断开TCP连接, 我们称这样的连接为非持久连接.</p>
+<p>http1.0里就是使用这样的方式来处理连接 在并发量不大的情况下这并不会影响到我们的使用, 但是如果并发量大, 那么服务器将需要消耗一部分的资源来专门干这事. </p>
+<p>所以为了解决这个问题, http1.1里引用了持久连接, 而且默认使用的就是持久连接, 与非持久连接不同的是持久连接允许个连接中可以传输多个对象.<br>当然在http1.1里还是可以通过设置来使用非持久连接的.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">sequenceDiagram</div><div class="line">A-&gt;&gt;B: 建立TCP连接</div><div class="line">A-&gt;&gt;B: 发起请求1</div><div class="line">B-&gt;&gt;A: 响应请求1</div><div class="line">A-&gt;&gt;B: 发起请求2</div><div class="line">B-&gt;&gt;A: 响应请求2</div><div class="line">A-&gt;&gt;B: 发起请求n</div><div class="line">B-&gt;&gt;A: 响应请求n</div><div class="line">B-&gt;&gt;A: 断开TCP连接</div></pre></td></tr></table></figure>
+<p>我们可以通过设置keep-alive参数来设置持久连接的相关参数, 如timeout</p>
+<p>而在这个请求模式中还有一个问题就是只有当客户端发起请求时, 服务端才能向客户端发送/返回数据. 且当请求1被阻塞的时候, 必须等待服务器处理完成请求后才能发起后续请求, 这也是http的缺点之一. </p>
+<p>目前服务器所使用的都是占比比较大的是http1.1版本, 它有如下缺点:</p>
+<p>安全性问题:</p>
+<ul>
+<li>基于明文文本的通信内容可能被窃听</li>
+<li>不验证通信双方的身份可能遭伪装</li>
+<li>无法证明报文完整性可能遭篡改</li>
+</ul>
+<p>性能问题:</p>
+<ul>
+<li>一条连接上只可发一个请求(非持久连接)</li>
+<li>队头阻塞</li>
+<li>请求只能由客户端发起，客户端不可接受响应之外的指令</li>
+<li>请求和响应的首部未经压缩就发送，首部信息越多延迟越大</li>
+<li>发送冗长的首部，多次来回之间首部大部分字段都未改变，浪费资源</li>
+<li>可选择任意压缩格式，不强制压缩后发送</li>
+</ul>
+<p>针对这些问题, 新版本的http(HTTP2.0)引入了</p>
+<h3 id="http的请求"><a href="#http的请求" class="headerlink" title="http的请求"></a>http的请求</h3><p>我们想要对一个网络上的资源发起访问, 首先要知道它所在的位置. 对此我们用一个URL来指定所需要访问的资源路径. </p>
+<p><a href="http://www.baidu.com:80/s?wd=http" target="_blank" rel="external">http://www.baidu.com:80/s?wd=http</a></p>
+<p>这是一个普通的URL, http指定了所使用的协议, 除http外还有https、ftp等协议. </p>
+<p>而www.baidu.com 这指定了我们所需要访问的服务器, 当然需要得到服务器的IP我们还需要通过DNS来解析.</p>
+<p>80 代表了我们需要访问这台服务器的80端口, 当需要指定端口时前边要加”:”.而当我们没指定任何端口时会自动访问80端口, 而采用https协议的话则默认访问443端口  </p>
+<p>/s 代表了资源所在服务器的路径. </p>
+<p>?wd=http 相当于请求附带的query.</p>
+<p>我们只需要把请求报文发送到指定的URL, 服务器就应该会把我们所需要的资源响应回来. </p>
+<h3 id="http请求报文格式"><a href="#http请求报文格式" class="headerlink" title="http请求报文格式"></a>http请求报文格式</h3><p><img src="https://images2018.cnblogs.com/blog/1361655/201804/1361655-20180413120416720-1194570336.png" alt="image"><br>可以看到请求报文由请求行、请求头部、空行和请求数据4部分组成.<br>其中请求行包括请求方法, 所请求的资源的地址与使用的http版本. </p>
+<p>请求头部中的内容一般用来描述客户端能兼容的类型.</p>
+<p>请求数据则是需要提供给服务端处理的数据</p>
+<h3 id="http响应报文格式"><a href="#http响应报文格式" class="headerlink" title="http响应报文格式"></a>http响应报文格式</h3><p><img src="https://camo.githubusercontent.com/7b4bafaefaa8241c599f1a0166dbd003cb8539a2/68747470733a2f2f692e696d6775722e636f6d2f723156723962412e706e67" alt="image"></p>
+<p>这是一个响应报文示例, 可以看到响应报文也分为4个组成部分, 分别为状态行, 响应头部, 空行, 响应的消息</p>
+<p>其中状态行包含了http的版本与一个状态码,<br>状态码由一个三位数组成，状态码大体有5种含义：</p>
+<ul>
+<li>1xx 信息, 请求已被服务端收到, 请继续.</li>
+<li>2xx 成功. 请求已被服务端接收, 并处理完毕</li>
+<li>3xx 重定向. 需要进一步的操作才能完成此请求</li>
+<li>4xx 客户端错误. 请求含有词法错误, 或者无法被执行</li>
+<li>5xx 服务器错误. 服务端在处理请求的过程中出现错误</li>
+</ul>
+<p>其中1xx 是在http1.1版本才加进去的, http1.0并没有. </p>
+<p>而处理http已经规定好的状态码外, 我们还可以自行规定自己所需要的状态码. 只需使用双方都明确知道此状态码的含义即可. </p>
+<h3 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h3><p>请求方法, 一般称为method, 每个method都表示对url所指定的资源执行一种不同的操作. 客户端通过指定method来告知服务端如何处理该资源.</p>
+<ul>
+<li>GET: 服务端只检索既有资源返回给客户端, 不应有其他副作用.</li>
+<li>POST: 客户端将新建资源所需的数据携带在请求中, 使服务端创建一个新资源.</li>
+<li>PUT: 客户端提供完整的资源信息给服务端, 服务端据此更新既有资源或创建新资源.</li>
+<li>DELETE: 服务端删除指定的资源.</li>
+<li>PATCH: 客户端提供指定资源的部分信息, 服务端据此对既有资源做局部更新.</li>
+<li>HEAD: 服务端构造与GET方法一模一样的响应头部返回给客户端, 便于客户端获取该资源的元信息, 而非整体传输。常用于检查资源是否已改动.</li>
+<li>TRACE: 返回客户端请求经由哪些跃点到达了服务端, 中间代理或网关在转发该请求时应将自己的IP或DNS名称添加到头部的Via字段中. 常用于诊断.</li>
+<li>OPTIONS: 服务端返回该URL支持的请求方法. 通常请求’*’, 而非具体资源.</li>
+</ul>
+<p>而我们平时用的比较多的就是GET、POST、PUT、DELETE、HEAD. </p>
+	  
+	</div>
+
+    <div>
+    <center>
+      <p>如果你觉得我的文章对你有所帮助, 请多多支持.</p>
+      <img src="https://raw.githubusercontent.com/DearEirs/static/master/images/%E6%94%AF%E4%BB%98%E5%AE%9D%E6%94%B6%E6%AC%BE%E7%A0%81.png">
+    </center>
+    </div>
+	<div>
+  	<center>
+	<div class="pagination">
+<ul class="pagination">
+	 
+		
+    	<li class="prev"><a href="/2018/06/21/cache/" class="alignleft prev"><i class="fa fa-arrow-circle-o-left"></i>上一页</a></li>
+  		
+
+        <li><a href="/archives"><i class="fa fa-archive"></i>Archive</a></li>
+
+		
+		   <li class="next"><a href="/2018/05/10/flask/" class="alignright next">下一页<i class="fa fa-arrow-circle-o-right"></i></a></li>         
+        
+	
+</ul>
+</div>
+
+    </center>
+	</div>
+
+    <!-- share -->
+    
+        
+        
+
+    
+	
+	<!-- comment -->
+	
+<section id="comment">
+  <h2 class="title">留言</h2>
+  
+</section>
+
+
+	</div> <!-- col-md-9/col-md-12 -->
+		
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2018-06-21 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/协议/">协议<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/http/">http<span>1</span></a></li>
+    </ul>
+	</div>
+	
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+	</div>
+		
+
+</div><!-- row -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  &copy; 2018 Dear
+  
+      with help from <a href="http://hexo.io/" target="_blank">Hexo</a> and <a href="http://getbootstrap.com/" target="_blank">Twitter Bootstrap</a>. Theme by <a href="http://github.com/wzpan/hexo-theme-freemind/">Freemind</a>.    
+</p> </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>▲</span> 
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+
+<!-- syntax highlighting -->
+
+
+</body>
+   </html>
